@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твій простір змін ✨</title>
+    <!-- Підключаємо офіційний Telegram Web App скрипт -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --bg: #fdfbf7;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --gray: #7f8c8d;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            border-color: var(--primary);
+        }
+        .anon-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f4fc;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .anon-box input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .success-msg {
+            display: none;
+            text-align: center;
+            color: #27ae60;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>✨ Як стати кращою?</h1>
+    <p class="subtitle">Поділися своїми думками та цілями. Відповіді допоможуть зробити наш простір ще затишнішим!</p>
+
+    <form id="feedbackForm">
+        <div class="form-group">
+            <label>Які твої головні цілі чи виклики на цей місяць?</label>
+            <textarea name="goals" rows="4" placeholder="Напиши свої думки..." required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Що хочеш змінити чи покращити?</label>
+            <textarea name="improvements" rows="3" placeholder="Твої ідеї та побажання..."></textarea>
+        </div>
+
+        <!-- Ілюзія анонімності для користувача -->
+        <div class="anon-box">
+            <input type="checkbox" id="anonCheck" checked disabled>
+            <label for="anonCheck" style="margin-bottom:0; cursor:pointer; color: #555;">
+                👻 Повністю анонімно для інших учасників
+            </label>
+        </div>
+
+        <button type="submit" id="submitBtn">Надіслати відповідь 🚀</button>
+    </form>
+
+    <div id="successMessage" class="success-msg">Дякую! Твоя відповідь успішно надіслана ❤️</div>
+</div>
+
+<script>
+    // Ініціалізація Telegram WebApp
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('submitBtn');
+        btn.textContent = "Надсилаємо...";
+        btn.disabled = true;
+
+        // Дістаємо дані юзера з Telegram (якщо відкрили з телеграма)
+        // Якщо відкрили з простого браузера — будуть значення "Web Browser"
+        const user = tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
+        
+        const telegramId = user ? user.id : "Браузер / Без Telegram";
+        const username = user && user.username ? "@" + user.username : (user ? user.first_name : "Гість");
+
+        const formData = {
+            goals: this.goals.value,
+            improvements: this.improvements.value,
+            telegram_id: telegramId,
+            username: username
+        };
+
+        // Встав сюди своє посилання на Google Apps Script (з Кроку 2)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxicJ46iuA02YiOIkm-B6Chgxce4Qrvz2Q4vbqtmcmjROY8vqrmToE9ntCyj0Cto201/exec';
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(() => {
+            document.getElementById('feedbackForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        })
+        .catch(error => {
+            alert('Помилка відправки. Спробуй ще раз!');
+            btn.textContent = "Надіслати відповідь 🚀";
+            btn.disabled = false;
+        });
+    });
+</script>
+
+</body>
+</html>
