@@ -6,7 +6,7 @@
   <title>Затишок · DIY & Мінімалізм</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    /* ---------- RESET & BASE ---------- */
+    /* ---------- RESET ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -14,40 +14,115 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* ---------- THEME: COZY PASTEL (default) ---------- */
     :root {
-      --cream: #f9f5f0;
+      --bg: #f9f5f0;
+      --bg-gradient-1: rgba(201, 126, 90, 0.04);
+      --bg-gradient-2: rgba(201, 126, 90, 0.03);
+      --card: #fffbf7;
       --paper: #f2ebe3;
-      --terracotta: #c97e5a;
-      --terracotta-light: #dda382;
-      --terracotta-dark: #a85e3c;
-      --warm-gray: #8a7e72;
-      --soft-brown: #6b5a4e;
+      --accent: #c97e5a;
+      --accent-light: #dda382;
+      --accent-dark: #a85e3c;
+      --text: #6b5a4e;
+      --text-muted: #8a7e72;
+      --text-soft: #c4b5a8;
+      --border: #e8ddd3;
+      --input-bg: #fffdfa;
+      --row-bg: #faf6f1;
+      --row-border: #f0e8df;
+      --switch-off: #e0d5c9;
+      --switch-knob: #ffffff;
       --shadow: rgba(100, 70, 50, 0.08);
       --shadow-strong: rgba(100, 70, 50, 0.15);
-      --pin: #b5654a;
-      --sticker-bg: #fffbf7;
+      --pin-color: #b5654a;
+      --pin-highlight: #e8a080;
+      --nav-bg: rgba(249, 245, 240, 0.92);
+      --nav-border: rgba(201, 126, 90, 0.1);
+      --nav-active-bg: rgba(201, 126, 90, 0.07);
+      --sticker-line: rgba(201, 126, 90, 0.06);
+      --toast-bg: #6b5a4e;
+      --toast-color: #ffffff;
+      --cookie-grad-1: #e8c49a;
+      --cookie-grad-2: #d4a76a;
+      --cookie-grad-3: #c49050;
+      --cookie-stroke: #b88445;
+      --cookie-chip: #a86830;
+      --cookie-crack: #8a6030;
+      --cookie-broken-edge: #c49050;
+      --cookie-shadow: rgba(100, 70, 50, 0.08);
+      --ribbon-bg-1: #fdf8f3;
+      --ribbon-bg-2: #f5ece3;
+      --ribbon-line: rgba(201, 126, 90, 0.07);
+      --glow: transparent;
+      --glow-strong: transparent;
       --font-serif: 'Georgia', 'Times New Roman', serif;
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* ---------- THEME: NIGHT NEON ---------- */
+    html[data-theme="neon"] {
+      --bg: #0f0e17;
+      --bg-gradient-1: rgba(255, 106, 213, 0.06);
+      --bg-gradient-2: rgba(94, 234, 212, 0.05);
+      --card: #1a1825;
+      --paper: #221f33;
+      --accent: #ff6ad5;
+      --accent-light: #ff9ee2;
+      --accent-dark: #d64eb0;
+      --text: #e8e6f5;
+      --text-muted: #9d9bb8;
+      --text-soft: #6b6885;
+      --border: #2f2b45;
+      --input-bg: #221f33;
+      --row-bg: #221f33;
+      --row-border: #2f2b45;
+      --switch-off: #3a3654;
+      --switch-knob: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.4);
+      --shadow-strong: rgba(255, 106, 213, 0.15);
+      --pin-color: #5eead4;
+      --pin-highlight: #a7f3e4;
+      --nav-bg: rgba(15, 14, 23, 0.94);
+      --nav-border: rgba(255, 106, 213, 0.15);
+      --nav-active-bg: rgba(255, 106, 213, 0.12);
+      --sticker-line: rgba(255, 106, 213, 0.08);
+      --toast-bg: #221f33;
+      --toast-color: #e8e6f5;
+      --cookie-grad-1: #f0b890;
+      --cookie-grad-2: #d49767;
+      --cookie-grad-3: #b87d4d;
+      --cookie-stroke: #a0703f;
+      --cookie-chip: #8a5c30;
+      --cookie-crack: #6b4420;
+      --cookie-broken-edge: #b87d4d;
+      --cookie-shadow: rgba(0, 0, 0, 0.4);
+      --ribbon-bg-1: #221f33;
+      --ribbon-bg-2: #1a1825;
+      --ribbon-line: rgba(255, 106, 213, 0.08);
+      --glow: 0 0 20px rgba(255, 106, 213, 0.25);
+      --glow-strong: 0 0 30px rgba(255, 106, 213, 0.45);
     }
 
     html, body {
       height: 100%;
       overflow: hidden;
       font-family: var(--font-sans);
-      background-color: var(--cream);
-      color: var(--soft-brown);
+      background-color: var(--bg);
+      color: var(--text);
       user-select: none;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     body {
       display: flex;
       flex-direction: column;
-      background-image: 
-        radial-gradient(circle at 20% 10%, rgba(201, 126, 90, 0.04) 0%, transparent 50%),
-        radial-gradient(circle at 80% 90%, rgba(201, 126, 90, 0.03) 0%, transparent 50%);
+      background-image:
+        radial-gradient(circle at 20% 10%, var(--bg-gradient-1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 90%, var(--bg-gradient-2) 0%, transparent 50%);
+      transition: background-image 0.4s ease;
     }
 
-    /* ---------- APP CONTAINER ---------- */
     #app {
       flex: 1;
       display: flex;
@@ -56,12 +131,105 @@
       position: relative;
     }
 
+    /* ---------- TOP BAR ---------- */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 4px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text);
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: var(--glow);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ctrl-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.3s ease;
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px var(--shadow-strong), var(--glow);
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.94);
+    }
+
+    .ctrl-btn .ctrl-icon {
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .ctrl-btn .ctrl-text {
+      text-transform: uppercase;
+    }
+
+    .ctrl-btn.active-lang {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    html[data-theme="neon"] .ctrl-btn {
+      backdrop-filter: blur(10px);
+    }
+
+    html[data-theme="neon"] .ctrl-btn.active-lang {
+      box-shadow: var(--glow-strong);
+    }
+
+    /* ---------- TAB CONTENT ---------- */
     .tab-content {
       flex: 1;
       overflow-y: auto;
-      padding: 24px 20px 20px;
+      padding: 16px 20px 20px;
       display: none;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .tab-content::-webkit-scrollbar {
+      width: 0;
+      display: none;
     }
 
     .tab-content.active {
@@ -75,100 +243,128 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---------- HEADER ---------- */
     .page-title {
       font-family: var(--font-serif);
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 400;
-      color: var(--soft-brown);
+      color: var(--text);
       margin-bottom: 6px;
       letter-spacing: 0.5px;
+      transition: color 0.4s ease;
     }
 
     .page-subtitle {
       font-size: 13px;
-      color: var(--warm-gray);
-      margin-bottom: 24px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
       font-weight: 300;
       letter-spacing: 0.3px;
+      transition: color 0.4s ease;
     }
 
-    /* ---------- TAB 1: ДУМКА / SURVEY ---------- */
+    /* ---------- TAB 1: SURVEY ---------- */
     .survey-card {
-      background: var(--sticker-bg);
+      background: var(--card);
       border-radius: 18px;
-      padding: 28px 22px;
+      padding: 24px 20px;
       box-shadow: 0 2px 16px var(--shadow);
-      border: 1px solid rgba(201, 126, 90, 0.06);
+      border: 1px solid var(--border);
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    html[data-theme="neon"] .survey-card {
+      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 106, 213, 0.05);
     }
 
     .survey-label {
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: var(--terracotta);
+      color: var(--accent);
       font-weight: 600;
       margin-bottom: 10px;
+      transition: color 0.4s ease;
     }
 
     .survey-textarea {
       width: 100%;
-      min-height: 110px;
-      border: 1.5px solid #e8ddd3;
+      min-height: 100px;
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
       font-family: var(--font-sans);
       font-size: 15px;
       line-height: 1.5;
-      color: var(--soft-brown);
-      background: #fffdfa;
+      color: var(--text);
+      background: var(--input-bg);
       resize: vertical;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.3s ease, background 0.4s ease, color 0.4s ease;
     }
 
     .survey-textarea::placeholder {
-      color: #c4b5a8;
+      color: var(--text-soft);
       font-style: italic;
     }
 
     .survey-textarea:focus {
-      border-color: var(--terracotta-light);
-      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08);
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08), var(--glow);
     }
 
-    /* Toggle switch */
+    html[data-theme="neon"] .survey-textarea:focus {
+      box-shadow: 0 0 0 3px rgba(255, 106, 213, 0.15), var(--glow-strong);
+    }
+
     .toggle-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 18px;
+      margin-top: 12px;
       padding: 12px 16px;
-      background: #faf6f1;
+      background: var(--row-bg);
       border-radius: 12px;
-      border: 1px solid #f0e8df;
+      border: 1px solid var(--row-border);
+      gap: 12px;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .toggle-row .toggle-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
     }
 
     .toggle-label {
       font-size: 14px;
-      color: var(--soft-brown);
+      color: var(--text);
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: color 0.4s ease;
+    }
+
+    .toggle-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      transition: color 0.4s ease;
     }
 
     .toggle-switch {
       position: relative;
       width: 50px;
       height: 28px;
-      background: #e0d5c9;
+      background: var(--switch-off);
       border-radius: 14px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
       flex-shrink: 0;
     }
 
     .toggle-switch.active {
-      background: var(--terracotta);
+      background: var(--accent);
+      box-shadow: var(--glow);
     }
 
     .toggle-knob {
@@ -177,7 +373,7 @@
       left: 3px;
       width: 22px;
       height: 22px;
-      background: #fff;
+      background: var(--switch-knob);
       border-radius: 50%;
       box-shadow: 0 1px 4px rgba(0,0,0,0.12);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -187,7 +383,6 @@
       transform: translateX(22px);
     }
 
-    /* Name input (hidden when anonymous) */
     .name-input-wrapper {
       max-height: 0;
       overflow: hidden;
@@ -199,38 +394,41 @@
     .name-input-wrapper.visible {
       max-height: 70px;
       opacity: 1;
-      margin-top: 14px;
+      margin-top: 12px;
     }
 
     .name-input {
       width: 100%;
       padding: 12px 16px;
-      border: 1.5px solid #e8ddd3;
+      border: 1.5px solid var(--border);
       border-radius: 12px;
       font-family: var(--font-sans);
       font-size: 15px;
-      color: var(--soft-brown);
-      background: #fffdfa;
+      color: var(--text);
+      background: var(--input-bg);
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.3s ease, background 0.4s ease, color 0.4s ease;
     }
 
     .name-input::placeholder {
-      color: #c4b5a8;
+      color: var(--text-soft);
       font-style: italic;
     }
 
     .name-input:focus {
-      border-color: var(--terracotta-light);
-      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08);
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08), var(--glow);
     }
 
-    /* Submit button */
+    html[data-theme="neon"] .name-input:focus {
+      box-shadow: 0 0 0 3px rgba(255, 106, 213, 0.15), var(--glow-strong);
+    }
+
     .submit-btn {
       width: 100%;
-      margin-top: 22px;
+      margin-top: 20px;
       padding: 15px;
-      background: var(--terracotta);
+      background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 14px;
@@ -239,12 +437,12 @@
       font-weight: 600;
       letter-spacing: 0.5px;
       cursor: pointer;
-      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 12px rgba(201, 126, 90, 0.25);
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(201, 126, 90, 0.25), var(--glow);
     }
 
     .submit-btn:hover {
-      background: var(--terracotta-dark);
+      background: var(--accent-dark);
     }
 
     .submit-btn:active {
@@ -253,38 +451,18 @@
     }
 
     .submit-btn:disabled {
-      background: #d4c5b8;
+      background: var(--switch-off);
+      color: var(--text-muted);
       cursor: not-allowed;
       box-shadow: none;
       transform: none;
     }
 
-    /* Toast notification */
-    .toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--soft-brown);
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-weight: 500;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      z-index: 1000;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      white-space: nowrap;
+    html[data-theme="neon"] .submit-btn {
+      box-shadow: 0 4px 16px rgba(255, 106, 213, 0.35), var(--glow);
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ---------- TAB 2: ДОШКА / BOARD ---------- */
+    /* ---------- TAB 2: BOARD ---------- */
     .board-grid {
       display: flex;
       flex-direction: column;
@@ -294,32 +472,28 @@
 
     .sticker-card {
       position: relative;
-      background: var(--sticker-bg);
+      background: var(--card);
       border-radius: 4px;
       padding: 22px 18px 16px;
       box-shadow: 2px 4px 12px var(--shadow-strong), 0 1px 3px var(--shadow);
       transform: rotate(-1.2deg);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
     }
 
-    .sticker-card:nth-child(even) {
-      transform: rotate(1.1deg);
-    }
-
-    .sticker-card:nth-child(3n) {
-      transform: rotate(-0.7deg);
-    }
-
-    .sticker-card:nth-child(5n) {
-      transform: rotate(1.6deg);
-    }
+    .sticker-card:nth-child(even) { transform: rotate(1.1deg); }
+    .sticker-card:nth-child(3n) { transform: rotate(-0.7deg); }
+    .sticker-card:nth-child(5n) { transform: rotate(1.6deg); }
 
     .sticker-card:hover {
       transform: rotate(0deg) scale(1.01);
       box-shadow: 4px 8px 24px var(--shadow-strong);
     }
 
-    /* Decorative pin */
+    html[data-theme="neon"] .sticker-card {
+      box-shadow: 2px 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(255, 106, 213, 0.06);
+      border: 1px solid var(--border);
+    }
+
     .pin {
       position: absolute;
       top: -8px;
@@ -337,9 +511,10 @@
       transform: translateX(-50%);
       width: 16px;
       height: 16px;
-      background: radial-gradient(circle at 35% 35%, #e8a080, var(--pin));
+      background: radial-gradient(circle at 35% 35%, var(--pin-highlight), var(--pin-color));
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1), var(--glow);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
     .pin-needle {
@@ -353,47 +528,55 @@
       border-radius: 1px;
     }
 
-    /* Paper texture line */
+    html[data-theme="neon"] .pin-needle {
+      background: linear-gradient(to bottom, #5eead4, #2a9d8f);
+    }
+
     .sticker-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
+      top: 0; left: 0; right: 0; bottom: 0;
       border-radius: 4px;
-      background-image: 
+      background-image:
         repeating-linear-gradient(
           transparent,
           transparent 28px,
-          rgba(201, 126, 90, 0.06) 28px,
-          rgba(201, 126, 90, 0.06) 29px
+          var(--sticker-line) 28px,
+          var(--sticker-line) 29px
         );
       pointer-events: none;
     }
 
     .sticker-author {
       font-size: 11px;
-      color: var(--terracotta);
+      color: var(--accent);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.4s ease;
     }
 
     .sticker-text {
       font-family: var(--font-serif);
       font-size: 16px;
       line-height: 1.55;
-      color: var(--soft-brown);
+      color: var(--text);
       margin-bottom: 14px;
       word-break: break-word;
+      position: relative;
+      z-index: 1;
+      transition: color 0.4s ease;
     }
 
     .sticker-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: relative;
+      z-index: 1;
     }
 
     .like-btn {
@@ -404,7 +587,7 @@
       border: none;
       cursor: pointer;
       font-size: 14px;
-      color: var(--warm-gray);
+      color: var(--text-muted);
       padding: 4px 8px;
       border-radius: 20px;
       transition: background 0.2s ease, color 0.2s ease;
@@ -415,18 +598,14 @@
       background: rgba(201, 126, 90, 0.08);
     }
 
-    .like-btn.liked {
-      color: var(--terracotta);
-    }
+    .like-btn.liked { color: var(--accent); }
 
     .like-heart {
       font-size: 17px;
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .like-btn.liked .like-heart {
-      transform: scale(1.2);
-    }
+    .like-btn.liked .like-heart { transform: scale(1.2); }
 
     .like-count {
       font-weight: 500;
@@ -438,16 +617,14 @@
       border: none;
       cursor: pointer;
       font-size: 16px;
-      color: #c4b5a8;
+      color: var(--text-soft);
       padding: 4px 8px;
       border-radius: 20px;
       transition: color 0.2s ease, background 0.2s ease;
       display: none;
     }
 
-    .delete-btn.visible {
-      display: block;
-    }
+    .delete-btn.visible { display: block; }
 
     .delete-btn:hover {
       color: #d9534f;
@@ -457,13 +634,15 @@
     .empty-board {
       text-align: center;
       padding: 40px 20px;
-      color: var(--warm-gray);
+      color: var(--text-muted);
       font-family: var(--font-serif);
       font-style: italic;
       font-size: 15px;
+      line-height: 1.6;
+      transition: color 0.4s ease;
     }
 
-    /* ---------- TAB 3: ПЕЧИВО / COOKIE ---------- */
+    /* ---------- TAB 3: COOKIE ---------- */
     .cookie-container {
       flex: 1;
       display: flex;
@@ -471,7 +650,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      min-height: 380px;
+      min-height: 400px;
       padding: 10px 0;
     }
 
@@ -479,11 +658,11 @@
       font-family: var(--font-serif);
       font-size: 15px;
       font-style: italic;
-      color: var(--warm-gray);
+      color: var(--text-muted);
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       min-height: 24px;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, color 0.4s ease;
     }
 
     .cookie-wrapper {
@@ -499,6 +678,11 @@
       height: 100%;
       overflow: visible;
       transition: transform 0.1s ease;
+      filter: drop-shadow(0 4px 8px var(--cookie-shadow));
+    }
+
+    html[data-theme="neon"] .cookie-svg {
+      filter: drop-shadow(0 0 16px rgba(255, 106, 213, 0.25));
     }
 
     .cookie-wrapper.cracked .cookie-svg {
@@ -512,7 +696,6 @@
       75% { transform: translate(-1px, -1.5px) rotate(-0.3deg); }
     }
 
-    /* Cookie halves */
     .cookie-halves {
       position: absolute;
       inset: 0;
@@ -550,15 +733,8 @@
       height: 100%;
     }
 
-    .cookie-half-left svg {
-      position: absolute;
-      left: 0;
-    }
-
-    .cookie-half-right svg {
-      position: absolute;
-      right: 0;
-    }
+    .cookie-half-left svg { position: absolute; left: 0; }
+    .cookie-half-right svg { position: absolute; right: 0; }
 
     .cookie-halves.split .cookie-half-left {
       transform: translateX(-60px) rotate(-25deg) translateY(20px);
@@ -568,43 +744,44 @@
       transform: translateX(60px) rotate(25deg) translateY(20px);
     }
 
-    /* Prediction ribbon */
     .prediction-ribbon {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) scaleY(0);
       transform-origin: center center;
-      background: linear-gradient(135deg, #fdf8f3, #f5ece3);
-      border: 1px solid #e8ddd3;
+      background: linear-gradient(135deg, var(--ribbon-bg-1), var(--ribbon-bg-2));
+      border: 1px solid var(--border);
       border-radius: 3px;
-      padding: 28px 30px;
-      width: 260px;
-      max-width: 85vw;
+      padding: 26px 22px;
+      width: 290px;
+      max-width: 88vw;
       text-align: center;
-      box-shadow: 0 6px 30px rgba(100, 70, 50, 0.18);
+      box-shadow: 0 6px 30px var(--shadow-strong);
       opacity: 0;
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, background 0.4s ease, border-color 0.4s ease;
       z-index: 10;
       pointer-events: none;
+    }
+
+    html[data-theme="neon"] .prediction-ribbon {
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6), var(--glow-strong);
+      border-color: var(--accent);
     }
 
     .prediction-ribbon::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      background-image: 
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 3px;
+      background-image:
         repeating-linear-gradient(
           0deg,
           transparent,
           transparent 24px,
-          rgba(201, 126, 90, 0.07) 24px,
-          rgba(201, 126, 90, 0.07) 25px
+          var(--ribbon-line) 24px,
+          var(--ribbon-line) 25px
         );
-      border-radius: 3px;
       pointer-events: none;
     }
 
@@ -616,37 +793,53 @@
 
     .prediction-text {
       font-family: var(--font-serif);
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.6;
-      color: var(--soft-brown);
+      color: var(--text);
       font-style: italic;
       position: relative;
       z-index: 1;
+      margin-bottom: 10px;
+      transition: color 0.4s ease;
+    }
+
+    .prediction-verse {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-top: 4px;
+      transition: color 0.4s ease;
     }
 
     .prediction-deco {
       width: 40px;
       height: 1px;
-      background: var(--terracotta-light);
+      background: var(--accent-light);
       margin: 12px auto;
       opacity: 0.5;
       position: relative;
       z-index: 1;
+      transition: background 0.4s ease;
     }
 
     .reset-cookie-btn {
       margin-top: 28px;
       padding: 11px 28px;
       background: transparent;
-      border: 1.5px solid var(--terracotta-light);
+      border: 1.5px solid var(--accent-light);
       border-radius: 30px;
-      color: var(--terracotta);
+      color: var(--accent);
       font-family: var(--font-sans);
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.5px;
       cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.3s ease, border-color 0.4s ease;
       opacity: 0;
       pointer-events: none;
     }
@@ -657,26 +850,28 @@
     }
 
     .reset-cookie-btn:hover {
-      background: var(--terracotta);
+      background: var(--accent);
       color: #fff;
+      box-shadow: var(--glow);
     }
 
     .reset-cookie-btn:active {
       transform: scale(0.96);
     }
 
-    /* ---------- BOTTOM NAVIGATION ---------- */
+    /* ---------- BOTTOM NAV ---------- */
     .bottom-nav {
       display: flex;
-      background: rgba(249, 245, 240, 0.92);
+      background: var(--nav-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(201, 126, 90, 0.1);
+      border-top: 1px solid var(--nav-border);
       padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
       gap: 4px;
       flex-shrink: 0;
       position: relative;
       z-index: 100;
+      transition: background 0.4s ease, border-color 0.4s ease;
     }
 
     .nav-btn {
@@ -692,13 +887,14 @@
       border-radius: 14px;
       cursor: pointer;
       transition: background 0.2s ease, color 0.2s ease;
-      color: var(--warm-gray);
+      color: var(--text-muted);
       font-family: var(--font-sans);
     }
 
     .nav-btn.active {
-      color: var(--terracotta);
-      background: rgba(201, 126, 90, 0.07);
+      color: var(--accent);
+      background: var(--nav-active-bg);
+      box-shadow: var(--glow);
     }
 
     .nav-icon {
@@ -718,109 +914,135 @@
       text-transform: uppercase;
     }
 
-    /* ---------- SCROLLBAR ---------- */
-    .tab-content::-webkit-scrollbar {
-      width: 0;
-      display: none;
+    /* ---------- TOAST ---------- */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--toast-bg);
+      color: var(--toast-color);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease, background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15), var(--glow);
+      white-space: nowrap;
+      max-width: 90vw;
+      text-align: center;
     }
 
-    .tab-content {
-      scrollbar-width: none;
+    html[data-theme="neon"] .toast {
+      border: 1px solid var(--accent);
     }
 
-    /* ---------- ADMIN BADGE ---------- */
-    .admin-badge {
-      display: none;
-      font-size: 9px;
-      background: var(--terracotta);
-      color: #fff;
-      padding: 2px 6px;
-      border-radius: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-left: 6px;
-      vertical-align: middle;
-    }
-
-    .admin-badge.visible {
-      display: inline-block;
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
 <body>
 
 <div id="app">
+  <!-- ========== TOP BAR ========== -->
+  <div class="top-bar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span id="brandName">Затишок</span>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn active-lang" id="langBtn" title="Мова">
+        <span class="ctrl-icon">🌐</span>
+        <span class="ctrl-text" id="langText">UA</span>
+      </button>
+      <button class="ctrl-btn" id="themeBtn" title="Тема">
+        <span class="ctrl-icon" id="themeIcon">🌿</span>
+        <span class="ctrl-text" id="themeText">Pastel</span>
+      </button>
+    </div>
+  </div>
+
   <!-- ========== TAB 1: ДУМКА ========== -->
   <div class="tab-content active" id="tab-opinion">
-    <h1 class="page-title">Поділись думкою</h1>
-    <p class="page-subtitle">Твоя ідея може стати наступним проєктом ✨</p>
+    <h1 class="page-title" data-i18n="opinionTitle">Поділись думкою</h1>
+    <p class="page-subtitle" data-i18n="opinionSubtitle">Твоя ідея може стати наступним проєктом ✨</p>
 
     <div class="survey-card">
-      <div class="survey-label">Твоя ідея або відгук</div>
-      <textarea 
-        class="survey-textarea" 
-        id="surveyText" 
+      <div class="survey-label" data-i18n="surveyLabel">Твоя ідея або відгук</div>
+      <textarea
+        class="survey-textarea"
+        id="surveyText"
+        data-i18n-placeholder="surveyPlaceholder"
         placeholder="Напиши, що тобі хочеться створити чи побачити у каналі..."
         maxlength="500"
       ></textarea>
 
       <div class="toggle-row">
-        <span class="toggle-label" id="toggleLabel">Анонімно</span>
-        <div class="toggle-switch" id="anonToggle">
+        <div class="toggle-text">
+          <span class="toggle-label" id="anonLabel" data-i18n="anonLabel">Анонімно</span>
+          <span class="toggle-hint" id="anonHint" data-i18n="anonHint">Твоє ім'я буде приховано</span>
+        </div>
+        <div class="toggle-switch active" id="anonToggle">
           <div class="toggle-knob"></div>
         </div>
       </div>
 
       <div class="name-input-wrapper" id="nameWrapper">
-        <input 
-          type="text" 
-          class="name-input" 
-          id="nameInput" 
-          placeholder="Твоє ім'я..." 
+        <input
+          type="text"
+          class="name-input"
+          id="nameInput"
+          data-i18n-placeholder="namePlaceholder"
+          placeholder="Твоє ім'я..."
           maxlength="50"
         >
       </div>
 
-      <button class="submit-btn" id="submitSurveyBtn">Надіслати</button>
+      <div class="toggle-row">
+        <div class="toggle-text">
+          <span class="toggle-label" id="privacyLabel" data-i18n="privacyPublic">📌 На загальну дошку</span>
+          <span class="toggle-hint" id="privacyHint" data-i18n="privacyPublicHint">Ідея буде видима всім</span>
+        </div>
+        <div class="toggle-switch active" id="privacyToggle">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitSurveyBtn" data-i18n="submitBtn">Надіслати</button>
     </div>
   </div>
 
   <!-- ========== TAB 2: ДОШКА ========== -->
   <div class="tab-content" id="tab-board">
-    <h1 class="page-title">Спільна дошка</h1>
-    <p class="page-subtitle">Ідеї, що надихають спільноту 📌</p>
+    <h1 class="page-title" data-i18n="boardTitle">Спільна дошка</h1>
+    <p class="page-subtitle" data-i18n="boardSubtitle">Ідеї, що надихають спільноту 📌</p>
     <div class="board-grid" id="boardGrid"></div>
   </div>
 
   <!-- ========== TAB 3: ПЕЧИВО ========== -->
   <div class="tab-content" id="tab-cookie">
-    <h1 class="page-title">Печиво з передбаченням</h1>
-    <p class="page-subtitle">Натискай на печиво — дізнайся, що тебе чекає 🍪</p>
+    <h1 class="page-title" data-i18n="cookieTitle">Печиво з віршем</h1>
+    <p class="page-subtitle" data-i18n="cookieSubtitle">Натискай на печиво — отримай підбадьорливий вірш 🍪</p>
 
     <div class="cookie-container">
-      <div class="cookie-hint" id="cookieHint">Натисни на печиво</div>
+      <div class="cookie-hint" id="cookieHint" data-i18n="cookieHint">Натисни на печиво</div>
 
       <div class="cookie-wrapper" id="cookieWrapper">
-        <!-- Main cookie SVG -->
         <svg class="cookie-svg" id="cookieSvg" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Cookie shadow -->
-          <ellipse cx="110" cy="200" rx="75" ry="12" fill="rgba(100,70,50,0.08)"/>
-          
-          <!-- Cookie body -->
+          <ellipse cx="110" cy="200" rx="75" ry="12" fill="rgba(100,70,50,0.15)"/>
           <defs>
             <radialGradient id="cookieGrad" cx="40%" cy="35%" r="65%">
-              <stop offset="0%" stop-color="#e8c49a"/>
-              <stop offset="60%" stop-color="#d4a76a"/>
-              <stop offset="100%" stop-color="#c49050"/>
-            </radialGradient>
-            <radialGradient id="cookieGradDark" cx="50%" cy="50%" r="60%">
-              <stop offset="0%" stop-color="#d4a76a"/>
-              <stop offset="100%" stop-color="#b88445"/>
+              <stop offset="0%" stop-color="var(--cookie-grad-1)"/>
+              <stop offset="60%" stop-color="var(--cookie-grad-2)"/>
+              <stop offset="100%" stop-color="var(--cookie-grad-3)"/>
             </radialGradient>
           </defs>
-
-          <!-- Cookie base -->
-          <path id="cookieBase" d="
+          <path d="
             M 110 30
             C 145 30, 185 50, 190 90
             C 195 125, 185 160, 160 178
@@ -828,46 +1050,35 @@
             C 70 183, 40 165, 32 135
             C 24 105, 28 75, 45 55
             C 62 35, 85 30, 110 30 Z
-          " fill="url(#cookieGrad)" stroke="#b88445" stroke-width="2"/>
-
-          <!-- Cookie texture dots / chips -->
-          <circle cx="85" cy="75" r="4" fill="#a86830" opacity="0.6"/>
-          <circle cx="130" cy="65" r="3" fill="#a86830" opacity="0.5"/>
-          <circle cx="150" cy="100" r="4.5" fill="#a86830" opacity="0.55"/>
-          <circle cx="70" cy="110" r="3.5" fill="#a86830" opacity="0.5"/>
-          <circle cx="115" cy="120" r="4" fill="#a86830" opacity="0.6"/>
-          <circle cx="90" cy="150" r="3" fill="#a86830" opacity="0.45"/>
-          <circle cx="140" cy="145" r="3.5" fill="#a86830" opacity="0.5"/>
-          <circle cx="55" cy="85" r="2.5" fill="#a86830" opacity="0.4"/>
-          <circle cx="160" cy="125" r="2.5" fill="#a86830" opacity="0.4"/>
-          <circle cx="105" cy="95" r="2" fill="#a86830" opacity="0.35"/>
-          <circle cx="75" cy="135" r="2" fill="#a86830" opacity="0.35"/>
-          
-          <!-- Highlight -->
+          " fill="url(#cookieGrad)" stroke="var(--cookie-stroke)" stroke-width="2"/>
+          <circle cx="85" cy="75" r="4" fill="var(--cookie-chip)" opacity="0.6"/>
+          <circle cx="130" cy="65" r="3" fill="var(--cookie-chip)" opacity="0.5"/>
+          <circle cx="150" cy="100" r="4.5" fill="var(--cookie-chip)" opacity="0.55"/>
+          <circle cx="70" cy="110" r="3.5" fill="var(--cookie-chip)" opacity="0.5"/>
+          <circle cx="115" cy="120" r="4" fill="var(--cookie-chip)" opacity="0.6"/>
+          <circle cx="90" cy="150" r="3" fill="var(--cookie-chip)" opacity="0.45"/>
+          <circle cx="140" cy="145" r="3.5" fill="var(--cookie-chip)" opacity="0.5"/>
+          <circle cx="55" cy="85" r="2.5" fill="var(--cookie-chip)" opacity="0.4"/>
+          <circle cx="160" cy="125" r="2.5" fill="var(--cookie-chip)" opacity="0.4"/>
+          <circle cx="105" cy="95" r="2" fill="var(--cookie-chip)" opacity="0.35"/>
+          <circle cx="75" cy="135" r="2" fill="var(--cookie-chip)" opacity="0.35"/>
           <ellipse cx="80" cy="65" rx="25" ry="15" fill="white" opacity="0.08" transform="rotate(-20 80 65)"/>
-
-          <!-- Crack lines (initially hidden) -->
           <g id="crackGroup" opacity="0">
-            <!-- Crack 1 -->
-            <path id="crack1" d="M 110 55 L 105 90 L 115 110" stroke="#8a6030" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
-            <!-- Crack 2 -->
-            <path id="crack2" d="M 115 110 L 130 140 L 125 165" stroke="#8a6030" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
-            <!-- Crack 3 -->
-            <path id="crack3" d="M 105 90 L 80 105 L 70 130" stroke="#8a6030" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
-            <!-- Crack 4 -->
-            <path id="crack4" d="M 130 140 L 155 130" stroke="#8a6030" stroke-width="1.2" stroke-linecap="round" fill="none" stroke-dasharray="100" stroke-dashoffset="100"/>
+            <path id="crack1" d="M 110 55 L 105 90 L 115 110" stroke="var(--cookie-crack)" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <path id="crack2" d="M 115 110 L 130 140 L 125 165" stroke="var(--cookie-crack)" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <path id="crack3" d="M 105 90 L 80 105 L 70 130" stroke="var(--cookie-crack)" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <path id="crack4" d="M 130 140 L 155 130" stroke="var(--cookie-crack)" stroke-width="1.2" stroke-linecap="round" fill="none" stroke-dasharray="100" stroke-dashoffset="100"/>
           </g>
         </svg>
 
-        <!-- Cookie halves (for splitting) -->
         <div class="cookie-halves" id="cookieHalves">
           <div class="cookie-half cookie-half-left">
             <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <radialGradient id="cookieGradL" cx="40%" cy="35%" r="65%">
-                  <stop offset="0%" stop-color="#e8c49a"/>
-                  <stop offset="60%" stop-color="#d4a76a"/>
-                  <stop offset="100%" stop-color="#c49050"/>
+                  <stop offset="0%" stop-color="var(--cookie-grad-1)"/>
+                  <stop offset="60%" stop-color="var(--cookie-grad-2)"/>
+                  <stop offset="100%" stop-color="var(--cookie-grad-3)"/>
                 </radialGradient>
               </defs>
               <path d="
@@ -878,24 +1089,23 @@
                 C 70 183, 40 165, 32 135
                 C 24 105, 28 75, 45 55
                 C 62 35, 85 30, 110 30 Z
-              " fill="url(#cookieGradL)" stroke="#b88445" stroke-width="2"/>
-              <circle cx="85" cy="75" r="4" fill="#a86830" opacity="0.6"/>
-              <circle cx="70" cy="110" r="3.5" fill="#a86830" opacity="0.5"/>
-              <circle cx="90" cy="150" r="3" fill="#a86830" opacity="0.45"/>
-              <circle cx="55" cy="85" r="2.5" fill="#a86830" opacity="0.4"/>
-              <circle cx="105" cy="95" r="2" fill="#a86830" opacity="0.35"/>
-              <circle cx="75" cy="135" r="2" fill="#a86830" opacity="0.35"/>
-              <!-- Broken edge -->
-              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="#c49050" stroke-width="3" fill="none" opacity="0.8"/>
+              " fill="url(#cookieGradL)" stroke="var(--cookie-stroke)" stroke-width="2"/>
+              <circle cx="85" cy="75" r="4" fill="var(--cookie-chip)" opacity="0.6"/>
+              <circle cx="70" cy="110" r="3.5" fill="var(--cookie-chip)" opacity="0.5"/>
+              <circle cx="90" cy="150" r="3" fill="var(--cookie-chip)" opacity="0.45"/>
+              <circle cx="55" cy="85" r="2.5" fill="var(--cookie-chip)" opacity="0.4"/>
+              <circle cx="105" cy="95" r="2" fill="var(--cookie-chip)" opacity="0.35"/>
+              <circle cx="75" cy="135" r="2" fill="var(--cookie-chip)" opacity="0.35"/>
+              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="var(--cookie-broken-edge)" stroke-width="3" fill="none" opacity="0.8"/>
             </svg>
           </div>
           <div class="cookie-half cookie-half-right">
             <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <radialGradient id="cookieGradR" cx="60%" cy="40%" r="65%">
-                  <stop offset="0%" stop-color="#e8c49a"/>
-                  <stop offset="60%" stop-color="#d4a76a"/>
-                  <stop offset="100%" stop-color="#c49050"/>
+                  <stop offset="0%" stop-color="var(--cookie-grad-1)"/>
+                  <stop offset="60%" stop-color="var(--cookie-grad-2)"/>
+                  <stop offset="100%" stop-color="var(--cookie-grad-3)"/>
                 </radialGradient>
               </defs>
               <path d="
@@ -906,48 +1116,46 @@
                 C 70 183, 40 165, 32 135
                 C 24 105, 28 75, 45 55
                 C 62 35, 85 30, 110 30 Z
-              " fill="url(#cookieGradR)" stroke="#b88445" stroke-width="2"/>
-              <circle cx="130" cy="65" r="3" fill="#a86830" opacity="0.5"/>
-              <circle cx="150" cy="100" r="4.5" fill="#a86830" opacity="0.55"/>
-              <circle cx="115" cy="120" r="4" fill="#a86830" opacity="0.6"/>
-              <circle cx="140" cy="145" r="3.5" fill="#a86830" opacity="0.5"/>
-              <circle cx="160" cy="125" r="2.5" fill="#a86830" opacity="0.4"/>
-              <!-- Broken edge -->
-              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="#c49050" stroke-width="3" fill="none" opacity="0.8"/>
+              " fill="url(#cookieGradR)" stroke="var(--cookie-stroke)" stroke-width="2"/>
+              <circle cx="130" cy="65" r="3" fill="var(--cookie-chip)" opacity="0.5"/>
+              <circle cx="150" cy="100" r="4.5" fill="var(--cookie-chip)" opacity="0.55"/>
+              <circle cx="115" cy="120" r="4" fill="var(--cookie-chip)" opacity="0.6"/>
+              <circle cx="140" cy="145" r="3.5" fill="var(--cookie-chip)" opacity="0.5"/>
+              <circle cx="160" cy="125" r="2.5" fill="var(--cookie-chip)" opacity="0.4"/>
+              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="var(--cookie-broken-edge)" stroke-width="3" fill="none" opacity="0.8"/>
             </svg>
           </div>
         </div>
 
-        <!-- Prediction ribbon -->
         <div class="prediction-ribbon" id="predictionRibbon">
           <div class="prediction-deco"></div>
           <p class="prediction-text" id="predictionText"></p>
+          <p class="prediction-verse" id="predictionVerse"></p>
           <div class="prediction-deco"></div>
         </div>
       </div>
 
-      <button class="reset-cookie-btn" id="resetCookieBtn">Спробувати ще раз</button>
+      <button class="reset-cookie-btn" id="resetCookieBtn" data-i18n="resetCookie">Спробувати ще раз</button>
     </div>
   </div>
 
-  <!-- ========== BOTTOM NAVIGATION ========== -->
+  <!-- ========== BOTTOM NAV ========== -->
   <nav class="bottom-nav">
-    <button class="nav-btn active" data-tab="opinion" id="navOpinion">
+    <button class="nav-btn active" data-tab="opinion">
       <span class="nav-icon">💭</span>
-      <span class="nav-label">Думка</span>
+      <span class="nav-label" data-i18n="navOpinion">Думка</span>
     </button>
-    <button class="nav-btn" data-tab="board" id="navBoard">
+    <button class="nav-btn" data-tab="board">
       <span class="nav-icon">📌</span>
-      <span class="nav-label">Дошка</span>
+      <span class="nav-label" data-i18n="navBoard">Дошка</span>
     </button>
-    <button class="nav-btn" data-tab="cookie" id="navCookie">
+    <button class="nav-btn" data-tab="cookie">
       <span class="nav-icon">🍪</span>
-      <span class="nav-label">Печиво</span>
+      <span class="nav-label" data-i18n="navCookie">Печиво</span>
     </button>
   </nav>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
@@ -958,41 +1166,181 @@
   const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwFkBBzEZXkPZ5BXqJdOe8OOGQy_taVDSPxnRfXmsJDTpdrK0N5PBCBYs7Fyp3Xkg3qA/exec';
   const ADMIN_ID = 7431962320;
 
-  // ==================== TELEGRAM WEB APP ====================
+  // ==================== I18N ====================
+  const I18N = {
+    ua: {
+      brandName: 'Затишок',
+      langBtn: 'UA',
+      themePastel: 'Pastel',
+      themeNeon: 'Neon',
+      opinionTitle: 'Поділись думкою',
+      opinionSubtitle: 'Твоя ідея може стати наступним проєктом ✨',
+      surveyLabel: 'Твоя ідея або відгук',
+      surveyPlaceholder: 'Напиши, що тобі хочеться створити чи побачити у каналі...',
+      anonLabel: 'Анонімно',
+      anonLabelNamed: 'Вказати ім\'я',
+      anonHint: 'Твоє ім\'я буде приховано',
+      anonHintNamed: 'Твоє ім\'я буде видно на дошці',
+      namePlaceholder: 'Твоє ім\'я...',
+      privacyPublic: '📌 На загальну дошку',
+      privacyPublicHint: 'Ідея буде видима всім',
+      privacyPrivate: '🔒 Тільки адміну (приватно)',
+      privacyPrivateHint: 'Ідею побачить лише адмін',
+      submitBtn: 'Надіслати',
+      submitBtnLoading: 'Надсилаю...',
+      boardTitle: 'Спільна дошка',
+      boardSubtitle: 'Ідеї, що надихають спільноту 📌',
+      boardEmpty: 'Поки що порожньо...<br>Поділись першою ідеєю на вкладці "Думка" ✨',
+      cookieTitle: 'Печиво з віршем',
+      cookieSubtitle: 'Натискай на печиво — отримай підбадьорливий вірш 🍪',
+      cookieHint: 'Натисни на печиво',
+      cookieHint1: 'Ще трохи...',
+      cookieHint2: 'Вже близько...',
+      cookieHint3: 'Ще один...',
+      resetCookie: 'Спробувати ще раз',
+      navOpinion: 'Думка',
+      navBoard: 'Дошка',
+      navCookie: 'Печиво',
+      toastEmpty: 'Будь ласка, напиши щось ✏️',
+      toastNoName: 'Введи своє ім\'я або обери "Анонімно"',
+      toastSuccessPublic: 'Дякуємо! Твоя ідея на дошці 💫',
+      toastSuccessPrivate: 'Надіслано приватно адміну 🔒',
+      toastDeleted: 'Ідею видалено 🗑️',
+      confirmDelete: 'Видалити цю ідею?',
+      anonymous: 'Анонім'
+    },
+    en: {
+      brandName: 'Cozy',
+      langBtn: 'EN',
+      themePastel: 'Pastel',
+      themeNeon: 'Neon',
+      opinionTitle: 'Share your thoughts',
+      opinionSubtitle: 'Your idea could be the next project ✨',
+      surveyLabel: 'Your idea or feedback',
+      surveyPlaceholder: 'Tell us what you\'d love to create or see in the channel...',
+      anonLabel: 'Anonymous',
+      anonLabelNamed: 'Use my name',
+      anonHint: 'Your name will be hidden',
+      anonHintNamed: 'Your name will be visible on the board',
+      namePlaceholder: 'Your name...',
+      privacyPublic: '📌 Public board',
+      privacyPublicHint: 'Everyone will see this idea',
+      privacyPrivate: '🔒 Admin only (private)',
+      privacyPrivateHint: 'Only the admin will see this',
+      submitBtn: 'Send',
+      submitBtnLoading: 'Sending...',
+      boardTitle: 'Shared board',
+      boardSubtitle: 'Ideas that inspire the community 📌',
+      boardEmpty: 'Nothing here yet...<br>Share your first idea in the "Thoughts" tab ✨',
+      cookieTitle: 'Fortune cookie',
+      cookieSubtitle: 'Tap the cookie — get an uplifting verse 🍪',
+      cookieHint: 'Tap the cookie',
+      cookieHint1: 'A bit more...',
+      cookieHint2: 'Almost there...',
+      cookieHint3: 'One more...',
+      resetCookie: 'Try again',
+      navOpinion: 'Thoughts',
+      navBoard: 'Board',
+      navCookie: 'Cookie',
+      toastEmpty: 'Please write something ✏️',
+      toastNoName: 'Enter your name or choose "Anonymous"',
+      toastSuccessPublic: 'Thank you! Your idea is on the board 💫',
+      toastSuccessPrivate: 'Sent privately to admin 🔒',
+      toastDeleted: 'Idea deleted 🗑️',
+      confirmDelete: 'Delete this idea?',
+      anonymous: 'Anonymous'
+    }
+  };
+
+  // Bіблійні вірші (UA + EN)
+  const VERSES = {
+    ua: [
+      { text: '«Бо Я знаю ті думки, які думаю про вас, — говорить Господь, — думки спокою, а не на зло, щоб дати вам будучність та надію.»', ref: 'Єремія 29:11' },
+      { text: '«Усе можу в Тім, Хто мене підкріплює, — у Христі.»', ref: 'Филип\'ян 4:13' },
+      { text: '«Господь — мій пастир, і я не буду мати нестачі.»', ref: 'Псалом 23:1' },
+      { text: '«Не бійся, бо Я з тобою; не лякайся, бо Я — Бог твій! Я зміцню тебе, і Я поможу тобі.»', ref: 'Ісая 41:10' },
+      { text: '«Тож не журіться про завтрашній день, бо завтрашній день буде мати про що журитися.»', ref: 'Матвія 6:34' },
+      { text: '«Довір Господу дорогу свою, і надійся на Нього, — і Він зробить.»', ref: 'Псалом 37:5' },
+      { text: '«Прийдіть до Мене, усі струджені та обтяжені, — і Я вас заспокою!»', ref: 'Матвія 11:28' },
+      { text: '«Любов довготерпить, любов милосердить, не заздрить, любов не величається, не надимається.»', ref: '1 Коринтян 13:4' },
+      { text: '«Радійте завжди, моліться безупинно, за все дякуйте.»', ref: '1 Солунян 5:16-18' },
+      { text: '«Надія ж не засоромить, бо любов Божа вилилась у серця наші Духом Святим.»', ref: 'Римлян 5:5' },
+      { text: '«Господь — світло моє та спасіння моє, — кого буду боятися?»', ref: 'Псалом 27:1' },
+      { text: '«І пізнаєте правду, а правда вас вільними зробить!»', ref: 'Івана 8:32' },
+      { text: '«Благословен той чоловік, що надію свою покладає на Господа.»', ref: 'Єремія 17:7' },
+      { text: '«Спокійне серце — життя для тіла, а заздрощі — гниль для костей.»', ref: 'Приповісті 14:30' },
+      { text: '«Будьте ж милосердні, як і Отець ваш милосердний.»', ref: 'Луки 6:36' },
+      { text: '«І хай мир Божий, що вищий від усякого розуму, береже серця ваші та думки ваші у Христі Ісусі.»', ref: 'Филип\'ян 4:7' },
+      { text: '«Усе робіть так, як для Господа, а не для людей.»', ref: 'Колосян 3:23' },
+      { text: '«Тож, браття мої любі, будьте міцні, непохитні, збагачуйтесь повсякчас у ділі Господньому.»', ref: '1 Коринтян 15:58' },
+      { text: '«Тому не судіть нічого передчасно, поки не прийде Господь.»', ref: '1 Коринтян 4:5' },
+      { text: '«Все робіть без нарікань та без сумніву, щоб були ви непорочні та чисті.»', ref: 'Филип\'ян 2:14-15' }
+    ],
+    en: [
+      { text: '"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."', ref: 'Jeremiah 29:11' },
+      { text: '"I can do all things through Christ who strengthens me."', ref: 'Philippians 4:13' },
+      { text: '"The Lord is my shepherd; I shall not want."', ref: 'Psalm 23:1' },
+      { text: '"Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you."', ref: 'Isaiah 41:10' },
+      { text: '"Therefore do not worry about tomorrow, for tomorrow will worry about itself."', ref: 'Matthew 6:34' },
+      { text: '"Commit your way to the Lord; trust in him, and he will act."', ref: 'Psalm 37:5' },
+      { text: '"Come to me, all who labor and are heavy laden, and I will give you rest."', ref: 'Matthew 11:28' },
+      { text: '"Love is patient and kind; love does not envy or boast; it is not arrogant."', ref: '1 Corinthians 13:4' },
+      { text: '"Rejoice always, pray without ceasing, give thanks in all circumstances."', ref: '1 Thessalonians 5:16-18' },
+      { text: '"Hope does not put us to shame, because God\'s love has been poured into our hearts."', ref: 'Romans 5:5' },
+      { text: '"The Lord is my light and my salvation; whom shall I fear?"', ref: 'Psalm 27:1' },
+      { text: '"And you will know the truth, and the truth will set you free."', ref: 'John 8:32' },
+      { text: '"Blessed is the man who trusts in the Lord, whose trust is the Lord."', ref: 'Jeremiah 17:7' },
+      { text: '"A tranquil heart gives life to the flesh, but envy makes the bones rot."', ref: 'Proverbs 14:30' },
+      { text: '"Be merciful, even as your Father is merciful."', ref: 'Luke 6:36' },
+      { text: '"And the peace of God, which surpasses all understanding, will guard your hearts and minds in Christ Jesus."', ref: 'Philippians 4:7' },
+      { text: '"Whatever you do, work heartily, as for the Lord and not for men."', ref: 'Colossians 3:23' },
+      { text: '"Be steadfast, immovable, always abounding in the work of the Lord."', ref: '1 Corinthians 15:58' },
+      { text: '"Therefore do not pronounce judgment before the time, before the Lord comes."', ref: '1 Corinthians 4:5' },
+      { text: '"Do all things without grumbling or disputing, that you may be blameless and innocent."', ref: 'Philippians 2:14-15' }
+    ]
+  };
+
+  // ==================== TELEGRAM ====================
   const tg = window.Telegram?.WebApp;
   if (tg) {
     tg.ready();
     tg.expand();
-    tg.enableClosingConfirmation();
-    if (tg.setHeaderColor) {
-      tg.setHeaderColor('#f9f5f0');
-    }
-    if (tg.setBackgroundColor) {
-      tg.setBackgroundColor('#f9f5f0');
-    }
+    try { tg.enableClosingConfirmation(); } catch (e) {}
   }
-
   const userId = tg?.initDataUnsafe?.user?.id;
   const isAdmin = userId === ADMIN_ID;
 
   // ==================== STATE ====================
   const state = {
+    lang: localStorage.getItem('cozy_lang') || 'ua',
+    theme: localStorage.getItem('cozy_theme') || 'pastel',
     isAnonymous: true,
+    isPrivate: false,
     ideas: JSON.parse(localStorage.getItem('cozy_ideas') || '[]'),
     likedIds: JSON.parse(localStorage.getItem('cozy_liked') || '[]'),
     cookieClicks: 0,
     cookieBroken: false,
-    currentPrediction: ''
+    currentVerse: null
   };
 
   // ==================== DOM REFS ====================
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => document.querySelectorAll(s);
 
+  const langBtn = $('#langBtn');
+  const langText = $('#langText');
+  const themeBtn = $('#themeBtn');
+  const themeIcon = $('#themeIcon');
+  const themeText = $('#themeText');
+  const brandName = $('#brandName');
   const anonToggle = $('#anonToggle');
-  const toggleLabel = $('#toggleLabel');
+  const anonLabel = $('#anonLabel');
+  const anonHint = $('#anonHint');
   const nameWrapper = $('#nameWrapper');
   const nameInput = $('#nameInput');
+  const privacyToggle = $('#privacyToggle');
+  const privacyLabel = $('#privacyLabel');
+  const privacyHint = $('#privacyHint');
   const surveyText = $('#surveyText');
   const submitSurveyBtn = $('#submitSurveyBtn');
   const boardGrid = $('#boardGrid');
@@ -1003,12 +1351,80 @@
   const cookieHint = $('#cookieHint');
   const predictionRibbon = $('#predictionRibbon');
   const predictionText = $('#predictionText');
+  const predictionVerse = $('#predictionVerse');
   const resetCookieBtn = $('#resetCookieBtn');
   const crackGroup = $('#crackGroup');
   const crack1 = $('#crack1');
   const crack2 = $('#crack2');
   const crack3 = $('#crack3');
   const crack4 = $('#crack4');
+
+  // ==================== THEME ====================
+  function applyTheme(theme) {
+    state.theme = theme;
+    document.documentElement.setAttribute('data-theme', theme === 'neon' ? 'neon' : 'cozy');
+    localStorage.setItem('cozy_theme', theme);
+    themeIcon.textContent = theme === 'neon' ? '🌙' : '🌿';
+    themeText.textContent = theme === 'neon' ? I18N[state.lang].themeNeon : I18N[state.lang].themePastel;
+    if (tg?.setHeaderColor) {
+      try { tg.setHeaderColor(theme === 'neon' ? '#0f0e17' : '#f9f5f0'); } catch (e) {}
+    }
+    if (tg?.setBackgroundColor) {
+      try { tg.setBackgroundColor(theme === 'neon' ? '#0f0e17' : '#f9f5f0'); } catch (e) {}
+    }
+  }
+
+  themeBtn.addEventListener('click', () => {
+    applyTheme(state.theme === 'pastel' ? 'neon' : 'pastel');
+    if (tg?.HapticFeedback) {
+      try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+    }
+  });
+
+  // ==================== LANGUAGE ====================
+  function applyLang(lang) {
+    state.lang = lang;
+    localStorage.setItem('cozy_lang', lang);
+    document.documentElement.setAttribute('lang', lang === 'ua' ? 'uk' : 'en');
+
+    const t = I18N[lang];
+    langText.textContent = lang === 'ua' ? 'UA' : 'EN';
+    brandName.textContent = t.brandName;
+    themeText.textContent = state.theme === 'neon' ? t.themeNeon : t.themePastel;
+
+    $$('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    $$('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+    });
+
+    // Update dynamic labels
+    anonLabel.textContent = state.isAnonymous ? t.anonLabel : t.anonLabelNamed;
+    anonHint.textContent = state.isAnonymous ? t.anonHint : t.anonHintNamed;
+    privacyLabel.textContent = state.isPrivate ? t.privacyPrivate : t.privacyPublic;
+    privacyHint.textContent = state.isPrivate ? t.privacyPrivateHint : t.privacyPublicHint;
+    submitSurveyBtn.textContent = t.submitBtn;
+
+    // Update cookie hint if broken
+    if (state.cookieBroken && state.currentVerse) {
+      // keep the verse as is (stays in original lang when revealed)
+    } else {
+      cookieHint.textContent = t.cookieHint;
+    }
+
+    // Re-render board (author "Анонім"/"Anonymous")
+    renderBoard();
+  }
+
+  langBtn.addEventListener('click', () => {
+    applyLang(state.lang === 'ua' ? 'en' : 'ua');
+    if (tg?.HapticFeedback) {
+      try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+    }
+  });
 
   // ==================== NAVIGATION ====================
   const tabs = ['opinion', 'board', 'cookie'];
@@ -1025,113 +1441,109 @@
         btn.classList.remove('active');
       }
     });
-
     if (tg?.HapticFeedback) {
-      tg.HapticFeedback.selectionChanged();
+      try { tg.HapticFeedback.selectionChanged(); } catch (e) {}
     }
   }
 
   $$('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      switchTab(btn.dataset.tab);
-    });
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
   // ==================== TOAST ====================
   let toastTimer;
-
   function showToast(msg) {
     toastEl.textContent = msg;
     toastEl.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      toastEl.classList.remove('show');
-    }, 2200);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
   }
 
   // ==================== TAB 1: SURVEY ====================
   anonToggle.addEventListener('click', () => {
     state.isAnonymous = !state.isAnonymous;
-    anonToggle.classList.toggle('active', !state.isAnonymous);
-    toggleLabel.textContent = state.isAnonymous ? 'Анонімно' : 'Вказати ім\'я';
+    anonToggle.classList.toggle('active', state.isAnonymous);
+    const t = I18N[state.lang];
+    anonLabel.textContent = state.isAnonymous ? t.anonLabel : t.anonLabelNamed;
+    anonHint.textContent = state.isAnonymous ? t.anonHint : t.anonHintNamed;
     nameWrapper.classList.toggle('visible', !state.isAnonymous);
-
     if (tg?.HapticFeedback) {
-      tg.HapticFeedback.impactOccurred('light');
+      try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
     }
-
     if (state.isAnonymous) {
       nameInput.value = '';
     } else {
-      nameInput.focus();
+      setTimeout(() => nameInput.focus(), 200);
     }
   });
 
-  // Load saved name if exists
   const savedName = localStorage.getItem('cozy_user_name');
-  if (savedName) {
-    nameInput.value = savedName;
-  }
+  if (savedName) nameInput.value = savedName;
+  nameInput.addEventListener('input', () => localStorage.setItem('cozy_user_name', nameInput.value));
 
-  // Save name on input
-  nameInput.addEventListener('input', () => {
-    localStorage.setItem('cozy_user_name', nameInput.value);
+  privacyToggle.addEventListener('click', () => {
+    state.isPrivate = !state.isPrivate;
+    privacyToggle.classList.toggle('active', !state.isPrivate);
+    const t = I18N[state.lang];
+    privacyLabel.textContent = state.isPrivate ? t.privacyPrivate : t.privacyPublic;
+    privacyHint.textContent = state.isPrivate ? t.privacyPrivateHint : t.privacyPublicHint;
+    if (tg?.HapticFeedback) {
+      try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+    }
   });
 
-  submitSurveyBtn.addEventListener('click', function() {
+  submitSurveyBtn.addEventListener('click', () => {
+    const t = I18N[state.lang];
     const text = surveyText.value.trim();
-    const name = state.isAnonymous ? 'Анонім' : (nameInput.value.trim() || 'Анонім');
+    const name = state.isAnonymous ? t.anonymous : (nameInput.value.trim() || t.anonymous);
 
     if (!text) {
-      showToast('Будь ласка, напиши щось ✏️');
+      showToast(t.toastEmpty);
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('error'); } catch (e) {}
       return;
     }
-
     if (!state.isAnonymous && !nameInput.value.trim()) {
-      showToast('Введи своє ім\'я або обери "Анонімно"');
+      showToast(t.toastNoName);
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (e) {}
       return;
     }
 
     submitSurveyBtn.disabled = true;
-    submitSurveyBtn.textContent = 'Надсилаю...';
+    submitSurveyBtn.textContent = t.submitBtnLoading;
 
-    // Simulate sending
     const idea = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       text: text,
       name: name,
       timestamp: Date.now(),
-      likes: 0
+      likes: 0,
+      isPrivate: state.isPrivate
     };
 
-    // Try to send to Google Apps Script if URL is configured
-    if (GOOGLE_APPS_SCRIPT_URL && GOOGLE_APPS_SCRIPT_URL.includes('YOUR_SCRIPT')) {
-      // Demo mode: save locally
-      setTimeout(() => {
-        saveIdeaLocally(idea);
-        finishSurveySubmission();
-      }, 600);
-    } else {
-      // Real mode: send to Google Apps Script
-      fetch(GOOGLE_APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: text,
-          name: name,
-          timestamp: new Date().toISOString(),
-          telegram_user_id: userId || null
-        })
-      }).then(() => {
-        saveIdeaLocally(idea);
-        finishSurveySubmission();
-      }).catch(() => {
-        // Fallback to local
-        saveIdeaLocally(idea);
-        finishSurveySubmission();
-      });
-    }
+    const payload = {
+      text: text,
+      name: name,
+      isPrivate: state.isPrivate,
+      isAnonymous: state.isAnonymous,
+      lang: state.lang,
+      timestamp: new Date().toISOString(),
+      telegram_user_id: userId || null
+    };
+
+    fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      if (!state.isPrivate) saveIdeaLocally(idea);
+      finishSurveySubmission(state.isPrivate);
+    })
+    .catch(() => {
+      if (!state.isPrivate) saveIdeaLocally(idea);
+      finishSurveySubmission(state.isPrivate);
+    });
   });
 
   function saveIdeaLocally(idea) {
@@ -1140,31 +1552,31 @@
     renderBoard();
   }
 
-  function finishSurveySubmission() {
+  function finishSurveySubmission(wasPrivate) {
+    const t = I18N[state.lang];
     surveyText.value = '';
     submitSurveyBtn.disabled = false;
-    submitSurveyBtn.textContent = 'Надіслати';
-    showToast('Дякуємо! Твоя ідея на дошці 💫');
-
+    submitSurveyBtn.textContent = t.submitBtn;
+    showToast(wasPrivate ? t.toastSuccessPrivate : t.toastSuccessPublic);
     if (tg?.HapticFeedback) {
-      tg.HapticFeedback.notificationOccurred('success');
+      try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {}
     }
   }
 
   // ==================== TAB 2: BOARD ====================
   function renderBoard() {
     boardGrid.innerHTML = '';
+    const t = I18N[state.lang];
+    const publicIdeas = state.ideas.filter(i => !i.isPrivate);
 
-    if (state.ideas.length === 0) {
-      boardGrid.innerHTML = '<div class="empty-board">Поки що порожньо...<br>Поділись першою ідеєю на вкладці "Думка" ✨</div>';
+    if (publicIdeas.length === 0) {
+      boardGrid.innerHTML = `<div class="empty-board">${t.boardEmpty}</div>`;
       return;
     }
 
-    state.ideas.forEach((idea, index) => {
+    publicIdeas.forEach((idea) => {
       const card = document.createElement('div');
       card.className = 'sticker-card';
-      card.style.animationDelay = (index * 0.05) + 's';
-
       const isLiked = state.likedIds.includes(idea.id);
 
       card.innerHTML = `
@@ -1179,21 +1591,14 @@
             <span class="like-heart">${isLiked ? '❤️' : '🤍'}</span>
             <span class="like-count">${idea.likes || 0}</span>
           </button>
-          <button class="delete-btn ${isAdmin ? 'visible' : ''}" data-id="${idea.id}" title="Видалити">✕</button>
+          <button class="delete-btn ${isAdmin ? 'visible' : ''}" data-id="${idea.id}" title="Delete">✕</button>
         </div>
       `;
-
       boardGrid.appendChild(card);
     });
 
-    // Attach event listeners
-    boardGrid.querySelectorAll('.like-btn').forEach(btn => {
-      btn.addEventListener('click', handleLike);
-    });
-
-    boardGrid.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', handleDelete);
-    });
+    boardGrid.querySelectorAll('.like-btn').forEach(btn => btn.addEventListener('click', handleLike));
+    boardGrid.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', handleDelete));
   }
 
   function handleLike(e) {
@@ -1201,33 +1606,23 @@
     const btn = e.currentTarget;
     const id = btn.dataset.id;
     const idea = state.ideas.find(i => i.id === id);
-
     if (!idea) return;
 
     const likedIdx = state.likedIds.indexOf(id);
-
     if (likedIdx === -1) {
-      // Like
       idea.likes = (idea.likes || 0) + 1;
       state.likedIds.push(id);
       btn.classList.add('liked');
       btn.querySelector('.like-heart').textContent = '❤️';
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('light');
-      }
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
     } else {
-      // Unlike
       idea.likes = Math.max(0, (idea.likes || 0) - 1);
       state.likedIds.splice(likedIdx, 1);
       btn.classList.remove('liked');
       btn.querySelector('.like-heart').textContent = '🤍';
-      if (tg?.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('soft');
-      }
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('soft'); } catch (e) {}
     }
-
     btn.querySelector('.like-count').textContent = idea.likes;
-
     localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
     localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
   }
@@ -1235,24 +1630,16 @@
   function handleDelete(e) {
     e.stopPropagation();
     if (!isAdmin) return;
-
     const id = e.currentTarget.dataset.id;
-
-    if (!confirm('Видалити цю ідею?')) return;
-
+    const t = I18N[state.lang];
+    if (!confirm(t.confirmDelete)) return;
     state.ideas = state.ideas.filter(i => i.id !== id);
     state.likedIds = state.likedIds.filter(lid => lid !== id);
-
     localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
     localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
-
     renderBoard();
-
-    if (tg?.HapticFeedback) {
-      tg.HapticFeedback.notificationOccurred('warning');
-    }
-
-    showToast('Ідею видалено 🗑️');
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (e) {}
+    showToast(t.toastDeleted);
   }
 
   function escapeHtml(str) {
@@ -1262,187 +1649,134 @@
   }
 
   // ==================== TAB 3: COOKIE ====================
-  const predictions = [
-    'Найкрасивіші речі народжуються з простих матеріалів 🌿',
-    'Твій наступний DIY-проєкт принесе тобі спокій і радість ✨',
-    'Сьогодні варто додати трохи теракоти у свій простір 🧡',
-    'Папір, клей і трохи магії — і диво готове 📄✂️',
-    'Дозволь собі створити щось недосконале — воно буде особливим 🌸',
-    'Затишок починається з маленьких деталей навколо тебе 🕯️',
-    'Твоя ідея варта того, щоб її втілити. Почни сьогодні! 💫',
-    'Кремові відтінки та натуральні текстури принесуть гармонію 🎨',
-    'Не бійся експериментувати — найкращі знахідки народжуються випадково 🍂',
-    'Зроби паузу, вдихни глибше і поміть красу навколо тебе 🌾',
-    'Твоє творче серце знає шлях. Просто довірся йому ❤️',
-    'Маленькі рухи створюють великі зміни. Крок за кроком 🐾',
-    'Сьогодні — ідеальний день для нової ідеї на дошці 📌',
-    'Мінімалізм — це не про порожнечу, а про простір для головного ✨',
-    'Ти здатен створити щось прекрасне з нічого. Я вірю в тебе! 🌟'
-  ];
+  const savedBroken = localStorage.getItem('cozy_cookie_broken');
+  const savedIdx = localStorage.getItem('cozy_verse_index');
+  const savedLang = localStorage.getItem('cozy_verse_lang');
 
-  // Load cookie state from localStorage
-  const savedCookieBroken = localStorage.getItem('cozy_cookie_broken');
-  const savedPrediction = localStorage.getItem('cozy_prediction');
-
-  if (savedCookieBroken === 'true' && savedPrediction) {
+  if (savedBroken === 'true' && savedIdx !== null) {
     state.cookieBroken = true;
     state.cookieClicks = 4;
-    state.currentPrediction = savedPrediction;
-    // Restore broken state after render
-    setTimeout(() => {
-      restoreBrokenCookie();
-    }, 100);
+    const verseLang = savedLang || state.lang;
+    state.currentVerse = (VERSES[verseLang] || VERSES.ua)[parseInt(savedIdx, 10)];
+    setTimeout(restoreBrokenCookie, 100);
   }
 
   function restoreBrokenCookie() {
-    cookieWrapper.style.opacity = '0';
+    cookieSvg.style.opacity = '0';
+    cookieSvg.style.transform = 'scale(0.8) rotate(10deg)';
     cookieHalves.classList.add('active', 'split');
+    cookieHint.style.opacity = '0';
     setTimeout(() => {
-      predictionText.textContent = state.currentPrediction;
+      if (state.currentVerse) {
+        predictionText.textContent = state.currentVerse.text;
+        predictionVerse.textContent = '— ' + state.currentVerse.ref;
+      }
       predictionRibbon.classList.add('visible');
-      cookieHint.style.opacity = '0';
       resetCookieBtn.classList.add('visible');
     }, 300);
   }
 
-  cookieWrapper.addEventListener('click', function(e) {
+  cookieWrapper.addEventListener('click', () => {
     if (state.cookieBroken) return;
-
     state.cookieClicks++;
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
 
-    if (tg?.HapticFeedback) {
-      tg.HapticFeedback.impactOccurred('light');
-    }
+    const t = I18N[state.lang];
 
     if (state.cookieClicks <= 3) {
-      // Show cracks progressively
       crackGroup.setAttribute('opacity', '1');
-
       if (state.cookieClicks === 1) {
         crack1.style.transition = 'stroke-dashoffset 0.4s ease';
         crack1.style.strokeDashoffset = '0';
-        cookieHint.textContent = 'Ще трохи...';
+        cookieHint.textContent = t.cookieHint1;
       } else if (state.cookieClicks === 2) {
-        crack1.style.strokeDashoffset = '0';
         crack2.style.transition = 'stroke-dashoffset 0.4s ease';
         crack2.style.strokeDashoffset = '0';
-        crackHint('Вже близько...');
+        cookieHint.textContent = t.cookieHint2;
       } else if (state.cookieClicks === 3) {
         crack3.style.transition = 'stroke-dashoffset 0.35s ease';
         crack3.style.strokeDashoffset = '0';
         crack4.style.transition = 'stroke-dashoffset 0.35s ease';
         crack4.style.strokeDashoffset = '0';
         cookieWrapper.classList.add('cracked');
-        cookieHint.textContent = 'Ще один...';
+        cookieHint.textContent = t.cookieHint3;
       }
-
-      // Add vibration for each click
       cookieSvg.style.transition = 'transform 0.1s ease';
       cookieSvg.style.transform = 'scale(0.97)';
-      setTimeout(() => {
-        cookieSvg.style.transform = 'scale(1)';
-      }, 100);
-
+      setTimeout(() => { cookieSvg.style.transform = 'scale(1)'; }, 100);
     } else if (state.cookieClicks === 4) {
       breakCookie();
-    }
-
-    function crackHint(msg) {
-      cookieHint.textContent = msg;
     }
   });
 
   function breakCookie() {
     state.cookieBroken = true;
     cookieWrapper.classList.remove('cracked');
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {}
 
-    if (tg?.HapticFeedback) {
-      tg.HapticFeedback.notificationOccurred('success');
-    }
-
-    // Fade out main cookie
     cookieSvg.style.transition = 'opacity 0.2s ease, transform 0.3s ease';
     cookieSvg.style.opacity = '0';
     cookieSvg.style.transform = 'scale(0.8) rotate(10deg)';
-
-    // Show halves
     cookieHalves.classList.add('active');
 
     setTimeout(() => {
       cookieHalves.classList.add('split');
       cookieHint.style.opacity = '0';
 
-      // Pick prediction
-      const randomIdx = Math.floor(Math.random() * predictions.length);
-      state.currentPrediction = predictions[randomIdx];
+      const list = VERSES[state.lang] || VERSES.ua;
+      const idx = Math.floor(Math.random() * list.length);
+      state.currentVerse = list[idx];
 
       setTimeout(() => {
-        predictionText.textContent = state.currentPrediction;
+        predictionText.textContent = state.currentVerse.text;
+        predictionVerse.textContent = '— ' + state.currentVerse.ref;
         predictionRibbon.classList.add('visible');
-
-        // Save to localStorage
         localStorage.setItem('cozy_cookie_broken', 'true');
-        localStorage.setItem('cozy_prediction', state.currentPrediction);
-
+        localStorage.setItem('cozy_verse_index', String(idx));
+        localStorage.setItem('cozy_verse_lang', state.lang);
         resetCookieBtn.classList.add('visible');
-
-        if (tg?.HapticFeedback) {
-          tg.HapticFeedback.impactOccurred('medium');
-        }
+        if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('medium'); } catch (e) {}
       }, 400);
     }, 150);
   }
 
-  resetCookieBtn.addEventListener('click', function() {
+  resetCookieBtn.addEventListener('click', () => {
     state.cookieClicks = 0;
     state.cookieBroken = false;
-    state.currentPrediction = '';
-
+    state.currentVerse = null;
     localStorage.removeItem('cozy_cookie_broken');
-    localStorage.removeItem('cozy_prediction');
+    localStorage.removeItem('cozy_verse_index');
+    localStorage.removeItem('cozy_verse_lang');
 
-    // Reset visuals
     cookieWrapper.classList.remove('cracked');
     cookieSvg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
     cookieSvg.style.opacity = '1';
     cookieSvg.style.transform = 'scale(1)';
-
-    // Reset cracks
     crackGroup.setAttribute('opacity', '0');
     [crack1, crack2, crack3, crack4].forEach(c => {
       c.style.transition = 'none';
-      c.style.strokeDashoffset = c.getAttribute('stroke-dasharray') || '200';
+      const dash = c.getAttribute('stroke-dasharray');
+      c.style.strokeDashoffset = dash ? dash : '200';
     });
-
-    // Reset halves and ribbon
     cookieHalves.classList.remove('active', 'split');
     predictionRibbon.classList.remove('visible');
     resetCookieBtn.classList.remove('visible');
     cookieHint.style.opacity = '1';
-    cookieHint.textContent = 'Натисни на печиво';
+    cookieHint.textContent = I18N[state.lang].cookieHint;
 
-    if (tg?.HapticFeedback) {
-      tg.HapticFeedback.impactOccurred('light');
-    }
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
   });
 
   // ==================== INIT ====================
+  applyTheme(state.theme);
+  applyLang(state.lang);
   renderBoard();
 
-  // Check if cookie was broken on page load
-  if (state.cookieBroken && state.currentPrediction) {
-    setTimeout(() => {
-      restoreBrokenCookie();
-    }, 200);
+  if (state.cookieBroken && state.currentVerse) {
+    setTimeout(restoreBrokenCookie, 200);
   }
 
-  // Update admin badge
-  const adminBadge = document.querySelector('.admin-badge');
-  if (adminBadge) {
-    adminBadge.classList.toggle('visible', isAdmin);
-  }
-
-  console.log('🍪 Cozy DIY Mini App loaded. Admin:', isAdmin);
+  console.log('🍪 Cozy DIY Mini App ready.', { lang: state.lang, theme: state.theme, isAdmin, userId });
 
 })();
 </script>
