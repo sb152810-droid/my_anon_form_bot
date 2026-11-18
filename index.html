@@ -56,6 +56,8 @@
       --ribbon-line: rgba(201, 126, 90, 0.07);
       --glow: transparent;
       --glow-strong: transparent;
+      --skeleton-base: #ede4d9;
+      --skeleton-shine: #f6efe7;
       --font-serif: 'Georgia', 'Times New Roman', serif;
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
@@ -102,6 +104,8 @@
       --ribbon-line: rgba(255, 106, 213, 0.08);
       --glow: 0 0 20px rgba(255, 106, 213, 0.25);
       --glow-strong: 0 0 30px rgba(255, 106, 213, 0.45);
+      --skeleton-base: #221f33;
+      --skeleton-shine: #2f2b45;
     }
 
     html, body {
@@ -120,7 +124,6 @@
       background-image:
         radial-gradient(circle at 20% 10%, var(--bg-gradient-1) 0%, transparent 50%),
         radial-gradient(circle at 80% 90%, var(--bg-gradient-2) 0%, transparent 50%);
-      transition: background-image 0.4s ease;
     }
 
     #app {
@@ -194,28 +197,11 @@
       transform: scale(0.94);
     }
 
-    .ctrl-btn .ctrl-icon {
-      font-size: 13px;
-      line-height: 1;
-    }
+    .ctrl-icon { font-size: 13px; line-height: 1; }
+    .ctrl-text { text-transform: uppercase; }
 
-    .ctrl-btn .ctrl-text {
-      text-transform: uppercase;
-    }
-
-    .ctrl-btn.active-lang {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    html[data-theme="neon"] .ctrl-btn {
-      backdrop-filter: blur(10px);
-    }
-
-    html[data-theme="neon"] .ctrl-btn.active-lang {
-      box-shadow: var(--glow-strong);
-    }
+    html[data-theme="neon"] .ctrl-btn { backdrop-filter: blur(10px); }
+    html[data-theme="neon"] .ctrl-btn.active-lang { box-shadow: var(--glow-strong); }
 
     /* ---------- TAB CONTENT ---------- */
     .tab-content {
@@ -227,10 +213,7 @@
       scrollbar-width: none;
     }
 
-    .tab-content::-webkit-scrollbar {
-      width: 0;
-      display: none;
-    }
+    .tab-content::-webkit-scrollbar { width: 0; display: none; }
 
     .tab-content.active {
       display: flex;
@@ -250,7 +233,6 @@
       color: var(--text);
       margin-bottom: 6px;
       letter-spacing: 0.5px;
-      transition: color 0.4s ease;
     }
 
     .page-subtitle {
@@ -259,7 +241,6 @@
       margin-bottom: 22px;
       font-weight: 300;
       letter-spacing: 0.3px;
-      transition: color 0.4s ease;
     }
 
     /* ---------- TAB 1: SURVEY ---------- */
@@ -283,7 +264,6 @@
       color: var(--accent);
       font-weight: 600;
       margin-bottom: 10px;
-      transition: color 0.4s ease;
     }
 
     .survey-textarea {
@@ -302,10 +282,7 @@
       transition: border-color 0.2s ease, box-shadow 0.3s ease, background 0.4s ease, color 0.4s ease;
     }
 
-    .survey-textarea::placeholder {
-      color: var(--text-soft);
-      font-style: italic;
-    }
+    .survey-textarea::placeholder { color: var(--text-soft); font-style: italic; }
 
     .survey-textarea:focus {
       border-color: var(--accent-light);
@@ -340,7 +317,6 @@
       font-size: 14px;
       color: var(--text);
       font-weight: 500;
-      transition: color 0.4s ease;
     }
 
     .toggle-hint {
@@ -348,7 +324,6 @@
       color: var(--text-muted);
       font-weight: 400;
       letter-spacing: 0.2px;
-      transition: color 0.4s ease;
     }
 
     .toggle-switch {
@@ -362,10 +337,7 @@
       flex-shrink: 0;
     }
 
-    .toggle-switch.active {
-      background: var(--accent);
-      box-shadow: var(--glow);
-    }
+    .toggle-switch.active { background: var(--accent); box-shadow: var(--glow); }
 
     .toggle-knob {
       position: absolute;
@@ -379,9 +351,7 @@
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .toggle-switch.active .toggle-knob {
-      transform: translateX(22px);
-    }
+    .toggle-switch.active .toggle-knob { transform: translateX(22px); }
 
     .name-input-wrapper {
       max-height: 0;
@@ -410,10 +380,7 @@
       transition: border-color 0.2s ease, box-shadow 0.3s ease, background 0.4s ease, color 0.4s ease;
     }
 
-    .name-input::placeholder {
-      color: var(--text-soft);
-      font-style: italic;
-    }
+    .name-input::placeholder { color: var(--text-soft); font-style: italic; }
 
     .name-input:focus {
       border-color: var(--accent-light);
@@ -441,14 +408,8 @@
       box-shadow: 0 4px 12px rgba(201, 126, 90, 0.25), var(--glow);
     }
 
-    .submit-btn:hover {
-      background: var(--accent-dark);
-    }
-
-    .submit-btn:active {
-      transform: scale(0.97);
-      box-shadow: 0 2px 6px rgba(201, 126, 90, 0.2);
-    }
+    .submit-btn:hover { background: var(--accent-dark); }
+    .submit-btn:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(201, 126, 90, 0.2); }
 
     .submit-btn:disabled {
       background: var(--switch-off);
@@ -463,6 +424,37 @@
     }
 
     /* ---------- TAB 2: BOARD ---------- */
+    .board-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.3s ease;
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+
+    .refresh-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--glow); }
+    .refresh-btn:active { transform: scale(0.94); }
+    .refresh-btn.spinning .refresh-icon { animation: spin 0.8s linear infinite; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     .board-grid {
       display: flex;
       flex-direction: column;
@@ -478,6 +470,12 @@
       box-shadow: 2px 4px 12px var(--shadow-strong), 0 1px 3px var(--shadow);
       transform: rotate(-1.2deg);
       transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+      animation: stickerIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    }
+
+    @keyframes stickerIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.94) rotate(-1.2deg); }
+      to { opacity: 1; transform: translateY(0) scale(1) rotate(-1.2deg); }
     }
 
     .sticker-card:nth-child(even) { transform: rotate(1.1deg); }
@@ -506,8 +504,7 @@
 
     .pin-head {
       position: absolute;
-      top: 0;
-      left: 50%;
+      top: 0; left: 50%;
       transform: translateX(-50%);
       width: 16px;
       height: 16px;
@@ -519,8 +516,7 @@
 
     .pin-needle {
       position: absolute;
-      top: 12px;
-      left: 50%;
+      top: 12px; left: 50%;
       transform: translateX(-50%);
       width: 2px;
       height: 10px;
@@ -556,7 +552,6 @@
       margin-bottom: 10px;
       position: relative;
       z-index: 1;
-      transition: color 0.4s ease;
     }
 
     .sticker-text {
@@ -568,7 +563,6 @@
       word-break: break-word;
       position: relative;
       z-index: 1;
-      transition: color 0.4s ease;
     }
 
     .sticker-footer {
@@ -594,23 +588,11 @@
       font-family: var(--font-sans);
     }
 
-    .like-btn:hover {
-      background: rgba(201, 126, 90, 0.08);
-    }
-
+    .like-btn:hover { background: rgba(201, 126, 90, 0.08); }
     .like-btn.liked { color: var(--accent); }
-
-    .like-heart {
-      font-size: 17px;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
+    .like-heart { font-size: 17px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .like-btn.liked .like-heart { transform: scale(1.2); }
-
-    .like-count {
-      font-weight: 500;
-      font-size: 13px;
-    }
+    .like-count { font-weight: 500; font-size: 13px; }
 
     .delete-btn {
       background: none;
@@ -625,11 +607,7 @@
     }
 
     .delete-btn.visible { display: block; }
-
-    .delete-btn:hover {
-      color: #d9534f;
-      background: rgba(217, 83, 79, 0.08);
-    }
+    .delete-btn:hover { color: #d9534f; background: rgba(217, 83, 79, 0.08); }
 
     .empty-board {
       text-align: center;
@@ -639,7 +617,36 @@
       font-style: italic;
       font-size: 15px;
       line-height: 1.6;
-      transition: color 0.4s ease;
+    }
+
+    /* Skeleton loader */
+    .skeleton-card {
+      position: relative;
+      background: var(--card);
+      border-radius: 4px;
+      padding: 22px 18px 16px;
+      box-shadow: 2px 4px 12px var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-shine) 50%, var(--skeleton-base) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      margin-bottom: 10px;
+    }
+
+    .skeleton-line.short { width: 40%; height: 8px; }
+    .skeleton-line.medium { width: 70%; }
+    .skeleton-line.full { width: 100%; }
+    .skeleton-line.tiny { width: 25%; height: 8px; margin-bottom: 0; }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
     /* ---------- TAB 3: COOKIE ---------- */
@@ -685,9 +692,7 @@
       filter: drop-shadow(0 0 16px rgba(255, 106, 213, 0.25));
     }
 
-    .cookie-wrapper.cracked .cookie-svg {
-      animation: vibrate 0.15s linear infinite;
-    }
+    .cookie-wrapper.cracked .cookie-svg { animation: vibrate 0.15s linear infinite; }
 
     @keyframes vibrate {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
@@ -704,10 +709,7 @@
       transition: opacity 0.1s ease;
     }
 
-    .cookie-halves.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .cookie-halves.active { opacity: 1; pointer-events: auto; }
 
     .cookie-half {
       position: absolute;
@@ -718,21 +720,9 @@
       transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1.2);
     }
 
-    .cookie-half-left {
-      left: 0;
-      transform-origin: right center;
-    }
-
-    .cookie-half-right {
-      right: 0;
-      transform-origin: left center;
-    }
-
-    .cookie-half svg {
-      width: 200%;
-      height: 100%;
-    }
-
+    .cookie-half-left { left: 0; transform-origin: right center; }
+    .cookie-half-right { right: 0; transform-origin: left center; }
+    .cookie-half svg { width: 200%; height: 100%; }
     .cookie-half-left svg { position: absolute; left: 0; }
     .cookie-half-right svg { position: absolute; right: 0; }
 
@@ -800,7 +790,6 @@
       position: relative;
       z-index: 1;
       margin-bottom: 10px;
-      transition: color 0.4s ease;
     }
 
     .prediction-verse {
@@ -813,7 +802,6 @@
       font-weight: 600;
       letter-spacing: 0.3px;
       margin-top: 4px;
-      transition: color 0.4s ease;
     }
 
     .prediction-deco {
@@ -824,7 +812,6 @@
       opacity: 0.5;
       position: relative;
       z-index: 1;
-      transition: background 0.4s ease;
     }
 
     .reset-cookie-btn {
@@ -844,20 +831,9 @@
       pointer-events: none;
     }
 
-    .reset-cookie-btn.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .reset-cookie-btn:hover {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: var(--glow);
-    }
-
-    .reset-cookie-btn:active {
-      transform: scale(0.96);
-    }
+    .reset-cookie-btn.visible { opacity: 1; pointer-events: auto; }
+    .reset-cookie-btn:hover { background: var(--accent); color: #fff; box-shadow: var(--glow); }
+    .reset-cookie-btn:active { transform: scale(0.96); }
 
     /* ---------- BOTTOM NAV ---------- */
     .bottom-nav {
@@ -903,9 +879,7 @@
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .nav-btn.active .nav-icon {
-      transform: scale(1.12);
-    }
+    .nav-btn.active .nav-icon { transform: scale(1.12); }
 
     .nav-label {
       font-size: 10px;
@@ -936,14 +910,8 @@
       text-align: center;
     }
 
-    html[data-theme="neon"] .toast {
-      border: 1px solid var(--accent);
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    html[data-theme="neon"] .toast { border: 1px solid var(--accent); }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
@@ -956,10 +924,6 @@
       <span id="brandName">Затишок</span>
     </div>
     <div class="controls">
-      <button class="ctrl-btn active-lang" id="langBtn" title="Мова">
-        <span class="ctrl-icon">🌐</span>
-        <span class="ctrl-text" id="langText">UA</span>
-      </button>
       <button class="ctrl-btn" id="themeBtn" title="Тема">
         <span class="ctrl-icon" id="themeIcon">🌿</span>
         <span class="ctrl-text" id="themeText">Pastel</span>
@@ -969,23 +933,22 @@
 
   <!-- ========== TAB 1: ДУМКА ========== -->
   <div class="tab-content active" id="tab-opinion">
-    <h1 class="page-title" data-i18n="opinionTitle">Поділись думкою</h1>
-    <p class="page-subtitle" data-i18n="opinionSubtitle">Твоя ідея може стати наступним проєктом ✨</p>
+    <h1 class="page-title">Поділись думкою</h1>
+    <p class="page-subtitle">Твоя ідея може стати наступним проєктом ✨</p>
 
     <div class="survey-card">
-      <div class="survey-label" data-i18n="surveyLabel">Твоя ідея або відгук</div>
+      <div class="survey-label">Твоя ідея або відгук</div>
       <textarea
         class="survey-textarea"
         id="surveyText"
-        data-i18n-placeholder="surveyPlaceholder"
         placeholder="Напиши, що тобі хочеться створити чи побачити у каналі..."
         maxlength="500"
       ></textarea>
 
       <div class="toggle-row">
         <div class="toggle-text">
-          <span class="toggle-label" id="anonLabel" data-i18n="anonLabel">Анонімно</span>
-          <span class="toggle-hint" id="anonHint" data-i18n="anonHint">Твоє ім'я буде приховано</span>
+          <span class="toggle-label" id="anonLabel">Анонімно</span>
+          <span class="toggle-hint" id="anonHint">Твоє ім'я буде приховано</span>
         </div>
         <div class="toggle-switch active" id="anonToggle">
           <div class="toggle-knob"></div>
@@ -997,7 +960,6 @@
           type="text"
           class="name-input"
           id="nameInput"
-          data-i18n-placeholder="namePlaceholder"
           placeholder="Твоє ім'я..."
           maxlength="50"
         >
@@ -1005,32 +967,40 @@
 
       <div class="toggle-row">
         <div class="toggle-text">
-          <span class="toggle-label" id="privacyLabel" data-i18n="privacyPublic">📌 На загальну дошку</span>
-          <span class="toggle-hint" id="privacyHint" data-i18n="privacyPublicHint">Ідея буде видима всім</span>
+          <span class="toggle-label" id="privacyLabel">📌 На загальну дошку</span>
+          <span class="toggle-hint" id="privacyHint">Ідея буде видима всім</span>
         </div>
         <div class="toggle-switch active" id="privacyToggle">
           <div class="toggle-knob"></div>
         </div>
       </div>
 
-      <button class="submit-btn" id="submitSurveyBtn" data-i18n="submitBtn">Надіслати</button>
+      <button class="submit-btn" id="submitSurveyBtn">Надіслати</button>
     </div>
   </div>
 
   <!-- ========== TAB 2: ДОШКА ========== -->
   <div class="tab-content" id="tab-board">
-    <h1 class="page-title" data-i18n="boardTitle">Спільна дошка</h1>
-    <p class="page-subtitle" data-i18n="boardSubtitle">Ідеї, що надихають спільноту 📌</p>
+    <div class="board-header">
+      <div>
+        <h1 class="page-title">Спільна дошка</h1>
+        <p class="page-subtitle">Ідеї, що надихають спільноту 📌</p>
+      </div>
+      <button class="refresh-btn" id="refreshBtn" title="Оновити">
+        <span class="refresh-icon">🔄</span>
+        <span>Оновити</span>
+      </button>
+    </div>
     <div class="board-grid" id="boardGrid"></div>
   </div>
 
   <!-- ========== TAB 3: ПЕЧИВО ========== -->
   <div class="tab-content" id="tab-cookie">
-    <h1 class="page-title" data-i18n="cookieTitle">Печиво з віршем</h1>
-    <p class="page-subtitle" data-i18n="cookieSubtitle">Натискай на печиво — отримай підбадьорливий вірш 🍪</p>
+    <h1 class="page-title">Печиво з віршем</h1>
+    <p class="page-subtitle">Натискай на печиво — отримай підбадьорливий вірш 🍪</p>
 
     <div class="cookie-container">
-      <div class="cookie-hint" id="cookieHint" data-i18n="cookieHint">Натисни на печиво</div>
+      <div class="cookie-hint" id="cookieHint">Натисни на печиво</div>
 
       <div class="cookie-wrapper" id="cookieWrapper">
         <svg class="cookie-svg" id="cookieSvg" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1135,7 +1105,7 @@
         </div>
       </div>
 
-      <button class="reset-cookie-btn" id="resetCookieBtn" data-i18n="resetCookie">Спробувати ще раз</button>
+      <button class="reset-cookie-btn" id="resetCookieBtn">Спробувати ще раз</button>
     </div>
   </div>
 
@@ -1143,15 +1113,15 @@
   <nav class="bottom-nav">
     <button class="nav-btn active" data-tab="opinion">
       <span class="nav-icon">💭</span>
-      <span class="nav-label" data-i18n="navOpinion">Думка</span>
+      <span class="nav-label">Думка</span>
     </button>
     <button class="nav-btn" data-tab="board">
       <span class="nav-icon">📌</span>
-      <span class="nav-label" data-i18n="navBoard">Дошка</span>
+      <span class="nav-label">Дошка</span>
     </button>
     <button class="nav-btn" data-tab="cookie">
       <span class="nav-icon">🍪</span>
-      <span class="nav-label" data-i18n="navCookie">Печиво</span>
+      <span class="nav-label">Печиво</span>
     </button>
   </nav>
 </div>
@@ -1163,142 +1133,8 @@
   'use strict';
 
   // ==================== CONFIG ====================
-  const GOOGLE_APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwWFG_0iYC2RR6zT0MUY8Lqb518MXQ-B0L1MhfjsAYFcacg7-XOUTgy4OOJ8bA4LXvSAg/exec';
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWFG_0iYC2RR6zT0MUY8Lqb518MXQ-B0L1MhfjsAYFcacg7-XOUTgy4OOJ8bA4LXvSAg/exec';
   const ADMIN_ID = 7431962320;
-
-  // ==================== I18N ====================
-  const I18N = {
-    ua: {
-      brandName: 'Затишок',
-      langBtn: 'UA',
-      themePastel: 'Pastel',
-      themeNeon: 'Neon',
-      opinionTitle: 'Поділись думкою',
-      opinionSubtitle: 'Твоя ідея може стати наступним проєктом ✨',
-      surveyLabel: 'Твоя ідея або відгук',
-      surveyPlaceholder: 'Напиши, що тобі хочеться створити чи побачити у каналі...',
-      anonLabel: 'Анонімно',
-      anonLabelNamed: 'Вказати ім\'я',
-      anonHint: 'Твоє ім\'я буде приховано',
-      anonHintNamed: 'Твоє ім\'я буде видно на дошці',
-      namePlaceholder: 'Твоє ім\'я...',
-      privacyPublic: '📌 На загальну дошку',
-      privacyPublicHint: 'Ідея буде видима всім',
-      privacyPrivate: '🔒 Тільки адміну (приватно)',
-      privacyPrivateHint: 'Ідею побачить лише адмін',
-      submitBtn: 'Надіслати',
-      submitBtnLoading: 'Надсилаю...',
-      boardTitle: 'Спільна дошка',
-      boardSubtitle: 'Ідеї, що надихають спільноту 📌',
-      boardEmpty: 'Поки що порожньо...<br>Поділись першою ідеєю на вкладці "Думка" ✨',
-      cookieTitle: 'Печиво з віршем',
-      cookieSubtitle: 'Натискай на печиво — отримай підбадьорливий вірш 🍪',
-      cookieHint: 'Натисни на печиво',
-      cookieHint1: 'Ще трохи...',
-      cookieHint2: 'Вже близько...',
-      cookieHint3: 'Ще один...',
-      resetCookie: 'Спробувати ще раз',
-      navOpinion: 'Думка',
-      navBoard: 'Дошка',
-      navCookie: 'Печиво',
-      toastEmpty: 'Будь ласка, напиши щось ✏️',
-      toastNoName: 'Введи своє ім\'я або обери "Анонімно"',
-      toastSuccessPublic: 'Дякуємо! Твоя ідея на дошці 💫',
-      toastSuccessPrivate: 'Надіслано приватно адміну 🔒',
-      toastDeleted: 'Ідею видалено 🗑️',
-      confirmDelete: 'Видалити цю ідею?',
-      anonymous: 'Анонім'
-    },
-    en: {
-      brandName: 'Cozy',
-      langBtn: 'EN',
-      themePastel: 'Pastel',
-      themeNeon: 'Neon',
-      opinionTitle: 'Share your thoughts',
-      opinionSubtitle: 'Your idea could be the next project ✨',
-      surveyLabel: 'Your idea or feedback',
-      surveyPlaceholder: 'Tell us what you\'d love to create or see in the channel...',
-      anonLabel: 'Anonymous',
-      anonLabelNamed: 'Use my name',
-      anonHint: 'Your name will be hidden',
-      anonHintNamed: 'Your name will be visible on the board',
-      namePlaceholder: 'Your name...',
-      privacyPublic: '📌 Public board',
-      privacyPublicHint: 'Everyone will see this idea',
-      privacyPrivate: '🔒 Admin only (private)',
-      privacyPrivateHint: 'Only the admin will see this',
-      submitBtn: 'Send',
-      submitBtnLoading: 'Sending...',
-      boardTitle: 'Shared board',
-      boardSubtitle: 'Ideas that inspire the community 📌',
-      boardEmpty: 'Nothing here yet...<br>Share your first idea in the "Thoughts" tab ✨',
-      cookieTitle: 'Fortune cookie',
-      cookieSubtitle: 'Tap the cookie — get an uplifting verse 🍪',
-      cookieHint: 'Tap the cookie',
-      cookieHint1: 'A bit more...',
-      cookieHint2: 'Almost there...',
-      cookieHint3: 'One more...',
-      resetCookie: 'Try again',
-      navOpinion: 'Thoughts',
-      navBoard: 'Board',
-      navCookie: 'Cookie',
-      toastEmpty: 'Please write something ✏️',
-      toastNoName: 'Enter your name or choose "Anonymous"',
-      toastSuccessPublic: 'Thank you! Your idea is on the board 💫',
-      toastSuccessPrivate: 'Sent privately to admin 🔒',
-      toastDeleted: 'Idea deleted 🗑️',
-      confirmDelete: 'Delete this idea?',
-      anonymous: 'Anonymous'
-    }
-  };
-
-  // Bіблійні вірші (UA + EN)
-  const VERSES = {
-    ua: [
-      { text: '«Бо Я знаю ті думки, які думаю про вас, — говорить Господь, — думки спокою, а не на зло, щоб дати вам будучність та надію.»', ref: 'Єремія 29:11' },
-      { text: '«Усе можу в Тім, Хто мене підкріплює, — у Христі.»', ref: 'Филип\'ян 4:13' },
-      { text: '«Господь — мій пастир, і я не буду мати нестачі.»', ref: 'Псалом 23:1' },
-      { text: '«Не бійся, бо Я з тобою; не лякайся, бо Я — Бог твій! Я зміцню тебе, і Я поможу тобі.»', ref: 'Ісая 41:10' },
-      { text: '«Тож не журіться про завтрашній день, бо завтрашній день буде мати про що журитися.»', ref: 'Матвія 6:34' },
-      { text: '«Довір Господу дорогу свою, і надійся на Нього, — і Він зробить.»', ref: 'Псалом 37:5' },
-      { text: '«Прийдіть до Мене, усі струджені та обтяжені, — і Я вас заспокою!»', ref: 'Матвія 11:28' },
-      { text: '«Любов довготерпить, любов милосердить, не заздрить, любов не величається, не надимається.»', ref: '1 Коринтян 13:4' },
-      { text: '«Радійте завжди, моліться безупинно, за все дякуйте.»', ref: '1 Солунян 5:16-18' },
-      { text: '«Надія ж не засоромить, бо любов Божа вилилась у серця наші Духом Святим.»', ref: 'Римлян 5:5' },
-      { text: '«Господь — світло моє та спасіння моє, — кого буду боятися?»', ref: 'Псалом 27:1' },
-      { text: '«І пізнаєте правду, а правда вас вільними зробить!»', ref: 'Івана 8:32' },
-      { text: '«Благословен той чоловік, що надію свою покладає на Господа.»', ref: 'Єремія 17:7' },
-      { text: '«Спокійне серце — життя для тіла, а заздрощі — гниль для костей.»', ref: 'Приповісті 14:30' },
-      { text: '«Будьте ж милосердні, як і Отець ваш милосердний.»', ref: 'Луки 6:36' },
-      { text: '«І хай мир Божий, що вищий від усякого розуму, береже серця ваші та думки ваші у Христі Ісусі.»', ref: 'Филип\'ян 4:7' },
-      { text: '«Усе робіть так, як для Господа, а не для людей.»', ref: 'Колосян 3:23' },
-      { text: '«Тож, браття мої любі, будьте міцні, непохитні, збагачуйтесь повсякчас у ділі Господньому.»', ref: '1 Коринтян 15:58' },
-      { text: '«Тому не судіть нічого передчасно, поки не прийде Господь.»', ref: '1 Коринтян 4:5' },
-      { text: '«Все робіть без нарікань та без сумніву, щоб були ви непорочні та чисті.»', ref: 'Филип\'ян 2:14-15' }
-    ],
-    en: [
-      { text: '"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."', ref: 'Jeremiah 29:11' },
-      { text: '"I can do all things through Christ who strengthens me."', ref: 'Philippians 4:13' },
-      { text: '"The Lord is my shepherd; I shall not want."', ref: 'Psalm 23:1' },
-      { text: '"Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you."', ref: 'Isaiah 41:10' },
-      { text: '"Therefore do not worry about tomorrow, for tomorrow will worry about itself."', ref: 'Matthew 6:34' },
-      { text: '"Commit your way to the Lord; trust in him, and he will act."', ref: 'Psalm 37:5' },
-      { text: '"Come to me, all who labor and are heavy laden, and I will give you rest."', ref: 'Matthew 11:28' },
-      { text: '"Love is patient and kind; love does not envy or boast; it is not arrogant."', ref: '1 Corinthians 13:4' },
-      { text: '"Rejoice always, pray without ceasing, give thanks in all circumstances."', ref: '1 Thessalonians 5:16-18' },
-      { text: '"Hope does not put us to shame, because God\'s love has been poured into our hearts."', ref: 'Romans 5:5' },
-      { text: '"The Lord is my light and my salvation; whom shall I fear?"', ref: 'Psalm 27:1' },
-      { text: '"And you will know the truth, and the truth will set you free."', ref: 'John 8:32' },
-      { text: '"Blessed is the man who trusts in the Lord, whose trust is the Lord."', ref: 'Jeremiah 17:7' },
-      { text: '"A tranquil heart gives life to the flesh, but envy makes the bones rot."', ref: 'Proverbs 14:30' },
-      { text: '"Be merciful, even as your Father is merciful."', ref: 'Luke 6:36' },
-      { text: '"And the peace of God, which surpasses all understanding, will guard your hearts and minds in Christ Jesus."', ref: 'Philippians 4:7' },
-      { text: '"Whatever you do, work heartily, as for the Lord and not for men."', ref: 'Colossians 3:23' },
-      { text: '"Be steadfast, immovable, always abounding in the work of the Lord."', ref: '1 Corinthians 15:58' },
-      { text: '"Therefore do not pronounce judgment before the time, before the Lord comes."', ref: '1 Corinthians 4:5' },
-      { text: '"Do all things without grumbling or disputing, that you may be blameless and innocent."', ref: 'Philippians 2:14-15' }
-    ]
-  };
 
   // ==================== TELEGRAM ====================
   const tg = window.Telegram?.WebApp;
@@ -1307,17 +1143,29 @@
     tg.expand();
     try { tg.enableClosingConfirmation(); } catch (e) {}
   }
-  const userId = tg?.initDataUnsafe?.user?.id;
+
+  const tgUserData = tg?.initDataUnsafe?.user || null;
+  const userId = tgUserData?.id || null;
   const isAdmin = userId === ADMIN_ID;
+
+  // Build tgUser string: "id|@username|First Last"
+  function buildTgUser() {
+    if (!tgUserData) return 'guest|guest|Guest';
+    const id = tgUserData.id || 'unknown';
+    const uname = tgUserData.username ? '@' + tgUserData.username : '';
+    const fullName = [tgUserData.first_name || '', tgUserData.last_name || ''].filter(Boolean).join(' ') || 'Anonymous';
+    return id + '|' + uname + '|' + fullName;
+  }
 
   // ==================== STATE ====================
   const state = {
-    lang: localStorage.getItem('cozy_lang') || 'ua',
     theme: localStorage.getItem('cozy_theme') || 'pastel',
     isAnonymous: true,
     isPrivate: false,
-    ideas: JSON.parse(localStorage.getItem('cozy_ideas') || '[]'),
+    localIdeas: JSON.parse(localStorage.getItem('cozy_ideas') || '[]'),
     likedIds: JSON.parse(localStorage.getItem('cozy_liked') || '[]'),
+    remoteIdeas: [],
+    boardLoading: false,
     cookieClicks: 0,
     cookieBroken: false,
     currentVerse: null
@@ -1325,14 +1173,10 @@
 
   // ==================== DOM REFS ====================
   const $ = (s) => document.querySelector(s);
-  const $$ = (s) => document.querySelectorAll(s);
 
-  const langBtn = $('#langBtn');
-  const langText = $('#langText');
   const themeBtn = $('#themeBtn');
   const themeIcon = $('#themeIcon');
   const themeText = $('#themeText');
-  const brandName = $('#brandName');
   const anonToggle = $('#anonToggle');
   const anonLabel = $('#anonLabel');
   const anonHint = $('#anonHint');
@@ -1344,6 +1188,7 @@
   const surveyText = $('#surveyText');
   const submitSurveyBtn = $('#submitSurveyBtn');
   const boardGrid = $('#boardGrid');
+  const refreshBtn = $('#refreshBtn');
   const toastEl = $('#toast');
   const cookieWrapper = $('#cookieWrapper');
   const cookieSvg = $('#cookieSvg');
@@ -1365,7 +1210,7 @@
     document.documentElement.setAttribute('data-theme', theme === 'neon' ? 'neon' : 'cozy');
     localStorage.setItem('cozy_theme', theme);
     themeIcon.textContent = theme === 'neon' ? '🌙' : '🌿';
-    themeText.textContent = theme === 'neon' ? I18N[state.lang].themeNeon : I18N[state.lang].themePastel;
+    themeText.textContent = theme === 'neon' ? 'Neon' : 'Pastel';
     if (tg?.setHeaderColor) {
       try { tg.setHeaderColor(theme === 'neon' ? '#0f0e17' : '#f9f5f0'); } catch (e) {}
     }
@@ -1381,58 +1226,13 @@
     }
   });
 
-  // ==================== LANGUAGE ====================
-  function applyLang(lang) {
-    state.lang = lang;
-    localStorage.setItem('cozy_lang', lang);
-    document.documentElement.setAttribute('lang', lang === 'ua' ? 'uk' : 'en');
-
-    const t = I18N[lang];
-    langText.textContent = lang === 'ua' ? 'UA' : 'EN';
-    brandName.textContent = t.brandName;
-    themeText.textContent = state.theme === 'neon' ? t.themeNeon : t.themePastel;
-
-    $$('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (t[key] !== undefined) el.innerHTML = t[key];
-    });
-    $$('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
-      if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
-    });
-
-    // Update dynamic labels
-    anonLabel.textContent = state.isAnonymous ? t.anonLabel : t.anonLabelNamed;
-    anonHint.textContent = state.isAnonymous ? t.anonHint : t.anonHintNamed;
-    privacyLabel.textContent = state.isPrivate ? t.privacyPrivate : t.privacyPublic;
-    privacyHint.textContent = state.isPrivate ? t.privacyPrivateHint : t.privacyPublicHint;
-    submitSurveyBtn.textContent = t.submitBtn;
-
-    // Update cookie hint if broken
-    if (state.cookieBroken && state.currentVerse) {
-      // keep the verse as is (stays in original lang when revealed)
-    } else {
-      cookieHint.textContent = t.cookieHint;
-    }
-
-    // Re-render board (author "Анонім"/"Anonymous")
-    renderBoard();
-  }
-
-  langBtn.addEventListener('click', () => {
-    applyLang(state.lang === 'ua' ? 'en' : 'ua');
-    if (tg?.HapticFeedback) {
-      try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
-    }
-  });
-
   // ==================== NAVIGATION ====================
   const tabs = ['opinion', 'board', 'cookie'];
 
   function switchTab(tabName) {
     tabs.forEach(t => {
       const content = document.getElementById('tab-' + t);
-      const btn = document.querySelector(`.nav-btn[data-tab="${t}"]`);
+      const btn = document.querySelector('.nav-btn[data-tab="' + t + '"]');
       if (t === tabName) {
         content.classList.add('active');
         btn.classList.add('active');
@@ -1444,9 +1244,12 @@
     if (tg?.HapticFeedback) {
       try { tg.HapticFeedback.selectionChanged(); } catch (e) {}
     }
+    if (tabName === 'board' && state.remoteIdeas.length === 0 && !state.boardLoading) {
+      loadBoardFromSheets();
+    }
   }
 
-  $$('.nav-btn').forEach(btn => {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
@@ -1463,9 +1266,8 @@
   anonToggle.addEventListener('click', () => {
     state.isAnonymous = !state.isAnonymous;
     anonToggle.classList.toggle('active', state.isAnonymous);
-    const t = I18N[state.lang];
-    anonLabel.textContent = state.isAnonymous ? t.anonLabel : t.anonLabelNamed;
-    anonHint.textContent = state.isAnonymous ? t.anonHint : t.anonHintNamed;
+    anonLabel.textContent = state.isAnonymous ? 'Анонімно' : 'Вказати ім\'я';
+    anonHint.textContent = state.isAnonymous ? 'Твоє ім\'я буде приховано' : 'Твоє ім\'я буде видно на дошці';
     nameWrapper.classList.toggle('visible', !state.isAnonymous);
     if (tg?.HapticFeedback) {
       try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
@@ -1484,52 +1286,52 @@
   privacyToggle.addEventListener('click', () => {
     state.isPrivate = !state.isPrivate;
     privacyToggle.classList.toggle('active', !state.isPrivate);
-    const t = I18N[state.lang];
-    privacyLabel.textContent = state.isPrivate ? t.privacyPrivate : t.privacyPublic;
-    privacyHint.textContent = state.isPrivate ? t.privacyPrivateHint : t.privacyPublicHint;
+    privacyLabel.textContent = state.isPrivate ? '🔒 Тільки адміну (приватно)' : '📌 На загальну дошку';
+    privacyHint.textContent = state.isPrivate ? 'Ідею побачить лише адмін' : 'Ідея буде видима всім';
     if (tg?.HapticFeedback) {
       try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
     }
   });
 
   submitSurveyBtn.addEventListener('click', () => {
-    const t = I18N[state.lang];
     const text = surveyText.value.trim();
-    const name = state.isAnonymous ? t.anonymous : (nameInput.value.trim() || t.anonymous);
+    const name = state.isAnonymous ? 'Анонім' : (nameInput.value.trim() || 'Анонім');
 
     if (!text) {
-      showToast(t.toastEmpty);
+      showToast('Будь ласка, напиши щось ✏️');
       if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('error'); } catch (e) {}
       return;
     }
     if (!state.isAnonymous && !nameInput.value.trim()) {
-      showToast(t.toastNoName);
+      showToast('Введи своє ім\'я або обери "Анонімно"');
       if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (e) {}
       return;
     }
 
     submitSurveyBtn.disabled = true;
-    submitSurveyBtn.textContent = t.submitBtnLoading;
+    submitSurveyBtn.textContent = 'Надсилаю...';
 
-    const idea = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    const newIdea = {
+      id: 'local-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       text: text,
       name: name,
-      timestamp: Date.now(),
       likes: 0,
-      isPrivate: state.isPrivate
+      isPrivate: state.isPrivate,
+      createdAt: Date.now()
     };
 
     const payload = {
+      action: 'submitIdea',
       text: text,
       name: name,
       isPrivate: state.isPrivate,
       isAnonymous: state.isAnonymous,
-      lang: state.lang,
-      timestamp: new Date().toISOString(),
-      telegram_user_id: userId || null
+      tgUser: buildTgUser(),
+      tgUserId: userId,
+      timestamp: new Date().toISOString()
     };
 
+    // POST via text/plain to avoid CORS preflight with Apps Script
     fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -1537,63 +1339,165 @@
       body: JSON.stringify(payload)
     })
     .then(() => {
-      if (!state.isPrivate) saveIdeaLocally(idea);
+      if (!state.isPrivate) {
+        // Save locally for instant feedback
+        state.localIdeas.unshift(newIdea);
+        localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
+        renderBoard();
+        // Reload from sheets after a small delay to fetch fresh data
+        setTimeout(() => loadBoardFromSheets(true), 1200);
+      }
       finishSurveySubmission(state.isPrivate);
     })
     .catch(() => {
-      if (!state.isPrivate) saveIdeaLocally(idea);
+      if (!state.isPrivate) {
+        state.localIdeas.unshift(newIdea);
+        localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
+        renderBoard();
+      }
       finishSurveySubmission(state.isPrivate);
     });
   });
 
-  function saveIdeaLocally(idea) {
-    state.ideas.unshift(idea);
-    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
-    renderBoard();
-  }
-
   function finishSurveySubmission(wasPrivate) {
-    const t = I18N[state.lang];
     surveyText.value = '';
     submitSurveyBtn.disabled = false;
-    submitSurveyBtn.textContent = t.submitBtn;
-    showToast(wasPrivate ? t.toastSuccessPrivate : t.toastSuccessPublic);
+    submitSurveyBtn.textContent = 'Надіслати';
+    showToast(wasPrivate ? 'Надіслано приватно адміну 🔒' : 'Дякуємо! Твоя ідея на дошці 💫');
     if (tg?.HapticFeedback) {
       try { tg.HapticFeedback.notificationOccurred('success'); } catch (e) {}
     }
   }
 
   // ==================== TAB 2: BOARD ====================
+  function showSkeletons() {
+    boardGrid.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+      const sk = document.createElement('div');
+      sk.className = 'skeleton-card';
+      sk.style.transform = 'rotate(' + (i % 2 === 0 ? '-1.2deg' : '1.1deg') + ')';
+      sk.innerHTML =
+        '<div class="skeleton-line short"></div>' +
+        '<div class="skeleton-line full"></div>' +
+        '<div class="skeleton-line medium"></div>' +
+        '<div class="skeleton-line tiny"></div>';
+      boardGrid.appendChild(sk);
+    }
+  }
+
+  function loadBoardFromSheets(silent) {
+    if (state.boardLoading) return;
+    state.boardLoading = true;
+    if (!silent) showSkeletons();
+
+    refreshBtn.classList.add('spinning');
+
+    const url = GOOGLE_APPS_SCRIPT_URL + '?action=getIdeas&ts=' + Date.now();
+
+    fetch(url, { method: 'GET', mode: 'cors', cache: 'no-store' })
+      .then(res => res.text())
+      .then(text => {
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error('Invalid JSON from Apps Script: ' + text.slice(0, 120));
+        }
+
+        // Handle various response shapes
+        let items = [];
+        if (Array.isArray(data)) {
+          items = data;
+        } else if (data && Array.isArray(data.ideas)) {
+          items = data.ideas;
+        } else if (data && Array.isArray(data.data)) {
+          items = data.data;
+        } else if (data && data.status === 'success' && Array.isArray(data.result)) {
+          items = data.result;
+        }
+
+        // Filter public ones only
+        state.remoteIdeas = items
+          .filter(it => it && (it.isPrivate === false || it.isPrivate === 'false' || it.isPrivate === undefined || it.isPrivate === 0))
+          .map((it, idx) => ({
+            id: String(it.id || it.row || ('remote-' + idx + '-' + (it.timestamp || idx))),
+            text: String(it.text || it.idea || it.message || ''),
+            name: String(it.name || it.author || 'Анонім'),
+            likes: parseInt(it.likes || it.likeCount || 0, 10) || 0,
+            createdAt: it.timestamp || it.createdAt || null
+          }))
+          .filter(it => it.text.length > 0);
+
+        renderBoard();
+      })
+      .catch((err) => {
+        console.warn('[Board] Load failed, using local cache:', err.message);
+        renderBoard();
+        if (!silent) {
+          showToast('Не вдалось оновити дошку 📡');
+        }
+      })
+      .finally(() => {
+        state.boardLoading = false;
+        refreshBtn.classList.remove('spinning');
+      });
+  }
+
   function renderBoard() {
     boardGrid.innerHTML = '';
-    const t = I18N[state.lang];
-    const publicIdeas = state.ideas.filter(i => !i.isPrivate);
 
-    if (publicIdeas.length === 0) {
-      boardGrid.innerHTML = `<div class="empty-board">${t.boardEmpty}</div>`;
+    // Merge remote + local (dedupe by text+name to avoid double after refresh)
+    const merged = [];
+    const seen = new Set();
+
+    state.remoteIdeas.forEach(it => {
+      const key = it.name + '::' + it.text;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push(it);
+      }
+    });
+
+    state.localIdeas.forEach(it => {
+      if (it.isPrivate) return;
+      const key = it.name + '::' + it.text;
+      if (!seen.has(key)) {
+        seen.add(key);
+        merged.push({
+          id: it.id,
+          text: it.text,
+          name: it.name,
+          likes: it.likes || 0,
+          createdAt: it.createdAt
+        });
+      }
+    });
+
+    if (merged.length === 0) {
+      boardGrid.innerHTML =
+        '<div class="empty-board">Поки що порожньо...<br>Поділись першою ідеєю на вкладці "Думка" ✨</div>';
       return;
     }
 
-    publicIdeas.forEach((idea) => {
+    merged.forEach((idea, index) => {
       const card = document.createElement('div');
       card.className = 'sticker-card';
+      card.style.animationDelay = (index * 0.05) + 's';
+
       const isLiked = state.likedIds.includes(idea.id);
 
-      card.innerHTML = `
-        <div class="pin">
-          <div class="pin-head"></div>
-          <div class="pin-needle"></div>
-        </div>
-        <div class="sticker-author">${escapeHtml(idea.name)}</div>
-        <div class="sticker-text">${escapeHtml(idea.text)}</div>
-        <div class="sticker-footer">
-          <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${idea.id}">
-            <span class="like-heart">${isLiked ? '❤️' : '🤍'}</span>
-            <span class="like-count">${idea.likes || 0}</span>
-          </button>
-          <button class="delete-btn ${isAdmin ? 'visible' : ''}" data-id="${idea.id}" title="Delete">✕</button>
-        </div>
-      `;
+      card.innerHTML =
+        '<div class="pin"><div class="pin-head"></div><div class="pin-needle"></div></div>' +
+        '<div class="sticker-author">' + escapeHtml(idea.name) + '</div>' +
+        '<div class="sticker-text">' + escapeHtml(idea.text) + '</div>' +
+        '<div class="sticker-footer">' +
+          '<button class="like-btn ' + (isLiked ? 'liked' : '') + '" data-id="' + escapeAttr(idea.id) + '">' +
+            '<span class="like-heart">' + (isLiked ? '❤️' : '🤍') + '</span>' +
+            '<span class="like-count">' + (idea.likes || 0) + '</span>' +
+          '</button>' +
+          '<button class="delete-btn ' + (isAdmin ? 'visible' : '') + '" data-id="' + escapeAttr(idea.id) + '" title="Видалити">✕</button>' +
+        '</div>';
+
       boardGrid.appendChild(card);
     });
 
@@ -1605,8 +1509,31 @@
     e.stopPropagation();
     const btn = e.currentTarget;
     const id = btn.dataset.id;
-    const idea = state.ideas.find(i => i.id === id);
-    if (!idea) return;
+
+    // Find in local or remote
+    let idea = state.localIdeas.find(i => i.id === id);
+    if (!idea) idea = state.remoteIdeas.find(i => i.id === id);
+
+    if (!idea) {
+      // Doesn't exist locally — track like in liked set anyway with visual only
+      const likedIdx = state.likedIds.indexOf(id);
+      if (likedIdx === -1) {
+        state.likedIds.push(id);
+        btn.classList.add('liked');
+        btn.querySelector('.like-heart').textContent = '❤️';
+        const cnt = btn.querySelector('.like-count');
+        cnt.textContent = (parseInt(cnt.textContent, 10) || 0) + 1;
+      } else {
+        state.likedIds.splice(likedIdx, 1);
+        btn.classList.remove('liked');
+        btn.querySelector('.like-heart').textContent = '🤍';
+        const cnt = btn.querySelector('.like-count');
+        cnt.textContent = Math.max(0, (parseInt(cnt.textContent, 10) || 0) - 1);
+      }
+      localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (err) {}
+      return;
+    }
 
     const likedIdx = state.likedIds.indexOf(id);
     if (likedIdx === -1) {
@@ -1614,16 +1541,17 @@
       state.likedIds.push(id);
       btn.classList.add('liked');
       btn.querySelector('.like-heart').textContent = '❤️';
-      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (err) {}
     } else {
       idea.likes = Math.max(0, (idea.likes || 0) - 1);
       state.likedIds.splice(likedIdx, 1);
       btn.classList.remove('liked');
       btn.querySelector('.like-heart').textContent = '🤍';
-      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('soft'); } catch (e) {}
+      if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('soft'); } catch (err) {}
     }
     btn.querySelector('.like-count').textContent = idea.likes;
-    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
+
+    localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
     localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
   }
 
@@ -1631,33 +1559,86 @@
     e.stopPropagation();
     if (!isAdmin) return;
     const id = e.currentTarget.dataset.id;
-    const t = I18N[state.lang];
-    if (!confirm(t.confirmDelete)) return;
-    state.ideas = state.ideas.filter(i => i.id !== id);
+
+    if (!confirm('Видалити цю ідею?')) return;
+
+    // Try to delete via backend (best-effort)
+    fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'deleteIdea',
+        id: id,
+        tgUser: buildTgUser(),
+        tgUserId: userId
+      })
+    }).catch(() => {});
+
+    state.localIdeas = state.localIdeas.filter(i => i.id !== id);
+    state.remoteIdeas = state.remoteIdeas.filter(i => i.id !== id);
     state.likedIds = state.likedIds.filter(lid => lid !== id);
-    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
+
+    localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
     localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
+
     renderBoard();
-    if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (e) {}
-    showToast(t.toastDeleted);
+
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.notificationOccurred('warning'); } catch (err) {}
+    showToast('Ідею видалено 🗑️');
+
+    // Refresh from sheets
+    setTimeout(() => loadBoardFromSheets(true), 800);
   }
+
+  refreshBtn.addEventListener('click', () => {
+    if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+    loadBoardFromSheets(false);
+  });
 
   function escapeHtml(str) {
     const div = document.createElement('div');
-    div.textContent = str;
+    div.textContent = String(str);
     return div.innerHTML;
   }
 
+  function escapeAttr(str) {
+    return String(str).replace(/[&<>"']/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
   // ==================== TAB 3: COOKIE ====================
+  const VERSES = [
+    { text: '«Бо Я знаю ті думки, які думаю про вас, — говорить Господь, — думки спокою, а не на зло, щоб дати вам будучність та надію.»', ref: 'Єремія 29:11' },
+    { text: '«Усе можу в Тім, Хто мене підкріплює, — у Христі.»', ref: 'Филип\'ян 4:13' },
+    { text: '«Господь — мій пастир, і я не буду мати нестачі.»', ref: 'Псалом 23:1' },
+    { text: '«Не бійся, бо Я з тобою; не лякайся, бо Я — Бог твій! Я зміцню тебе, і Я поможу тобі.»', ref: 'Ісая 41:10' },
+    { text: '«Тож не журіться про завтрашній день, бо завтрашній день буде мати про що журитися.»', ref: 'Матвія 6:34' },
+    { text: '«Довір Господу дорогу свою, і надійся на Нього, — і Він зробить.»', ref: 'Псалом 37:5' },
+    { text: '«Прийдіть до Мене, усі струджені та обтяжені, — і Я вас заспокою!»', ref: 'Матвія 11:28' },
+    { text: '«Любов довготерпить, любов милосердить, не заздрить, любов не величається, не надимається.»', ref: '1 Коринтян 13:4' },
+    { text: '«Радійте завжди, моліться безупинно, за все дякуйте.»', ref: '1 Солунян 5:16-18' },
+    { text: '«Надія ж не засоромить, бо любов Божа вилилась у серця наші Духом Святим.»', ref: 'Римлян 5:5' },
+    { text: '«Господь — світло моє та спасіння моє, — кого буду боятися?»', ref: 'Псалом 27:1' },
+    { text: '«І пізнаєте правду, а правда вас вільними зробить!»', ref: 'Івана 8:32' },
+    { text: '«Благословен той чоловік, що надію свою покладає на Господа.»', ref: 'Єремія 17:7' },
+    { text: '«Спокійне серце — життя для тіла, а заздрощі — гниль для костей.»', ref: 'Приповісті 14:30' },
+    { text: '«Будьте ж милосердні, як і Отець ваш милосердний.»', ref: 'Луки 6:36' },
+    { text: '«І хай мир Божий, що вищий від усякого розуму, береже серця ваші та думки ваші у Христі Ісусі.»', ref: 'Филип\'ян 4:7' },
+    { text: '«Усе робіть так, як для Господа, а не для людей.»', ref: 'Колосян 3:23' },
+    { text: '«Тож, браття мої любі, будьте міцні, непохитні, збагачуйтесь повсякчас у ділі Господньому.»', ref: '1 Коринтян 15:58' },
+    { text: '«Тому не судіть нічого передчасно, поки не прийде Господь.»', ref: '1 Коринтян 4:5' },
+    { text: '«Все робіть без нарікань та без сумніву, щоб були ви непорочні та чисті.»', ref: 'Филип\'ян 2:14-15' }
+  ];
+
   const savedBroken = localStorage.getItem('cozy_cookie_broken');
   const savedIdx = localStorage.getItem('cozy_verse_index');
-  const savedLang = localStorage.getItem('cozy_verse_lang');
 
   if (savedBroken === 'true' && savedIdx !== null) {
     state.cookieBroken = true;
     state.cookieClicks = 4;
-    const verseLang = savedLang || state.lang;
-    state.currentVerse = (VERSES[verseLang] || VERSES.ua)[parseInt(savedIdx, 10)];
+    state.currentVerse = VERSES[parseInt(savedIdx, 10)] || VERSES[0];
     setTimeout(restoreBrokenCookie, 100);
   }
 
@@ -1681,25 +1662,23 @@
     state.cookieClicks++;
     if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
 
-    const t = I18N[state.lang];
-
     if (state.cookieClicks <= 3) {
       crackGroup.setAttribute('opacity', '1');
       if (state.cookieClicks === 1) {
         crack1.style.transition = 'stroke-dashoffset 0.4s ease';
         crack1.style.strokeDashoffset = '0';
-        cookieHint.textContent = t.cookieHint1;
+        cookieHint.textContent = 'Ще трохи...';
       } else if (state.cookieClicks === 2) {
         crack2.style.transition = 'stroke-dashoffset 0.4s ease';
         crack2.style.strokeDashoffset = '0';
-        cookieHint.textContent = t.cookieHint2;
+        cookieHint.textContent = 'Вже близько...';
       } else if (state.cookieClicks === 3) {
         crack3.style.transition = 'stroke-dashoffset 0.35s ease';
         crack3.style.strokeDashoffset = '0';
         crack4.style.transition = 'stroke-dashoffset 0.35s ease';
         crack4.style.strokeDashoffset = '0';
         cookieWrapper.classList.add('cracked');
-        cookieHint.textContent = t.cookieHint3;
+        cookieHint.textContent = 'Ще один...';
       }
       cookieSvg.style.transition = 'transform 0.1s ease';
       cookieSvg.style.transform = 'scale(0.97)';
@@ -1723,9 +1702,8 @@
       cookieHalves.classList.add('split');
       cookieHint.style.opacity = '0';
 
-      const list = VERSES[state.lang] || VERSES.ua;
-      const idx = Math.floor(Math.random() * list.length);
-      state.currentVerse = list[idx];
+      const idx = Math.floor(Math.random() * VERSES.length);
+      state.currentVerse = VERSES[idx];
 
       setTimeout(() => {
         predictionText.textContent = state.currentVerse.text;
@@ -1733,7 +1711,6 @@
         predictionRibbon.classList.add('visible');
         localStorage.setItem('cozy_cookie_broken', 'true');
         localStorage.setItem('cozy_verse_index', String(idx));
-        localStorage.setItem('cozy_verse_lang', state.lang);
         resetCookieBtn.classList.add('visible');
         if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('medium'); } catch (e) {}
       }, 400);
@@ -1746,7 +1723,6 @@
     state.currentVerse = null;
     localStorage.removeItem('cozy_cookie_broken');
     localStorage.removeItem('cozy_verse_index');
-    localStorage.removeItem('cozy_verse_lang');
 
     cookieWrapper.classList.remove('cracked');
     cookieSvg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -1762,21 +1738,31 @@
     predictionRibbon.classList.remove('visible');
     resetCookieBtn.classList.remove('visible');
     cookieHint.style.opacity = '1';
-    cookieHint.textContent = I18N[state.lang].cookieHint;
-
+    cookieHint.textContent = 'Натисни на печиво';
     if (tg?.HapticFeedback) try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
   });
 
   // ==================== INIT ====================
   applyTheme(state.theme);
-  applyLang(state.lang);
   renderBoard();
+
+  // Load board from sheets on first view of board tab OR after 1.5s if already on board
+  setTimeout(() => {
+    if (document.getElementById('tab-board').classList.contains('active')) {
+      loadBoardFromSheets(true);
+    }
+  }, 800);
 
   if (state.cookieBroken && state.currentVerse) {
     setTimeout(restoreBrokenCookie, 200);
   }
 
-  console.log('🍪 Cozy DIY Mini App ready.', { lang: state.lang, theme: state.theme, isAdmin, userId });
+  console.log('🍪 Cozy DIY Mini App ready.', {
+    theme: state.theme,
+    isAdmin: isAdmin,
+    userId: userId,
+    tgUser: buildTgUser()
+  });
 
 })();
 </script>
