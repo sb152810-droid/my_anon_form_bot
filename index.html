@@ -21,7 +21,6 @@
       --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
       --card-radius: 16px;
       --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-      --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
       --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -41,7 +40,6 @@
       position: relative;
     }
 
-    /* Language toggle */
     .lang-toggle {
       display: flex;
       justify-content: flex-end;
@@ -77,7 +75,6 @@
       transform: scale(0.95);
     }
 
-    /* Header */
     .header {
       text-align: center;
       margin-bottom: 24px;
@@ -91,7 +88,6 @@
       line-height: 1.3;
     }
 
-    /* Form screen */
     #formScreen {
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
@@ -106,7 +102,6 @@
       padding: 0 16px;
     }
 
-    /* Chips section */
     .section-label {
       font-size: 13px;
       font-weight: 600;
@@ -147,7 +142,6 @@
       box-shadow: 0 2px 12px rgba(51, 144, 236, 0.35);
     }
 
-    /* Mood emojis */
     .moods {
       display: flex;
       gap: 10px;
@@ -189,7 +183,6 @@
       box-shadow: 0 2px 12px rgba(51, 144, 236, 0.35);
     }
 
-    /* Textareas */
     .textarea-group {
       margin-bottom: 18px;
     }
@@ -228,7 +221,6 @@
       min-height: 70px;
     }
 
-    /* Submit button */
     .submit-btn {
       width: 100%;
       background: var(--button);
@@ -272,7 +264,6 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Thank you screen */
     #thankYouScreen {
       display: none;
       text-align: center;
@@ -309,7 +300,6 @@
       line-height: 1.45;
     }
 
-    /* Cookie */
     .cookie-wrap {
       display: flex;
       justify-content: center;
@@ -352,7 +342,6 @@
       100% { transform: scale(0) rotate(20deg); opacity: 0; }
     }
 
-    /* Verse card */
     .verse-card {
       display: none;
       background: var(--secondary-bg);
@@ -412,7 +401,6 @@
       margin-bottom: 10px;
     }
 
-    /* Send another button */
     .again-btn {
       display: none;
       width: 100%;
@@ -438,7 +426,6 @@
       color: var(--button-text);
     }
 
-    /* Toast */
     .toast {
       position: fixed;
       bottom: 30px;
@@ -463,7 +450,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Decorative background elements */
     .bg-decoration {
       position: fixed;
       border-radius: 50%;
@@ -488,7 +474,6 @@
       left: -60px;
     }
 
-    /* Responsive tweaks */
     @media (max-width: 380px) {
       .app { padding: 12px 12px 32px; }
       .header h1 { font-size: 19px; }
@@ -506,33 +491,21 @@
 
 <div class="app">
 
-  <!-- Language Toggle -->
   <div class="lang-toggle">
     <button class="lang-btn active" id="langUA" data-lang="ua">🇺🇦 UA</button>
     <button class="lang-btn" id="langEN" data-lang="en">🇬🇧 EN</button>
   </div>
 
-  <!-- FORM SCREEN -->
   <div id="formScreen">
     <div class="header">
       <h1 id="headerTitle">Поділися своєю думкою ✨</h1>
     </div>
 
     <div class="section-label" id="labelCategory">Категорія</div>
-    <div class="chips" id="chipsContainer">
-      <button class="chip" data-value="idea">💡 <span>Ідея для посту</span></button>
-      <button class="chip" data-value="question">💬 <span>Питання</span></button>
-      <button class="chip" data-value="newtopic">🔥 <span>Нова тема</span></button>
-      <button class="chip" data-value="hello">✨ <span>Просто привіт</span></button>
-    </div>
+    <div class="chips" id="chipsContainer"></div>
 
     <div class="section-label" id="labelMood">Настрій</div>
-    <div class="moods" id="moodsContainer">
-      <button class="mood-btn" data-value="super"><span class="emoji">🔋</span><span>Супер</span></button>
-      <button class="mood-btn" data-value="sleepy"><span class="emoji">☁️</span><span>Сонно</span></button>
-      <button class="mood-btn" data-value="creative"><span class="emoji">🎨</span><span>Творчо</span></button>
-      <button class="mood-btn" data-value="coffee"><span class="emoji">☕</span><span>Хочу кави</span></button>
-    </div>
+    <div class="moods" id="moodsContainer"></div>
 
     <div class="textarea-group">
       <textarea id="mainText" class="main" placeholder="Твоя ідея, питання або думка..."></textarea>
@@ -547,7 +520,6 @@
     </button>
   </div>
 
-  <!-- THANK YOU SCREEN -->
   <div id="thankYouScreen">
     <div class="thank-title" id="thankTitle">Дякуємо! Твоє повідомлення вже у нас 💌</div>
     <div class="thank-hint" id="thankHint">Натисни на печиво, щоб відкрити вірш на сьогодні:</div>
@@ -565,11 +537,8 @@
             <stop offset="100%" stop-color="#e0b855"/>
           </radialGradient>
         </defs>
-        <!-- Main cookie body -->
         <circle cx="70" cy="70" r="60" fill="url(#cookieGrad)" stroke="#c49a2e" stroke-width="2"/>
-        <!-- Inner highlight -->
         <circle cx="70" cy="70" r="52" fill="url(#cookieGrad2)" opacity="0.5"/>
-        <!-- Chocolate chips -->
         <circle cx="48" cy="48" r="7" fill="#5c3a1e" opacity="0.85"/>
         <circle cx="90" cy="52" r="6" fill="#5c3a1e" opacity="0.8"/>
         <circle cx="60" cy="85" r="6.5" fill="#5c3a1e" opacity="0.85"/>
@@ -578,16 +547,13 @@
         <circle cx="40" cy="78" r="4.5" fill="#5c3a1e" opacity="0.65"/>
         <circle cx="80" cy="105" r="4.5" fill="#5c3a1e" opacity="0.6"/>
         <circle cx="55" cy="60" r="3.5" fill="#5c3a1e" opacity="0.5"/>
-        <!-- Cute face -->
         <circle cx="55" cy="65" r="4" fill="#3d2510"/>
         <circle cx="85" cy="65" r="4" fill="#3d2510"/>
         <circle cx="56.5" cy="63.5" r="1.5" fill="#fff"/>
         <circle cx="86.5" cy="63.5" r="1.5" fill="#fff"/>
         <path d="M60 78 Q70 88 80 78" fill="none" stroke="#3d2510" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Blush -->
         <ellipse cx="45" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
         <ellipse cx="95" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
-        <!-- Sparkles -->
         <text x="25" y="40" font-size="12" opacity="0.6">✨</text>
         <text x="110" y="35" font-size="10" opacity="0.5">✨</text>
       </svg>
@@ -612,7 +578,6 @@
 
   const scriptURL = 'https://script.google.com/macros/s/AKfycbzjdbvyKiB6aSEnbuYnVhI1ojwblBHkjwGWOZfDQTJh_P_7T6sm7zMp15aHq0N3o4Qe/exec';
 
-  // ---- Telegram user ----
   let telegramId = 'browser_test';
   let username = 'guest';
   try {
@@ -626,7 +591,6 @@
     username = 'guest';
   }
 
-  // ---- Haptic helper ----
   function haptic(type) {
     try {
       if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
@@ -635,14 +599,12 @@
     } catch (e) {}
   }
 
-  // ---- State ----
   let currentLang = 'ua';
   let selectedCategory = null;
   let selectedMood = null;
   let isSending = false;
   let verseRevealed = false;
 
-  // ---- i18n ----
   const i18n = {
     ua: {
       headerTitle: 'Поділися своєю думкою ✨',
@@ -670,7 +632,6 @@
       emptyMain: 'Будь ласка, напиши щось у головному полі 💭',
       noCategory: 'Обери категорію, будь ласка 💡',
       noMood: 'Обери настрій, будь ласка 🎨',
-      sendSuccess: 'Надіслано! Дякуємо 💌',
       sendError: 'Щось пішло не так. Спробуй ще раз 🙏'
     },
     en: {
@@ -699,12 +660,10 @@
       emptyMain: 'Please write something in the main field 💭',
       noCategory: 'Please pick a category 💡',
       noMood: 'Please pick a mood 🎨',
-      sendSuccess: 'Sent! Thank you 💌',
       sendError: 'Something went wrong. Please try again 🙏'
     }
   };
 
-  // ---- Bible verses ----
   const verses = {
     ua: [
       { text: 'Дякуйте за все, бо така Божа воля про вас у Христі Ісусі.', ref: '1 Солунян 5:18', emoji: '🙏' },
@@ -736,7 +695,6 @@
     ]
   };
 
-  // ---- DOM elements ----
   const formScreen = document.getElementById('formScreen');
   const thankYouScreen = document.getElementById('thankYouScreen');
   const headerTitle = document.getElementById('headerTitle');
@@ -761,11 +719,9 @@
   const langUA = document.getElementById('langUA');
   const langEN = document.getElementById('langEN');
 
-  // ---- LocalStorage keys ----
   const LS_DRAFT = 'mini_app_draft_v1';
   const LS_LANG = 'mini_app_lang_v1';
 
-  // ---- Toast ----
   let toastTimer = null;
   function showToast(msg) {
     toastEl.textContent = msg;
@@ -776,7 +732,6 @@
     }, 2200);
   }
 
-  // ---- Draft save/load/clear ----
   function saveDraft() {
     try {
       const draft = {
@@ -807,35 +762,24 @@
     } catch (e) {}
   }
 
-  // ---- Render dynamic content based on language ----
   function renderLanguage(lang) {
     currentLang = lang;
     const t = i18n[lang];
 
-    // Header
     headerTitle.textContent = t.headerTitle;
-
-    // Labels
     labelCategory.textContent = t.labelCategory;
     labelMood.textContent = t.labelMood;
-
-    // Placeholders
     mainText.placeholder = t.mainPlaceholder;
     improveText.placeholder = t.improvePlaceholder;
 
-    // Submit button text (only if not sending)
     if (!isSending) {
       submitText.textContent = t.submitText;
     }
 
-    // Thank you texts
     thankTitle.textContent = t.thankTitle;
     thankHint.textContent = t.thankHint;
-
-    // Again button
     againBtn.textContent = t.againBtn;
 
-    // Chips
     chipsContainer.innerHTML = '';
     t.categories.forEach(function(cat) {
       const btn = document.createElement('button');
@@ -856,7 +800,6 @@
       chipsContainer.appendChild(btn);
     });
 
-    // Moods
     moodsContainer.innerHTML = '';
     t.moods.forEach(function(mood) {
       const btn = document.createElement('button');
@@ -877,12 +820,10 @@
       moodsContainer.appendChild(btn);
     });
 
-    // Language buttons
     langUA.classList.toggle('active', lang === 'ua');
     langEN.classList.toggle('active', lang === 'en');
   }
 
-  // ---- Language switch ----
   function setLanguage(lang) {
     if (lang === currentLang) return;
     haptic('light');
@@ -890,7 +831,6 @@
     try {
       localStorage.setItem(LS_LANG, lang);
     } catch (e) {}
-    // If verse is already visible, re-pick verse in new language
     if (verseRevealed) {
       showVerse();
     }
@@ -899,11 +839,9 @@
   langUA.addEventListener('click', function() { setLanguage('ua'); });
   langEN.addEventListener('click', function() { setLanguage('en'); });
 
-  // ---- Textarea listeners for draft ----
   mainText.addEventListener('input', saveDraft);
   improveText.addEventListener('input', saveDraft);
 
-  // ---- Submit ----
   function getCategoryLabel(value) {
     const t = i18n[currentLang];
     const found = t.categories.find(function(c) { return c.value === value; });
@@ -926,7 +864,6 @@
 
     const t = i18n[currentLang];
 
-    // Validate
     if (!mainText.value.trim()) {
       showToast(t.emptyMain);
       mainText.focus();
@@ -941,17 +878,14 @@
       return;
     }
 
-    // Build goals string
     const goalsStr = '[' + getLangLabel() + '] [' + getCategoryLabel(selectedCategory) + '] [' + getMoodLabel(selectedMood) + '] ' + mainText.value.trim();
 
-    // Prepare FormData
     const formData = new FormData();
     formData.append('goals', goalsStr);
     formData.append('improvements', improveText.value.trim());
     formData.append('telegram_id', telegramId);
     formData.append('username', username);
 
-    // UI: sending state
     isSending = true;
     submitBtn.disabled = true;
     submitText.innerHTML = '<span class="spinner"></span>' + t.sendingText;
@@ -962,7 +896,6 @@
       body: formData
     })
     .then(function() {
-      // Success
       isSending = false;
       submitBtn.disabled = false;
       submitText.textContent = i18n[currentLang].submitText;
@@ -979,27 +912,19 @@
     });
   });
 
-  // ---- Thank you screen ----
   function showThankYouScreen() {
     formScreen.classList.add('hidden');
-    // Reset verse state
     verseRevealed = false;
     verseCard.classList.remove('visible');
     cookieSvg.classList.remove('cracked');
     againBtn.classList.remove('visible');
-    // Show thank you
     thankYouScreen.classList.add('visible');
-    // Reset form after animation
-    setTimeout(function() {
-      // Don't clear form yet — will clear on "again"
-    }, 500);
   }
 
   function goBackToForm() {
     haptic('light');
     thankYouScreen.classList.remove('visible');
     formScreen.classList.remove('hidden');
-    // Clear form
     selectedCategory = null;
     selectedMood = null;
     mainText.value = '';
@@ -1009,19 +934,16 @@
     verseCard.classList.remove('visible');
     cookieSvg.classList.remove('cracked');
     againBtn.classList.remove('visible');
-    // Re-render to clear selections
     renderLanguage(currentLang);
   }
 
   againBtn.addEventListener('click', goBackToForm);
 
-  // ---- Cookie click ----
   cookieWrap.addEventListener('click', function() {
     if (verseRevealed) return;
     haptic('light');
     verseRevealed = true;
     cookieSvg.classList.add('cracked');
-    // After crack animation, show verse
     setTimeout(function() {
       showVerse();
       againBtn.classList.add('visible');
@@ -1035,14 +957,11 @@
     verseRef.textContent = v.ref;
     verseEmoji.textContent = v.emoji;
     verseCard.classList.remove('visible');
-    // Force reflow
     void verseCard.offsetWidth;
     verseCard.classList.add('visible');
   }
 
-  // ---- Initial load ----
   function init() {
-    // Load language
     try {
       const savedLang = localStorage.getItem(LS_LANG);
       if (savedLang === 'en' || savedLang === 'ua') {
@@ -1050,13 +969,9 @@
       }
     } catch (e) {}
 
-    // Load draft
     loadDraft();
-
-    // Render
     renderLanguage(currentLang);
 
-    // Expand Telegram WebApp
     try {
       if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.ready();
