@@ -2,15 +2,18 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#f9f5f0">
+  <meta name="description" content="Затишок · DIY та мінімалістичний декор — Telegram Mini App">
   <title>Затишок · DIY & Мінімалізм</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     /* ============================================================
-       RESET & BASE
+       1. RESET & BASE
        ============================================================ */
-    * {
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -18,29 +21,34 @@
     }
 
     /* ============================================================
-       THEME: COZY PASTEL (default)
+       2. THEME: COZY PASTEL (default)
        ============================================================ */
     :root {
       --bg: #f9f5f0;
       --bg-gradient-1: rgba(201, 126, 90, 0.05);
       --bg-gradient-2: rgba(201, 126, 90, 0.03);
+      --bg-noise: rgba(160, 120, 90, 0.02);
       --card: #fffbf7;
       --paper: #f2ebe3;
       --accent: #c97e5a;
       --accent-light: #dda382;
       --accent-dark: #a85e3c;
       --accent-soft: rgba(201, 126, 90, 0.08);
+      --accent-glow: rgba(201, 126, 90, 0.15);
       --text: #6b5a4e;
       --text-muted: #8a7e72;
       --text-soft: #c4b5a8;
       --border: #e8ddd3;
+      --border-strong: #d9c8b8;
       --input-bg: #fffdfa;
       --row-bg: #faf6f1;
       --row-border: #f0e8df;
       --switch-off: #e0d5c9;
       --switch-knob: #ffffff;
+      --shadow-xs: rgba(100, 70, 50, 0.05);
       --shadow: rgba(100, 70, 50, 0.08);
       --shadow-strong: rgba(100, 70, 50, 0.15);
+      --shadow-deep: rgba(100, 70, 50, 0.22);
       --pin-color: #b5654a;
       --pin-highlight: #e8a080;
       --nav-bg: rgba(249, 245, 240, 0.94);
@@ -66,34 +74,42 @@
       --skeleton-shine: #f6efe7;
       --success: #6fa87c;
       --danger: #d9534f;
+      --warning: #e5a54b;
+      --scrollbar-thumb: #d9c8b8;
       --font-serif: 'Georgia', 'Times New Roman', 'Palatino Linotype', serif;
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: 'SF Mono', 'Menlo', 'Consolas', monospace;
     }
 
     /* ============================================================
-       THEME: NIGHT NEON
+       3. THEME: NIGHT NEON
        ============================================================ */
     html[data-theme="neon"] {
       --bg: #0f0e17;
-      --bg-gradient-1: rgba(255, 106, 213, 0.07);
-      --bg-gradient-2: rgba(94, 234, 212, 0.05);
+      --bg-gradient-1: rgba(255, 106, 213, 0.08);
+      --bg-gradient-2: rgba(94, 234, 212, 0.06);
+      --bg-noise: rgba(255, 106, 213, 0.02);
       --card: #1a1825;
       --paper: #221f33;
       --accent: #ff6ad5;
       --accent-light: #ff9ee2;
       --accent-dark: #d64eb0;
       --accent-soft: rgba(255, 106, 213, 0.12);
+      --accent-glow: rgba(255, 106, 213, 0.4);
       --text: #e8e6f5;
       --text-muted: #9d9bb8;
       --text-soft: #6b6885;
       --border: #2f2b45;
+      --border-strong: #423d5c;
       --input-bg: #221f33;
       --row-bg: #221f33;
       --row-border: #2f2b45;
       --switch-off: #3a3654;
       --switch-knob: #ffffff;
+      --shadow-xs: rgba(0, 0, 0, 0.3);
       --shadow: rgba(0, 0, 0, 0.4);
       --shadow-strong: rgba(255, 106, 213, 0.15);
+      --shadow-deep: rgba(255, 106, 213, 0.25);
       --pin-color: #5eead4;
       --pin-highlight: #a7f3e4;
       --nav-bg: rgba(15, 14, 23, 0.94);
@@ -119,8 +135,13 @@
       --skeleton-shine: #2f2b45;
       --success: #5eead4;
       --danger: #ff6ad5;
+      --warning: #ffb347;
+      --scrollbar-thumb: #423d5c;
     }
 
+    /* ============================================================
+       4. GLOBAL BASE STYLES
+       ============================================================ */
     html, body {
       height: 100%;
       overflow: hidden;
@@ -129,6 +150,8 @@
       color: var(--text);
       user-select: none;
       -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
 
@@ -137,12 +160,43 @@
       flex-direction: column;
       background-image:
         radial-gradient(circle at 20% 10%, var(--bg-gradient-1) 0%, transparent 55%),
-        radial-gradient(circle at 80% 90%, var(--bg-gradient-2) 0%, transparent 55%),
-        radial-gradient(circle at 50% 50%, transparent 0%, transparent 100%);
+        radial-gradient(circle at 80% 90%, var(--bg-gradient-2) 0%, transparent 55%);
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, var(--bg-noise) 2px, var(--bg-noise) 3px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, var(--bg-noise) 2px, var(--bg-noise) 3px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
     }
 
     button {
       font-family: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input, textarea {
+      font-family: inherit;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 4px;
     }
 
     #app {
@@ -151,10 +205,11 @@
       flex-direction: column;
       overflow: hidden;
       position: relative;
+      z-index: 1;
     }
 
     /* ============================================================
-       TOP BAR
+       5. TOP BAR
        ============================================================ */
     .top-bar {
       display: flex;
@@ -183,6 +238,12 @@
       background: var(--accent);
       box-shadow: var(--glow);
       transition: background 0.4s ease, box-shadow 0.4s ease;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.9); }
     }
 
     .brand-sub {
@@ -191,6 +252,25 @@
       color: var(--text-muted);
       letter-spacing: 0.4px;
       margin-left: 2px;
+    }
+
+    .admin-pill {
+      display: none;
+      font-size: 9px;
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 7px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-left: 6px;
+      vertical-align: middle;
+      font-weight: 700;
+      box-shadow: var(--glow);
+    }
+
+    .admin-pill.visible {
+      display: inline-block;
     }
 
     .controls {
@@ -228,18 +308,19 @@
     .ctrl-icon {
       font-size: 13px;
       line-height: 1;
+      transition: transform 0.4s ease;
+    }
+
+    .ctrl-btn:active .ctrl-icon {
+      transform: rotate(20deg);
     }
 
     .ctrl-text {
       text-transform: uppercase;
     }
 
-    html[data-theme="neon"] .ctrl-btn {
-      backdrop-filter: blur(10px);
-    }
-
     /* ============================================================
-       TAB CONTENT
+       6. TAB CONTENT
        ============================================================ */
     .tab-content {
       flex: 1;
@@ -247,12 +328,8 @@
       padding: 16px 20px 20px;
       display: none;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .tab-content::-webkit-scrollbar {
-      width: 0;
-      display: none;
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) transparent;
     }
 
     .tab-content.active {
@@ -285,7 +362,7 @@
     }
 
     /* ============================================================
-       TAB 1: SURVEY
+       7. TAB 1: SURVEY
        ============================================================ */
     .survey-card {
       background: var(--card);
@@ -315,7 +392,6 @@
       border: 1.5px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
-      font-family: var(--font-sans);
       font-size: 15px;
       line-height: 1.5;
       color: var(--text);
@@ -342,11 +418,17 @@
       margin-top: 6px;
       letter-spacing: 0.3px;
       transition: color 0.2s ease;
+      font-family: var(--font-mono);
     }
 
     .char-counter.warn {
       color: var(--accent);
       font-weight: 600;
+    }
+
+    .char-counter.danger {
+      color: var(--danger);
+      font-weight: 700;
     }
 
     .toggle-row {
@@ -373,6 +455,7 @@
       font-size: 14px;
       color: var(--text);
       font-weight: 500;
+      transition: color 0.3s ease;
     }
 
     .toggle-hint {
@@ -406,7 +489,7 @@
       height: 22px;
       background: var(--switch-knob);
       border-radius: 50%;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -433,7 +516,6 @@
       padding: 12px 16px;
       border: 1.5px solid var(--border);
       border-radius: 12px;
-      font-family: var(--font-sans);
       font-size: 15px;
       color: var(--text);
       background: var(--input-bg);
@@ -488,17 +570,14 @@
       transform: none;
     }
 
-    html[data-theme="neon"] .submit-btn {
-      box-shadow: 0 4px 16px rgba(255, 106, 213, 0.35), var(--glow);
-    }
-
     .spinner {
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
+      display: inline-block;
     }
 
     @keyframes spin {
@@ -506,7 +585,7 @@
     }
 
     /* ============================================================
-       TAB 2: BOARD
+       8. TAB 2: BOARD
        ============================================================ */
     .board-header {
       display: flex;
@@ -550,6 +629,15 @@
       animation: spin 0.8s linear infinite;
     }
 
+    .board-stats {
+      font-size: 10px;
+      color: var(--text-soft);
+      letter-spacing: 0.4px;
+      margin-top: 4px;
+      font-style: italic;
+      transition: color 0.4s ease;
+    }
+
     .board-grid {
       display: flex;
       flex-direction: column;
@@ -577,6 +665,7 @@
     .sticker-card:nth-child(even) { transform: rotate(1.1deg); }
     .sticker-card:nth-child(3n) { transform: rotate(-0.7deg); }
     .sticker-card:nth-child(5n) { transform: rotate(1.6deg); }
+    .sticker-card:nth-child(7n) { transform: rotate(-1.5deg); }
 
     .sticker-card:hover {
       transform: rotate(0deg) scale(1.01);
@@ -584,7 +673,7 @@
     }
 
     html[data-theme="neon"] .sticker-card {
-      box-shadow: 2px 4px 16px rgba(0,0,0,0.5), 0 0 20px rgba(255, 106, 213, 0.06);
+      box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 106, 213, 0.06);
       border: 1px solid var(--border);
     }
 
@@ -607,7 +696,7 @@
       height: 16px;
       background: radial-gradient(circle at 35% 35%, var(--pin-highlight), var(--pin-color));
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1), var(--glow);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(0, 0, 0, 0.1), var(--glow);
       transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
@@ -653,6 +742,20 @@
       margin-bottom: 10px;
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sticker-author::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+      flex-shrink: 0;
     }
 
     .sticker-text {
@@ -664,6 +767,7 @@
       word-break: break-word;
       position: relative;
       z-index: 1;
+      white-space: pre-wrap;
     }
 
     .sticker-date {
@@ -759,7 +863,6 @@
       opacity: 0.6;
     }
 
-    /* Skeleton */
     .skeleton-card {
       position: relative;
       background: var(--card);
@@ -790,7 +893,7 @@
     }
 
     /* ============================================================
-       TAB 3: COOKIE
+       9. TAB 3: COOKIE
        ============================================================ */
     .cookie-container {
       flex: 1;
@@ -809,7 +912,7 @@
       font-style: italic;
       color: var(--text-muted);
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
       min-height: 24px;
       transition: opacity 0.3s ease, color 0.4s ease;
     }
@@ -831,11 +934,12 @@
       background: var(--text-soft);
       margin: 0 3px;
       transition: background 0.3s ease, transform 0.3s ease;
+      vertical-align: middle;
     }
 
     .cookie-counter .dot.filled {
       background: var(--accent);
-      transform: scale(1.3);
+      transform: scale(1.4);
       box-shadow: var(--glow);
     }
 
@@ -1045,7 +1149,7 @@
     }
 
     /* ============================================================
-       BOTTOM NAV
+       10. BOTTOM NAV
        ============================================================ */
     .bottom-nav {
       display: flex;
@@ -1101,7 +1205,7 @@
     }
 
     /* ============================================================
-       TOAST
+       11. TOAST
        ============================================================ */
     .toast {
       position: fixed;
@@ -1118,7 +1222,7 @@
       pointer-events: none;
       transition: opacity 0.35s ease, transform 0.35s ease, background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
       z-index: 1000;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15), var(--glow);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), var(--glow);
       white-space: nowrap;
       max-width: 90vw;
       text-align: center;
@@ -1136,24 +1240,36 @@
     }
 
     /* ============================================================
-       ADMIN BADGE
+       12. RESPONSIVE
        ============================================================ */
-    .admin-pill {
-      display: none;
-      font-size: 9px;
-      background: var(--accent);
-      color: #fff;
-      padding: 2px 7px;
-      border-radius: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-left: 6px;
-      vertical-align: middle;
-      font-weight: 700;
+    @media (min-width: 480px) {
+      .tab-content {
+        padding: 20px 32px 24px;
+      }
+      .page-title { font-size: 28px; }
+      .cookie-wrapper { width: 240px; height: 240px; }
+      .prediction-ribbon { width: 320px; }
     }
 
-    .admin-pill.visible {
-      display: inline-block;
+    @media (min-width: 768px) {
+      .tab-content {
+        padding: 24px max(32px, calc(50vw - 340px)) 28px;
+      }
+      .survey-card { padding: 30px 28px; }
+      .cookie-wrapper { width: 260px; height: 260px; }
+    }
+
+    @media (max-height: 640px) {
+      .cookie-container { min-height: 340px; }
+      .cookie-wrapper { width: 180px; height: 180px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -1234,6 +1350,7 @@
       <div>
         <h1 class="page-title">Спільна дошка</h1>
         <p class="page-subtitle">Ідеї, що надихають спільноту 📌</p>
+        <div class="board-stats" id="boardStats"></div>
       </div>
       <button class="refresh-btn" id="refreshBtn" type="button" title="Оновити">
         <span class="refresh-icon">🔄</span>
@@ -1384,21 +1501,33 @@
 <div class="toast" id="toast"></div>
 
 <script>
+/* ============================================================
+   Telegram Mini App — Затишок DIY
+   All logic wrapped in DOMContentLoaded + global delegation
+   ============================================================ */
 document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  /* ============================================================
+  /* ------------------------------------------------------------
      CONFIG
-     ============================================================ */
-  var GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9wBqXccRWpvxK5rGZghQ8cMRr3iXhPoDmVITtTHtvCQeteu0epdvey0FChz34lyB6tg/exec';
+     ------------------------------------------------------------ */
+  var GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwWFG_0iYC2RR6zT0MUY8Lqb518MXQ-B0L1MhfjsAYFcacg7-XOUTgy4OOJ8bA4LXvSAg/exec';
   var ADMIN_ID = 7431962320;
   var MAX_TEXT_LEN = 500;
   var MAX_NAME_LEN = 50;
+  var STORAGE_KEYS = {
+    theme: 'cozy_theme',
+    name: 'cozy_user_name',
+    ideas: 'cozy_ideas',
+    liked: 'cozy_liked',
+    cookieBroken: 'cozy_cookie_broken',
+    verseIdx: 'cozy_verse_index'
+  };
 
-  /* ============================================================
+  /* ------------------------------------------------------------
      TELEGRAM
-     ============================================================ */
-  var tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+     ------------------------------------------------------------ */
+  var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
 
   if (tg) {
     try { tg.ready(); } catch (e) {}
@@ -1406,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', function () {
     try { tg.enableClosingConfirmation(); } catch (e) {}
   }
 
-  var tgUserData = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
+  var tgUserData = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) ? tg.initDataUnsafe.user : null;
   var userId = tgUserData && tgUserData.id ? tgUserData.id : null;
   var isAdmin = userId === ADMIN_ID;
 
@@ -1429,11 +1558,11 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (e) {}
   }
 
-  /* ============================================================
+  /* ------------------------------------------------------------
      STATE
-     ============================================================ */
+     ------------------------------------------------------------ */
   var state = {
-    theme: localStorage.getItem('cozy_theme') || 'pastel',
+    theme: localStorage.getItem(STORAGE_KEYS.theme) || 'pastel',
     isAnonymous: true,
     isPrivate: false,
     localIdeas: [],
@@ -1444,68 +1573,68 @@ document.addEventListener('DOMContentLoaded', function () {
     cookieClicks: 0,
     cookieBroken: false,
     currentVerse: null,
-    isSubmitting: false
+    isSubmitting: false,
+    activeTab: 'opinion'
   };
 
-  try {
-    state.localIdeas = JSON.parse(localStorage.getItem('cozy_ideas') || '[]');
-  } catch (e) { state.localIdeas = []; }
-
-  try {
-    state.likedIds = JSON.parse(localStorage.getItem('cozy_liked') || '[]');
-  } catch (e) { state.likedIds = []; }
-
+  try { state.localIdeas = JSON.parse(localStorage.getItem(STORAGE_KEYS.ideas) || '[]'); } catch (e) { state.localIdeas = []; }
+  try { state.likedIds = JSON.parse(localStorage.getItem(STORAGE_KEYS.liked) || '[]'); } catch (e) { state.likedIds = []; }
   if (!Array.isArray(state.localIdeas)) state.localIdeas = [];
   if (!Array.isArray(state.likedIds)) state.likedIds = [];
 
-  /* ============================================================
-     DOM REFS
-     ============================================================ */
+  /* ------------------------------------------------------------
+     DOM HELPERS
+     ------------------------------------------------------------ */
   function $(id) { return document.getElementById(id); }
   function $all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
 
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = String(str == null ? '' : str);
+    return div.innerHTML;
+  }
+
+  function escapeAttr(str) {
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function safeStorageSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
+
+  function safeStorageRemove(key) {
+    try { localStorage.removeItem(key); } catch (e) {}
+  }
+
+  /* ------------------------------------------------------------
+     TOAST
+     ------------------------------------------------------------ */
+  var toastEl = $('toast');
+  var toastTimer = null;
+
+  function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('show');
+    }, 2400);
+  }
+
+  /* ------------------------------------------------------------
+     THEME
+     ------------------------------------------------------------ */
   var themeBtn = $('themeBtn');
   var themeIcon = $('themeIcon');
   var themeText = $('themeText');
-  var adminPill = $('adminPill');
-  var anonToggle = $('anonToggle');
-  var anonLabel = $('anonLabel');
-  var anonHint = $('anonHint');
-  var nameWrapper = $('nameWrapper');
-  var nameInput = $('nameInput');
-  var privacyToggle = $('privacyToggle');
-  var privacyLabel = $('privacyLabel');
-  var privacyHint = $('privacyHint');
-  var surveyText = $('surveyText');
-  var charCounter = $('charCounter');
-  var submitSurveyBtn = $('submitSurveyBtn');
-  var submitBtnText = $('submitBtnText');
-  var boardGrid = $('boardGrid');
-  var refreshBtn = $('refreshBtn');
-  var toastEl = $('toast');
-  var cookieWrapper = $('cookieWrapper');
-  var cookieSvg = $('cookieSvg');
-  var cookieHalves = $('cookieHalves');
-  var cookieHint = $('cookieHint');
-  var cookieCounter = $('cookieCounter');
-  var cookieDots = $all('#cookieCounter .dot');
-  var predictionRibbon = $('predictionRibbon');
-  var predictionText = $('predictionText');
-  var predictionVerse = $('predictionVerse');
-  var resetCookieBtn = $('resetCookieBtn');
-  var crackGroup = $('crackGroup');
-  var crack1 = $('crack1');
-  var crack2 = $('crack2');
-  var crack3 = $('crack3');
-  var crack4 = $('crack4');
 
-  /* ============================================================
-     THEME
-     ============================================================ */
   function applyTheme(theme) {
     state.theme = theme;
     document.documentElement.setAttribute('data-theme', theme === 'neon' ? 'neon' : 'cozy');
-    localStorage.setItem('cozy_theme', theme);
+    safeStorageSet(STORAGE_KEYS.theme, theme);
     if (themeIcon) themeIcon.textContent = theme === 'neon' ? '🌙' : '🌿';
     if (themeText) themeText.textContent = theme === 'neon' ? 'Neon' : 'Pastel';
 
@@ -1518,19 +1647,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  if (themeBtn) {
-    themeBtn.addEventListener('click', function () {
-      applyTheme(state.theme === 'pastel' ? 'neon' : 'pastel');
-      haptic('impact', 'light');
-    });
+  function toggleTheme() {
+    applyTheme(state.theme === 'pastel' ? 'neon' : 'pastel');
+    haptic('impact', 'light');
   }
 
-  /* ============================================================
+  /* ------------------------------------------------------------
      NAVIGATION
-     ============================================================ */
+     ------------------------------------------------------------ */
   var TAB_NAMES = ['opinion', 'board', 'cookie'];
 
   function switchTab(tabName) {
+    if (TAB_NAMES.indexOf(tabName) === -1) return;
+    state.activeTab = tabName;
+
     TAB_NAMES.forEach(function (t) {
       var content = $('tab-' + t);
       var btn = document.querySelector('.nav-btn[data-tab="' + t + '"]');
@@ -1545,184 +1675,144 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     haptic('selection');
 
-    if (tabName === 'board') {
-      if (!state.boardLoadedOnce && !state.boardLoading) {
-        loadBoardFromSheets(false);
-      }
+    if (tabName === 'board' && !state.boardLoadedOnce && !state.boardLoading) {
+      loadBoardFromSheets(false);
     }
   }
 
-  $all('.nav-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var tabName = btn.getAttribute('data-tab');
-      if (tabName) switchTab(tabName);
-    });
-  });
+  /* ------------------------------------------------------------
+     TAB 1: SURVEY LOGIC
+     ------------------------------------------------------------ */
+  var surveyText = $('surveyText');
+  var charCounter = $('charCounter');
+  var anonToggle = $('anonToggle');
+  var anonLabel = $('anonLabel');
+  var anonHint = $('anonHint');
+  var nameWrapper = $('nameWrapper');
+  var nameInput = $('nameInput');
+  var privacyToggle = $('privacyToggle');
+  var privacyLabel = $('privacyLabel');
+  var privacyHint = $('privacyHint');
+  var submitSurveyBtn = $('submitSurveyBtn');
+  var submitBtnText = $('submitBtnText');
 
-  /* ============================================================
-     TOAST
-     ============================================================ */
-  var toastTimer = null;
-
-  function showToast(msg) {
-    if (!toastEl) return;
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    if (toastTimer) clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
-      toastEl.classList.remove('show');
-    }, 2400);
-  }
-
-  /* ============================================================
-     TAB 1: SURVEY
-     ============================================================ */
   function updateCharCounter() {
     if (!surveyText || !charCounter) return;
     var len = surveyText.value.length;
     charCounter.textContent = len + ' / ' + MAX_TEXT_LEN;
-    if (len > MAX_TEXT_LEN * 0.85) {
+    charCounter.classList.remove('warn', 'danger');
+    if (len >= MAX_TEXT_LEN) {
+      charCounter.classList.add('danger');
+    } else if (len > MAX_TEXT_LEN * 0.85) {
       charCounter.classList.add('warn');
-    } else {
-      charCounter.classList.remove('warn');
     }
   }
 
-  if (surveyText) {
-    surveyText.addEventListener('input', updateCharCounter);
-    updateCharCounter();
-  }
-
-  if (anonToggle) {
-    anonToggle.addEventListener('click', function () {
-      state.isAnonymous = !state.isAnonymous;
+  function toggleAnon() {
+    state.isAnonymous = !state.isAnonymous;
+    if (anonToggle) {
       anonToggle.classList.toggle('active', state.isAnonymous);
       anonToggle.setAttribute('aria-checked', state.isAnonymous ? 'true' : 'false');
-      if (anonLabel) anonLabel.textContent = state.isAnonymous ? 'Анонімно' : 'Вказати ім\'я';
-      if (anonHint) anonHint.textContent = state.isAnonymous ? 'Твоє ім\'я буде приховано' : 'Твоє ім\'я буде видно на дошці';
-      if (nameWrapper) nameWrapper.classList.toggle('visible', !state.isAnonymous);
-      haptic('impact', 'light');
-      if (state.isAnonymous) {
-        if (nameInput) nameInput.value = '';
-      } else {
-        setTimeout(function () {
-          if (nameInput) try { nameInput.focus(); } catch (e) {}
-        }, 200);
-      }
-    });
-    anonToggle.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        anonToggle.click();
-      }
-    });
+    }
+    if (anonLabel) anonLabel.textContent = state.isAnonymous ? 'Анонімно' : 'Вказати ім\'я';
+    if (anonHint) anonHint.textContent = state.isAnonymous ? 'Твоє ім\'я буде приховано' : 'Твоє ім\'я буде видно на дошці';
+    if (nameWrapper) nameWrapper.classList.toggle('visible', !state.isAnonymous);
+    haptic('impact', 'light');
+    if (state.isAnonymous) {
+      if (nameInput) nameInput.value = '';
+    } else {
+      setTimeout(function () {
+        if (nameInput) { try { nameInput.focus(); } catch (e) {} }
+      }, 200);
+    }
   }
 
-  var savedName = localStorage.getItem('cozy_user_name') || '';
-  if (nameInput) {
-    if (savedName) nameInput.value = savedName;
-    nameInput.addEventListener('input', function () {
-      localStorage.setItem('cozy_user_name', nameInput.value);
-    });
-  }
-
-  if (privacyToggle) {
-    privacyToggle.addEventListener('click', function () {
-      state.isPrivate = !state.isPrivate;
+  function togglePrivacy() {
+    state.isPrivate = !state.isPrivate;
+    if (privacyToggle) {
       privacyToggle.classList.toggle('active', !state.isPrivate);
       privacyToggle.setAttribute('aria-checked', state.isPrivate ? 'false' : 'true');
-      if (privacyLabel) privacyLabel.textContent = state.isPrivate ? '🔒 Тільки адміну (приватно)' : '📌 На загальну дошку';
-      if (privacyHint) privacyHint.textContent = state.isPrivate ? 'Ідею побачить лише адмін' : 'Ідея буде видима всім';
-      haptic('impact', 'light');
-    });
-    privacyToggle.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        privacyToggle.click();
-      }
-    });
+    }
+    if (privacyLabel) privacyLabel.textContent = state.isPrivate ? '🔒 Тільки адміну (приватно)' : '📌 На загальну дошку';
+    if (privacyHint) privacyHint.textContent = state.isPrivate ? 'Ідею побачить лише адмін' : 'Ідея буде видима всім';
+    haptic('impact', 'light');
   }
 
   function setSubmitting(isSubmitting) {
     state.isSubmitting = isSubmitting;
     if (!submitSurveyBtn) return;
     submitSurveyBtn.disabled = isSubmitting;
-    if (isSubmitting) {
-      submitBtnText.textContent = 'Надсилаю...';
-    } else {
-      submitBtnText.textContent = 'Надіслати';
+    if (submitBtnText) {
+      if (isSubmitting) {
+        submitBtnText.innerHTML = '<span class="spinner"></span> Надсилаю...';
+      } else {
+        submitBtnText.textContent = 'Надіслати';
+      }
     }
   }
 
-  if (submitSurveyBtn) {
-    submitSurveyBtn.addEventListener('click', function () {
-      if (state.isSubmitting) return;
+  function submitSurvey() {
+    if (state.isSubmitting) return;
 
-      var text = surveyText ? surveyText.value.trim() : '';
-      var customName = nameInput ? nameInput.value.trim() : '';
-      var displayName = state.isAnonymous ? 'Анонім' : (customName || 'Анонім');
+    var text = surveyText ? surveyText.value.trim() : '';
+    var customName = nameInput ? nameInput.value.trim() : '';
+    var displayName = state.isAnonymous ? 'Анонім' : (customName || 'Анонім');
 
-      if (!text) {
-        showToast('Будь ласка, напиши щось ✏️');
-        haptic('notification', 'error');
-        return;
-      }
+    if (!text) {
+      showToast('Будь ласка, напиши щось ✏️');
+      haptic('notification', 'error');
+      return;
+    }
 
-      if (!state.isAnonymous && !customName) {
-        showToast('Введи своє ім\'я або обери "Анонімно"');
-        haptic('notification', 'warning');
-        return;
-      }
+    if (!state.isAnonymous && !customName) {
+      showToast('Введи своє ім\'я або обери "Анонімно"');
+      haptic('notification', 'warning');
+      return;
+    }
 
-      setSubmitting(true);
+    setSubmitting(true);
 
-      var newIdea = {
-        id: 'local-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-        text: text,
-        name: displayName,
-        likes: 0,
-        isPrivate: state.isPrivate,
-        createdAt: Date.now()
-      };
+    var newIdea = {
+      id: 'local-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+      text: text,
+      name: displayName,
+      likes: 0,
+      isPrivate: state.isPrivate,
+      createdAt: Date.now()
+    };
 
-      var payload = {
-        action: 'submitIdea',
-        text: text,
-        name: displayName,
-        isPrivate: state.isPrivate,
-        isAnonymous: state.isAnonymous,
-        tgUser: buildTgUser(),
-        tgUserId: userId,
-        timestamp: new Date().toISOString()
-      };
+    var payload = {
+      action: 'submitIdea',
+      text: text,
+      name: displayName,
+      isPrivate: state.isPrivate,
+      isAnonymous: state.isAnonymous,
+      tgUser: buildTgUser(),
+      tgUserId: userId,
+      timestamp: new Date().toISOString()
+    };
 
-      var requestPromise;
+    var requestPromise;
+    try {
+      requestPromise = fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      requestPromise = Promise.reject(e);
+    }
 
-      try {
-        requestPromise = fetch(GOOGLE_APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-      } catch (e) {
-        requestPromise = Promise.reject(e);
-      }
-
-      requestPromise
-        .then(function () {
-          handleSubmitSuccess(newIdea, state.isPrivate);
-        })
-        .catch(function () {
-          handleSubmitSuccess(newIdea, state.isPrivate);
-        });
-    });
+    requestPromise
+      .then(function () { handleSubmitSuccess(newIdea, state.isPrivate); })
+      .catch(function () { handleSubmitSuccess(newIdea, state.isPrivate); });
   }
 
   function handleSubmitSuccess(newIdea, wasPrivate) {
     if (!wasPrivate) {
       state.localIdeas.unshift(newIdea);
-      localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
+      safeStorageSet(STORAGE_KEYS.ideas, JSON.stringify(state.localIdeas));
       renderBoard();
       setTimeout(function () { loadBoardFromSheets(true); }, 1200);
     }
@@ -1731,17 +1821,17 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCharCounter();
     setSubmitting(false);
 
-    if (wasPrivate) {
-      showToast('Надіслано приватно адміну 🔒');
-    } else {
-      showToast('Дякуємо! Твоя ідея на дошці 💫');
-    }
+    showToast(wasPrivate ? 'Надіслано приватно адміну 🔒' : 'Дякуємо! Твоя ідея на дошці 💫');
     haptic('notification', 'success');
   }
 
-  /* ============================================================
-     TAB 2: BOARD
-     ============================================================ */
+  /* ------------------------------------------------------------
+     TAB 2: BOARD LOGIC
+     ------------------------------------------------------------ */
+  var boardGrid = $('boardGrid');
+  var refreshBtn = $('refreshBtn');
+  var boardStats = $('boardStats');
+
   function showSkeletons() {
     if (!boardGrid) return;
     boardGrid.innerHTML = '';
@@ -1775,7 +1865,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var likes = parseInt(it.likes || it.likeCount || 0, 10);
       if (isNaN(likes)) likes = 0;
 
-      var id = it.id !== undefined && it.id !== null
+      var id = (it.id !== undefined && it.id !== null)
         ? String(it.id)
         : String(it.row !== undefined && it.row !== null ? it.row : ('remote-' + i + '-' + Date.now()));
 
@@ -1822,7 +1912,6 @@ document.addEventListener('DOMContentLoaded', function () {
           try {
             data = JSON.parse(text);
           } catch (e) {
-            // Apps Script sometimes wraps in HTML — try to strip
             var m = text.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
             if (m) {
               try { data = JSON.parse(m[0]); } catch (e2) { data = null; }
@@ -1831,22 +1920,15 @@ document.addEventListener('DOMContentLoaded', function () {
           if (!data) throw new Error('Invalid JSON');
 
           var items = [];
-          if (Array.isArray(data)) {
-            items = data;
-          } else if (data && Array.isArray(data.ideas)) {
-            items = data.ideas;
-          } else if (data && Array.isArray(data.data)) {
-            items = data.data;
-          } else if (data && Array.isArray(data.result)) {
-            items = data.result;
-          } else if (data && data.status === 'success' && Array.isArray(data.result)) {
-            items = data.result;
-          }
+          if (Array.isArray(data)) items = data;
+          else if (data && Array.isArray(data.ideas)) items = data.ideas;
+          else if (data && Array.isArray(data.data)) items = data.data;
+          else if (data && Array.isArray(data.result)) items = data.result;
+          else if (data && data.status === 'success' && Array.isArray(data.result)) items = data.result;
+
           done(true, items);
         })
-        .catch(function (err) {
-          done(false, []);
-        });
+        .catch(function () { done(false, []); });
     } catch (e) {
       done(false, []);
     }
@@ -1860,6 +1942,19 @@ document.addEventListener('DOMContentLoaded', function () {
       if (state.remoteIdeas[j].id === id) return state.remoteIdeas[j];
     }
     return null;
+  }
+
+  function formatDate(ts) {
+    if (!ts) return '';
+    var d = new Date(ts);
+    if (isNaN(d.getTime())) return '';
+    var dd = d.getDate();
+    var mm = d.getMonth() + 1;
+    var yy = d.getFullYear();
+    var hh = d.getHours();
+    var mn = d.getMinutes();
+    return dd + '.' + (mm < 10 ? '0' : '') + mm + '.' + yy + ' · ' +
+      (hh < 10 ? '0' : '') + hh + ':' + (mn < 10 ? '0' : '') + mn;
   }
 
   function renderBoard() {
@@ -1895,6 +1990,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+    if (boardStats) {
+      if (merged.length === 0) {
+        boardStats.textContent = '';
+      } else {
+        boardStats.textContent = 'Ідей на дошці: ' + merged.length;
+      }
+    }
+
     if (merged.length === 0) {
       boardGrid.innerHTML =
         '<div class="empty-board">' +
@@ -1911,23 +2014,14 @@ document.addEventListener('DOMContentLoaded', function () {
       card.style.animationDelay = (k * 0.05) + 's';
 
       var isLiked = state.likedIds.indexOf(idea.id) !== -1;
-
-      var dateHtml = '';
-      if (idea.createdAt) {
-        var d = new Date(idea.createdAt);
-        if (!isNaN(d.getTime())) {
-          var dd = d.getDate();
-          var mm = d.getMonth() + 1;
-          var yy = d.getFullYear();
-          dateHtml = '<div class="sticker-date">' + dd + '.' + (mm < 10 ? '0' : '') + mm + '.' + yy + '</div>';
-        }
-      }
+      var dateHtml = formatDate(idea.createdAt);
+      var dateBlock = dateHtml ? '<div class="sticker-date">' + dateHtml + '</div>' : '';
 
       card.innerHTML =
         '<div class="pin"><div class="pin-head"></div><div class="pin-needle"></div></div>' +
         '<div class="sticker-author">' + escapeHtml(idea.name) + '</div>' +
         '<div class="sticker-text">' + escapeHtml(idea.text) + '</div>' +
-        dateHtml +
+        dateBlock +
         '<div class="sticker-footer">' +
           '<button class="like-btn ' + (isLiked ? 'liked' : '') + '" data-id="' + escapeAttr(idea.id) + '" type="button">' +
             '<span class="like-heart">' + (isLiked ? '❤️' : '🤍') + '</span>' +
@@ -1938,60 +2032,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
       boardGrid.appendChild(card);
     }
-
-    $all('.like-btn').forEach(function (btn) {
-      btn.addEventListener('click', handleLike);
-    });
-    $all('.delete-btn').forEach(function (btn) {
-      btn.addEventListener('click', handleDelete);
-    });
   }
 
-  function handleLike(e) {
-    e.stopPropagation();
-    var btn = e.currentTarget;
+  function handleLike(btn) {
     var id = btn.getAttribute('data-id');
     if (!id) return;
 
     var idea = findIdeaById(id);
     var likedIdx = state.likedIds.indexOf(id);
+    var heart = btn.querySelector('.like-heart');
+    var cnt = btn.querySelector('.like-count');
 
     if (likedIdx === -1) {
       if (idea) idea.likes = (idea.likes || 0) + 1;
       state.likedIds.push(id);
       btn.classList.add('liked');
-      var heart = btn.querySelector('.like-heart');
-      var cnt = btn.querySelector('.like-count');
       if (heart) heart.textContent = '❤️';
       if (cnt) {
         var current = parseInt(cnt.textContent, 10) || 0;
-        cnt.textContent = (idea ? idea.likes : current + 1);
+        cnt.textContent = idea ? idea.likes : current + 1;
       }
       haptic('impact', 'light');
     } else {
       if (idea) idea.likes = Math.max(0, (idea.likes || 0) - 1);
       state.likedIds.splice(likedIdx, 1);
       btn.classList.remove('liked');
-      var heart2 = btn.querySelector('.like-heart');
-      var cnt2 = btn.querySelector('.like-count');
-      if (heart2) heart2.textContent = '🤍';
-      if (cnt2) {
-        var current2 = parseInt(cnt2.textContent, 10) || 0;
-        cnt2.textContent = (idea ? idea.likes : Math.max(0, current2 - 1));
+      if (heart) heart.textContent = '🤍';
+      if (cnt) {
+        var current2 = parseInt(cnt.textContent, 10) || 0;
+        cnt.textContent = idea ? idea.likes : Math.max(0, current2 - 1);
       }
       haptic('impact', 'soft');
     }
 
-    try {
-      localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
-      localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
-    } catch (e) {}
+    safeStorageSet(STORAGE_KEYS.ideas, JSON.stringify(state.localIdeas));
+    safeStorageSet(STORAGE_KEYS.liked, JSON.stringify(state.likedIds));
   }
 
-  function handleDelete(e) {
-    e.stopPropagation();
+  function handleDelete(btn) {
     if (!isAdmin) return;
-    var btn = e.currentTarget;
     var id = btn.getAttribute('data-id');
     if (!id) return;
 
@@ -2009,16 +2088,14 @@ document.addEventListener('DOMContentLoaded', function () {
           tgUserId: userId
         })
       }).catch(function () {});
-    } catch (err) {}
+    } catch (e) {}
 
     state.localIdeas = state.localIdeas.filter(function (i) { return i.id !== id; });
     state.remoteIdeas = state.remoteIdeas.filter(function (i) { return i.id !== id; });
     state.likedIds = state.likedIds.filter(function (lid) { return lid !== id; });
 
-    try {
-      localStorage.setItem('cozy_ideas', JSON.stringify(state.localIdeas));
-      localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
-    } catch (e) {}
+    safeStorageSet(STORAGE_KEYS.ideas, JSON.stringify(state.localIdeas));
+    safeStorageSet(STORAGE_KEYS.liked, JSON.stringify(state.likedIds));
 
     renderBoard();
     haptic('notification', 'warning');
@@ -2026,28 +2103,9 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () { loadBoardFromSheets(true); }, 800);
   }
 
-  if (refreshBtn) {
-    refreshBtn.addEventListener('click', function () {
-      haptic('impact', 'light');
-      loadBoardFromSheets(false);
-    });
-  }
-
-  function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.textContent = String(str == null ? '' : str);
-    return div.innerHTML;
-  }
-
-  function escapeAttr(str) {
-    return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-
-  /* ============================================================
-     TAB 3: COOKIE
-     ============================================================ */
+  /* ------------------------------------------------------------
+     TAB 3: COOKIE LOGIC
+     ------------------------------------------------------------ */
   var VERSES = [
     { text: '«Бо Я знаю ті думки, які думаю про вас, — говорить Господь, — думки спокою, а не на зло, щоб дати вам будучність та надію.»', ref: 'Єремія 29:11' },
     { text: '«Усе можу в Тім, Хто мене підкріплює, — у Христі.»', ref: 'Филип\'ян 4:13' },
@@ -2071,14 +2129,26 @@ document.addEventListener('DOMContentLoaded', function () {
     { text: '«Все робіть без нарікань та без сумніву, щоб були ви непорочні та чисті.»', ref: 'Филип\'ян 2:14-15' }
   ];
 
+  var cookieWrapper = $('cookieWrapper');
+  var cookieSvg = $('cookieSvg');
+  var cookieHalves = $('cookieHalves');
+  var cookieHint = $('cookieHint');
+  var cookieCounter = $('cookieCounter');
+  var cookieDots = $all('#cookieCounter .dot');
+  var predictionRibbon = $('predictionRibbon');
+  var predictionText = $('predictionText');
+  var predictionVerse = $('predictionVerse');
+  var resetCookieBtn = $('resetCookieBtn');
+  var crackGroup = $('crackGroup');
+  var crack1 = $('crack1');
+  var crack2 = $('crack2');
+  var crack3 = $('crack3');
+  var crack4 = $('crack4');
+
   function updateCookieDots() {
-    if (!cookieDots) return;
     for (var i = 0; i < cookieDots.length; i++) {
-      if (i < state.cookieClicks) {
-        cookieDots[i].classList.add('filled');
-      } else {
-        cookieDots[i].classList.remove('filled');
-      }
+      if (i < state.cookieClicks) cookieDots[i].classList.add('filled');
+      else cookieDots[i].classList.remove('filled');
     }
   }
 
@@ -2123,10 +2193,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (predictionVerse) predictionVerse.textContent = '— ' + state.currentVerse.ref;
         if (predictionRibbon) predictionRibbon.classList.add('visible');
 
-        try {
-          localStorage.setItem('cozy_cookie_broken', 'true');
-          localStorage.setItem('cozy_verse_index', String(idx));
-        } catch (e) {}
+        safeStorageSet(STORAGE_KEYS.cookieBroken, 'true');
+        safeStorageSet(STORAGE_KEYS.verseIdx, String(idx));
 
         if (resetCookieBtn) resetCookieBtn.classList.add('visible');
         haptic('impact', 'medium');
@@ -2134,97 +2202,209 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 150);
   }
 
-  if (cookieWrapper) {
-    cookieWrapper.addEventListener('click', function () {
-      if (state.cookieBroken) return;
+  function handleCookieClick() {
+    if (state.cookieBroken) return;
 
-      state.cookieClicks++;
-      updateCookieDots();
-      haptic('impact', 'light');
+    state.cookieClicks++;
+    updateCookieDots();
+    haptic('impact', 'light');
 
-      if (state.cookieClicks <= 3) {
-        if (crackGroup) crackGroup.setAttribute('opacity', '1');
+    if (state.cookieClicks <= 3) {
+      if (crackGroup) crackGroup.setAttribute('opacity', '1');
 
-        if (state.cookieClicks === 1) {
-          if (crack1) {
-            crack1.style.transition = 'stroke-dashoffset 0.4s ease';
-            crack1.style.strokeDashoffset = '0';
-          }
-          if (cookieHint) cookieHint.textContent = 'Ще трохи...';
-        } else if (state.cookieClicks === 2) {
-          if (crack2) {
-            crack2.style.transition = 'stroke-dashoffset 0.4s ease';
-            crack2.style.strokeDashoffset = '0';
-          }
-          if (cookieHint) cookieHint.textContent = 'Вже близько...';
-        } else if (state.cookieClicks === 3) {
-          if (crack3) {
-            crack3.style.transition = 'stroke-dashoffset 0.35s ease';
-            crack3.style.strokeDashoffset = '0';
-          }
-          if (crack4) {
-            crack4.style.transition = 'stroke-dashoffset 0.35s ease';
-            crack4.style.strokeDashoffset = '0';
-          }
-          if (cookieWrapper) cookieWrapper.classList.add('cracked');
-          if (cookieHint) cookieHint.textContent = 'Ще один...';
+      if (state.cookieClicks === 1) {
+        if (crack1) {
+          crack1.style.transition = 'stroke-dashoffset 0.4s ease';
+          crack1.style.strokeDashoffset = '0';
         }
-
-        if (cookieSvg) {
-          cookieSvg.style.transition = 'transform 0.1s ease';
-          cookieSvg.style.transform = 'scale(0.97)';
-          setTimeout(function () {
-            if (cookieSvg) cookieSvg.style.transform = 'scale(1)';
-          }, 100);
+        if (cookieHint) cookieHint.textContent = 'Ще трохи...';
+      } else if (state.cookieClicks === 2) {
+        if (crack2) {
+          crack2.style.transition = 'stroke-dashoffset 0.4s ease';
+          crack2.style.strokeDashoffset = '0';
         }
-      } else if (state.cookieClicks === 4) {
-        breakCookie();
+        if (cookieHint) cookieHint.textContent = 'Вже близько...';
+      } else if (state.cookieClicks === 3) {
+        if (crack3) {
+          crack3.style.transition = 'stroke-dashoffset 0.35s ease';
+          crack3.style.strokeDashoffset = '0';
+        }
+        if (crack4) {
+          crack4.style.transition = 'stroke-dashoffset 0.35s ease';
+          crack4.style.strokeDashoffset = '0';
+        }
+        if (cookieWrapper) cookieWrapper.classList.add('cracked');
+        if (cookieHint) cookieHint.textContent = 'Ще один...';
       }
-    });
-  }
 
-  if (resetCookieBtn) {
-    resetCookieBtn.addEventListener('click', function () {
-      state.cookieClicks = 0;
-      state.cookieBroken = false;
-      state.currentVerse = null;
-
-      try {
-        localStorage.removeItem('cozy_cookie_broken');
-        localStorage.removeItem('cozy_verse_index');
-      } catch (e) {}
-
-      if (cookieWrapper) cookieWrapper.classList.remove('cracked');
       if (cookieSvg) {
-        cookieSvg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        cookieSvg.style.opacity = '1';
-        cookieSvg.style.transform = 'scale(1)';
+        cookieSvg.style.transition = 'transform 0.1s ease';
+        cookieSvg.style.transform = 'scale(0.97)';
+        setTimeout(function () {
+          if (cookieSvg) cookieSvg.style.transform = 'scale(1)';
+        }, 100);
       }
-      if (crackGroup) crackGroup.setAttribute('opacity', '0');
+    } else if (state.cookieClicks === 4) {
+      breakCookie();
+    }
+  }
 
-      [crack1, crack2, crack3, crack4].forEach(function (c) {
-        if (!c) return;
-        c.style.transition = 'none';
-        var dash = c.getAttribute('stroke-dasharray');
-        c.style.strokeDashoffset = dash ? dash : '200';
-      });
+  function resetCookie() {
+    state.cookieClicks = 0;
+    state.cookieBroken = false;
+    state.currentVerse = null;
 
-      if (cookieHalves) cookieHalves.classList.remove('active', 'split');
-      if (predictionRibbon) predictionRibbon.classList.remove('visible');
-      if (resetCookieBtn) resetCookieBtn.classList.remove('visible');
-      if (cookieHint) {
-        cookieHint.style.opacity = '1';
-        cookieHint.textContent = 'Натисни на печиво';
+    safeStorageRemove(STORAGE_KEYS.cookieBroken);
+    safeStorageRemove(STORAGE_KEYS.verseIdx);
+
+    if (cookieWrapper) cookieWrapper.classList.remove('cracked');
+    if (cookieSvg) {
+      cookieSvg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      cookieSvg.style.opacity = '1';
+      cookieSvg.style.transform = 'scale(1)';
+    }
+    if (crackGroup) crackGroup.setAttribute('opacity', '0');
+
+    [crack1, crack2, crack3, crack4].forEach(function (c) {
+      if (!c) return;
+      c.style.transition = 'none';
+      var dash = c.getAttribute('stroke-dasharray');
+      c.style.strokeDashoffset = dash ? dash : '200';
+    });
+
+    if (cookieHalves) cookieHalves.classList.remove('active', 'split');
+    if (predictionRibbon) predictionRibbon.classList.remove('visible');
+    if (resetCookieBtn) resetCookieBtn.classList.remove('visible');
+    if (cookieHint) {
+      cookieHint.style.opacity = '1';
+      cookieHint.textContent = 'Натисни на печиво';
+    }
+    updateCookieDots();
+    haptic('impact', 'light');
+  }
+
+  /* ------------------------------------------------------------
+     GLOBAL DELEGATED CLICK HANDLER
+     ------------------------------------------------------------ */
+  document.addEventListener('click', function (e) {
+    var target = e.target;
+
+    // Walk up to find the interactive element
+    var el = target;
+    while (el && el !== document.body) {
+      // Theme button
+      if (el.id === 'themeBtn') {
+        toggleTheme();
+        return;
       }
-      updateCookieDots();
-      haptic('impact', 'light');
+
+      // Nav buttons
+      if (el.classList && el.classList.contains('nav-btn')) {
+        var tabName = el.getAttribute('data-tab');
+        if (tabName) switchTab(tabName);
+        return;
+      }
+
+      // Anonymous toggle
+      if (el.id === 'anonToggle') {
+        toggleAnon();
+        return;
+      }
+
+      // Privacy toggle
+      if (el.id === 'privacyToggle') {
+        togglePrivacy();
+        return;
+      }
+
+      // Submit button
+      if (el.id === 'submitSurveyBtn') {
+        submitSurvey();
+        return;
+      }
+
+      // Refresh button
+      if (el.id === 'refreshBtn') {
+        haptic('impact', 'light');
+        loadBoardFromSheets(false);
+        return;
+      }
+
+      // Like button
+      if (el.classList && el.classList.contains('like-btn')) {
+        e.stopPropagation();
+        handleLike(el);
+        return;
+      }
+
+      // Delete button
+      if (el.classList && el.classList.contains('delete-btn')) {
+        e.stopPropagation();
+        handleDelete(el);
+        return;
+      }
+
+      // Cookie wrapper
+      if (el.id === 'cookieWrapper' || (el.parentNode && el.parentNode.id === 'cookieWrapper')) {
+        handleCookieClick();
+        return;
+      }
+
+      // Reset cookie
+      if (el.id === 'resetCookieBtn') {
+        resetCookie();
+        return;
+      }
+
+      el = el.parentNode;
+    }
+  }, false);
+
+  /* ------------------------------------------------------------
+     KEYBOARD ACCESSIBILITY (Enter/Space on toggles)
+     ------------------------------------------------------------ */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var el = e.target;
+    if (!el || !el.classList) return;
+
+    if (el.id === 'anonToggle' || el.id === 'privacyToggle') {
+      e.preventDefault();
+      el.click();
+    }
+  });
+
+  /* ------------------------------------------------------------
+     SURVEY INPUT LISTENERS (input / focus, non-click)
+     ------------------------------------------------------------ */
+  if (surveyText) {
+    surveyText.addEventListener('input', updateCharCounter);
+  }
+
+  var savedName = localStorage.getItem(STORAGE_KEYS.name) || '';
+  if (nameInput) {
+    if (savedName) nameInput.value = savedName;
+    nameInput.addEventListener('input', function () {
+      safeStorageSet(STORAGE_KEYS.name, nameInput.value);
     });
   }
 
-  // Restore broken cookie state
+  /* ------------------------------------------------------------
+     INIT
+     ------------------------------------------------------------ */
+  applyTheme(state.theme);
+  updateCharCounter();
+
+  var adminPill = $('adminPill');
+  if (adminPill && isAdmin) adminPill.classList.add('visible');
+
+  renderBoard();
+  updateCookieDots();
+
+  // Restore broken cookie state from storage
   (function restoreFromStorage() {
-    var savedBroken = localStorage.getItem('cozy_cookie_broken');
-    var savedIdx = localStorage.getItem('cozy_verse_index');
+    var savedBroken = localStorage.getItem(STORAGE_KEYS.cookieBroken);
+    var savedIdx = localStorage.getItem(STORAGE_KEYS.verseIdx);
     if (savedBroken === 'true' && savedIdx !== null) {
       var idx = parseInt(savedIdx, 10);
       if (!isNaN(idx) && VERSES[idx]) {
@@ -2236,27 +2416,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
-  /* ============================================================
-     INIT
-     ============================================================ */
-  applyTheme(state.theme);
-
-  if (adminPill && isAdmin) {
-    adminPill.classList.add('visible');
-  }
-
-  renderBoard();
-  updateCookieDots();
-
-  // Preload board data on app launch (so it's ready when user taps board)
+  // Preload board data shortly after launch
   setTimeout(function () {
-    var boardTab = document.getElementById('tab-board');
-    if (boardTab && boardTab.classList.contains('active')) {
+    if (state.activeTab === 'board') {
       loadBoardFromSheets(true);
     }
   }, 800);
 
-  // Log for debugging
   console.log('[Cozy DIY] Ready', {
     theme: state.theme,
     isAdmin: isAdmin,
@@ -2265,7 +2431,6 @@ document.addEventListener('DOMContentLoaded', function () {
     ideasLocal: state.localIdeas.length,
     likes: state.likedIds.length
   });
-
 });
 </script>
 </body>
