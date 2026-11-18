@@ -1,1849 +1,1450 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#3390ec">
-<title>Спільнота ✨</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--tg-theme-bg-color,#ffffff);color:var(--tg-theme-text-color,#222222);line-height:1.45;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s ease,color .3s ease}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,textarea{font-family:inherit;color:inherit}
-img,svg{display:block;max-width:100%}
-::selection{background:var(--tg-theme-button-color,#3390ec);color:#fff}
-:root{--bg:var(--tg-theme-bg-color,#ffffff);--text:var(--tg-theme-text-color,#222222);--hint:var(--tg-theme-hint-color,#8b8b8b);--link:var(--tg-theme-link-color,#3390ec);--button:var(--tg-theme-button-color,#3390ec);--button-text:var(--tg-theme-button-text-color,#ffffff);--secondary-bg:var(--tg-theme-secondary-bg-color,#f4f4f5);--card-bg:var(--tg-theme-secondary-bg-color,#f4f4f5);--radius:16px;--radius-sm:12px;--radius-lg:22px;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow:0 4px 16px rgba(0,0,0,.09);--shadow-lg:0 10px 32px rgba(0,0,0,.14);--ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);--nav-h:64px;--safe-bottom:env(safe-area-inset-bottom,0px);--gold:#ffd700;--gold-deep:#e0a800;--danger:#e5484d;--success:#30a46c}
-.app{max-width:520px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 12px)}
-.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid color-mix(in srgb,var(--text) 8%,transparent)}
-.topbar-brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;letter-spacing:-.3px}
-.topbar-brand .logo{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--button),#7b5cff);display:grid;place-items:center;font-size:15px;box-shadow:0 4px 12px color-mix(in srgb,var(--button) 40%,transparent)}
-.topbar-right{display:flex;align-items:center;gap:8px}
-.lang-toggle{display:flex;gap:4px;background:var(--secondary-bg);border-radius:20px;padding:3px}
-.lang-btn{padding:5px 11px;border-radius:16px;font-size:12px;font-weight:700;color:var(--text);opacity:.5;transition:all .22s var(--ease);display:flex;align-items:center;gap:3px;line-height:1}
-.lang-btn.active{opacity:1;background:var(--button);color:var(--button-text);box-shadow:0 2px 8px color-mix(in srgb,var(--button) 45%,transparent)}
-.lang-btn:active{transform:scale(.94)}
-.channel-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:18px;font-size:12.5px;font-weight:700;background:var(--button);color:var(--button-text);box-shadow:0 4px 14px color-mix(in srgb,var(--button) 40%,transparent);transition:transform .2s var(--ease);text-decoration:none;white-space:nowrap}
-.channel-btn:active{transform:scale(.95)}
-.views{flex:1;position:relative}
-.view{display:none;padding:14px 14px 24px;animation:viewIn .35s var(--ease)}
-.view.active{display:block}
-@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.view-title{font-size:20px;font-weight:800;letter-spacing:-.4px;margin:4px 0 4px;display:flex;align-items:center;gap:8px}
-.view-sub{font-size:13px;color:var(--hint);margin-bottom:16px;line-height:1.4}
-.hero-strip{display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius-lg);background:linear-gradient(135deg,color-mix(in srgb,var(--button) 16%,var(--bg)),color-mix(in srgb,#7b5cff 14%,var(--bg)));border:1px solid color-mix(in srgb,var(--button) 18%,transparent);box-shadow:var(--shadow-sm);margin-bottom:16px}
-.hero-avatar{width:46px;height:46px;border-radius:14px;flex:0 0 auto;background:linear-gradient(135deg,var(--button),#7b5cff);display:grid;place-items:center;font-size:20px;font-weight:800;color:#fff;box-shadow:0 6px 16px color-mix(in srgb,var(--button) 45%,transparent)}
-.hero-meta{flex:1;min-width:0}
-.hero-name{font-weight:800;font-size:15px;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hero-level{font-size:12px;color:var(--hint);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hero-xp{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:88px}
-.xp-badge{font-size:12px;font-weight:800;padding:4px 10px;border-radius:14px;background:var(--button);color:var(--button-text);box-shadow:0 3px 10px color-mix(in srgb,var(--button) 40%,transparent)}
-.xp-mini-track{width:100%;height:5px;border-radius:3px;background:color-mix(in srgb,var(--text) 12%,transparent);overflow:hidden}
-.xp-mini-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width .6s var(--ease)}
-.card{background:var(--card-bg);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);border:1px solid color-mix(in srgb,var(--text) 6%,transparent)}
-.section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--hint);margin:18px 0 10px;display:flex;align-items:center;gap:6px}
-.section-label:first-child{margin-top:0}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{padding:10px 15px;border-radius:20px;font-size:14px;font-weight:600;background:var(--card-bg);color:var(--text);border:2px solid transparent;transition:all .22s var(--ease);display:inline-flex;align-items:center;gap:6px;user-select:none}
-.chip:active{transform:scale(.92)}
-.chip.selected{border-color:var(--button);background:var(--button);color:var(--button-text);box-shadow:0 3px 14px color-mix(in srgb,var(--button) 40%,transparent)}
-.moods{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.mood-card{display:flex;flex-direction:column;align-items:center;gap:5px;padding:13px 4px;border-radius:var(--radius);background:var(--card-bg);border:2px solid transparent;transition:all .22s var(--ease);user-select:none}
-.mood-card .em{font-size:24px;line-height:1}
-.mood-card .lb{font-size:11px;font-weight:700;text-align:center;line-height:1.15}
-.mood-card:active{transform:scale(.92)}
-.mood-card.selected{border-color:var(--button);background:var(--button);color:var(--button-text);box-shadow:0 4px 16px color-mix(in srgb,var(--button) 40%,transparent)}
-.field{margin-bottom:14px}
-.field-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
-.field-head .lbl{font-size:12.5px;font-weight:700;opacity:.75}
-.field-head .count{font-size:11px;color:var(--hint);font-variant-numeric:tabular-nums}
-textarea.tx{width:100%;background:var(--card-bg);border:2px solid transparent;border-radius:var(--radius);padding:13px 15px;font-size:15px;line-height:1.5;resize:none;transition:border-color .22s var(--ease),box-shadow .22s var(--ease)}
-textarea.tx:focus{outline:none;border-color:var(--button);box-shadow:0 0 0 4px color-mix(in srgb,var(--button) 14%,transparent)}
-textarea.tx::placeholder{color:var(--text);opacity:.38}
-textarea.tx.main{min-height:112px}
-textarea.tx.opt{min-height:74px}
-.btn-primary{width:100%;padding:16px;border-radius:var(--radius);font-size:16.5px;font-weight:800;background:var(--button);color:var(--button-text);box-shadow:0 6px 20px color-mix(in srgb,var(--button) 42%,transparent);transition:transform .2s var(--ease),opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary:active{transform:scale(.97)}
-.btn-primary:disabled{opacity:.55;transform:none;cursor:not-allowed}
-.btn-primary .spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.btn-ghost{width:100%;padding:14px;border-radius:var(--radius);font-size:15px;font-weight:700;background:var(--card-bg);color:var(--text);border:2px solid var(--button);transition:transform .2s var(--ease),background .2s,color .2s}
-.btn-ghost:active{transform:scale(.97);background:var(--button);color:var(--button-text)}
-.btn-danger{width:100%;padding:13px;border-radius:var(--radius);font-size:14px;font-weight:700;background:color-mix(in srgb,var(--danger) 12%,transparent);color:var(--danger);border:1.5px solid color-mix(in srgb,var(--danger) 40%,transparent)}
-.btn-danger:active{transform:scale(.97)}
-#screenCookie{text-align:center;padding-top:6px}
-.thank-title{font-size:21px;font-weight:800;letter-spacing:-.4px;line-height:1.32;margin-bottom:6px}
-.thank-hint{font-size:14.5px;color:var(--hint);margin-bottom:22px;line-height:1.45}
-.cookie-wrap{display:flex;justify-content:center;margin:6px 0 22px;cursor:pointer;user-select:none;position:relative;min-height:160px;align-items:center}
-@media (max-width:380px){.cookie-wrap{min-height:140px}}
-.cookie-svg{width:150px;height:150px;animation:wobble 3s ease-in-out infinite;filter:drop-shadow(0 10px 26px rgba(200,150,60,.4));transition:transform .3s var(--ease)}
-.cookie-wrap:active .cookie-svg{transform:scale(.93)}
-.cookie-svg.cracked{animation:crackAway .65s var(--ease) forwards}
-@keyframes wobble{0%,100%{transform:rotate(0) scale(1)}15%{transform:rotate(-6deg) scale(1.02)}30%{transform:rotate(5deg) scale(1.01)}45%{transform:rotate(-3deg) scale(1)}60%{transform:rotate(2deg) scale(1.01)}75%{transform:rotate(-1deg) scale(1)}}
-@keyframes crackAway{0%{transform:scale(1) rotate(0)}25%{transform:scale(1.16) rotate(-9deg)}50%{transform:scale(1.04) rotate(7deg)}75%{transform:scale(.88) rotate(-4deg);opacity:.65}100%{transform:scale(0) rotate(22deg);opacity:0}}
-.verse-card{display:none;background:var(--card-bg);border-radius:var(--radius);padding:22px 18px;text-align:left;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:20px}
-.verse-card::before{content:'';position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-deep),var(--gold))}
-.verse-card.show{display:block;animation:versePop .6s var(--spring)}
-@keyframes versePop{from{opacity:0;transform:translateY(26px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
-.verse-em{font-size:26px;margin-bottom:8px}
-.verse-text{font-size:16.5px;font-weight:500;font-style:italic;line-height:1.6;letter-spacing:-.2px;margin-bottom:12px}
-.verse-ref{font-size:13.5px;font-weight:800;color:var(--button);letter-spacing:.3px}
-.filter-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none}
-.filter-row::-webkit-scrollbar{display:none}
-.filter-pill{padding:9px 15px;border-radius:18px;font-size:13px;font-weight:700;white-space:nowrap;background:var(--card-bg);color:var(--text);opacity:.7;transition:all .2s var(--ease)}
-.filter-pill.active{opacity:1;background:var(--button);color:var(--button-text);box-shadow:0 3px 12px color-mix(in srgb,var(--button) 40%,transparent)}
-.filter-pill:active{transform:scale(.94)}
-.wall-card{background:var(--card-bg);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow-sm);border:1px solid color-mix(in srgb,var(--text) 6%,transparent);animation:cardIn .35s var(--ease)}
-@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.wall-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.wall-tag{font-size:11px;font-weight:800;padding:4px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.4px}
-.tag-announce{background:color-mix(in srgb,var(--button) 18%,transparent);color:var(--button)}
-.tag-important{background:color-mix(in srgb,var(--danger) 16%,transparent);color:var(--danger)}
-.tag-interactive{background:color-mix(in srgb,#7b5cff 18%,transparent);color:#7b5cff}
-.wall-title{font-size:16px;font-weight:800;letter-spacing:-.3px;margin-bottom:6px;line-height:1.3}
-.wall-body{font-size:14px;line-height:1.55;opacity:.85;margin-bottom:12px;white-space:pre-wrap}
-.wall-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.react-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border-radius:14px;background:color-mix(in srgb,var(--text) 7%,transparent);font-size:13px;font-weight:700;transition:transform .18s var(--ease),background .2s}
-.react-btn:active{transform:scale(.9)}
-.react-btn.on{background:color-mix(in srgb,var(--button) 18%,transparent);color:var(--button)}
-.wall-link{margin-left:auto;font-size:13px;font-weight:700;color:var(--button);text-decoration:none;display:inline-flex;align-items:center;gap:3px}
-.quiz-wrap{background:var(--card-bg);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm)}
-.quiz-q{font-size:17px;font-weight:800;letter-spacing:-.3px;line-height:1.35;margin-bottom:16px}
-.quiz-opts{display:flex;flex-direction:column;gap:9px}
-.quiz-opt{text-align:left;padding:14px 16px;border-radius:var(--radius-sm);font-size:14.5px;font-weight:600;background:color-mix(in srgb,var(--text) 6%,transparent);border:2px solid transparent;transition:all .2s var(--ease);display:flex;align-items:center;gap:10px}
-.quiz-opt .dot{width:22px;height:22px;border-radius:50%;flex:0 0 auto;border:2px solid var(--button);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--button)}
-.quiz-opt:active{transform:scale(.98)}
-.quiz-opt.picked{border-color:var(--button);background:color-mix(in srgb,var(--button) 14%,transparent)}
-.quiz-opt.correct{background:color-mix(in srgb,var(--success) 16%,transparent);border-color:var(--success);color:var(--success)}
-.quiz-opt.correct .dot{border-color:var(--success);color:var(--success)}
-.quiz-opt.wrong{background:color-mix(in srgb,var(--danger) 12%,transparent);border-color:var(--danger);color:var(--danger)}
-.quiz-opt.wrong .dot{border-color:var(--danger);color:var(--danger)}
-.quiz-opt[disabled]{cursor:default}
-.quiz-explain{margin-top:14px;padding:14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--button) 10%,transparent);font-size:14px;line-height:1.55;animation:versePop .4s var(--spring)}
-.quiz-bars{margin-top:14px;display:flex;flex-direction:column;gap:7px}
-.qbar-row{display:flex;align-items:center;gap:8px;font-size:12px}
-.qbar-lbl{width:26px;font-weight:800;opacity:.6;flex:0 0 auto}
-.qbar-track{flex:1;height:8px;border-radius:4px;background:color-mix(in srgb,var(--text) 10%,transparent);overflow:hidden}
-.qbar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--button),#7b5cff);transition:width .7s var(--ease)}
-.qbar-pct{width:38px;text-align:right;font-weight:700;opacity:.7;flex:0 0 auto}
-.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.arch-card{background:var(--card-bg);border-radius:var(--radius);padding:14px;position:relative;box-shadow:var(--shadow-sm);border:1px solid color-mix(in srgb,var(--text) 6%,transparent);display:flex;flex-direction:column;gap:8px;min-height:150px;animation:cardIn .35s var(--ease)}
-.arch-em{font-size:26px}
-.arch-title{font-size:14px;font-weight:800;letter-spacing:-.2px;line-height:1.3}
-.arch-desc{font-size:12px;opacity:.7;line-height:1.45;flex:1}
-.arch-foot{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.arch-link{font-size:12px;font-weight:700;color:var(--button);text-decoration:none}
-.arch-fav{font-size:17px;padding:2px;transition:transform .2s var(--spring)}
-.arch-fav:active{transform:scale(1.3)}
-.arch-fav.on{filter:drop-shadow(0 0 6px color-mix(in srgb,#e5484d 60%,transparent))}
-.profile-hero{text-align:center;padding:22px 16px;border-radius:var(--radius-lg);background:linear-gradient(135deg,color-mix(in srgb,var(--button) 18%,var(--bg)),color-mix(in srgb,#7b5cff 16%,var(--bg)));border:1px solid color-mix(in srgb,var(--button) 20%,transparent);margin-bottom:16px}
-.profile-av{width:76px;height:76px;border-radius:24px;margin:0 auto 12px;background:linear-gradient(135deg,var(--button),#7b5cff);display:grid;place-items:center;font-size:34px;font-weight:800;color:#fff;box-shadow:0 10px 26px color-mix(in srgb,var(--button) 45%,transparent)}
-.profile-name{font-size:18px;font-weight:800;letter-spacing:-.4px}
-.profile-status{font-size:13px;color:var(--hint);margin-top:2px}
-.xp-track{width:100%;height:12px;border-radius:6px;background:color-mix(in srgb,var(--text) 12%,transparent);overflow:hidden;margin:16px 0 6px;position:relative}
-.xp-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width .8s var(--ease);box-shadow:0 0 12px color-mix(in srgb,var(--gold) 60%,transparent)}
-.xp-label{font-size:12px;font-weight:700;opacity:.7;font-variant-numeric:tabular-nums}
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-.stat-box{background:var(--card-bg);border-radius:var(--radius-sm);padding:13px;text-align:center;box-shadow:var(--shadow-sm)}
-.stat-val{font-size:22px;font-weight:800;letter-spacing:-.5px;color:var(--button);font-variant-numeric:tabular-nums}
-.stat-lbl{font-size:11px;font-weight:700;opacity:.6;margin-top:2px;text-transform:uppercase;letter-spacing:.4px}
-.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.badge{background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 6px;text-align:center;box-shadow:var(--shadow-sm);position:relative;opacity:.42;filter:grayscale(1);transition:all .3s var(--ease)}
-.badge.unlocked{opacity:1;filter:none}
-.badge.unlocked .badge-svg{animation:badgePop .6s var(--spring)}
-@keyframes badgePop{0%{transform:scale(.4) rotate(-20deg);opacity:0}60%{transform:scale(1.15) rotate(6deg)}100%{transform:scale(1) rotate(0);opacity:1}}
-.badge-svg{width:48px;height:48px;margin:0 auto 6px}
-.badge-name{font-size:10.5px;font-weight:800;line-height:1.2;letter-spacing:-.1px}
-.badge-bar{height:4px;border-radius:2px;background:color-mix(in srgb,var(--text) 12%,transparent);margin-top:7px;overflow:hidden}
-.badge-bar-fill{height:100%;border-radius:2px;background:var(--button);transition:width .6s var(--ease)}
-.saved-verse{background:var(--card-bg);border-radius:var(--radius-sm);padding:13px 15px;margin-bottom:9px;box-shadow:var(--shadow-sm)}
-.saved-verse .sv-text{font-size:14px;font-style:italic;line-height:1.55;margin-bottom:6px}
-.saved-verse .sv-ref{font-size:12px;font-weight:800;color:var(--button)}
-.admin-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;padding:14px;border-radius:var(--radius);background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#3a2c00;box-shadow:0 6px 22px rgba(224,168,0,.4)}
-.admin-head .ah-title{font-size:16px;font-weight:800;letter-spacing:-.3px}
-.admin-head .ah-sub{font-size:12px;opacity:.75;margin-top:1px}
-.admin-view-btn{padding:9px 13px;border-radius:14px;font-size:12.5px;font-weight:800;background:rgba(0,0,0,.18);color:#fff;white-space:nowrap;transition:transform .2s var(--ease)}
-.admin-view-btn:active{transform:scale(.94)}
-.admin-sec{background:var(--card-bg);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
-.admin-sec-title{font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
-.admin-in{width:100%;padding:11px 13px;border-radius:var(--radius-sm);font-size:14px;background:var(--bg);border:1.5px solid color-mix(in srgb,var(--text) 14%,transparent);margin-bottom:9px;transition:border-color .2s}
-.admin-in:focus{outline:none;border-color:var(--button)}
-textarea.admin-in{resize:none;min-height:64px;line-height:1.45}
-.admin-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.admin-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.admin-lbl{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;opacity:.55;margin-bottom:5px;display:block}
-.admin-pub{width:100%;padding:14px;border-radius:var(--radius-sm);font-size:15px;font-weight:800;background:var(--button);color:var(--button-text);margin-top:4px;box-shadow:0 4px 14px color-mix(in srgb,var(--button) 38%,transparent);transition:transform .2s var(--ease)}
-.admin-pub:active{transform:scale(.97)}
-.admin-correct-pick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.corr-pill{padding:6px 13px;border-radius:14px;font-size:12.5px;font-weight:700;background:color-mix(in srgb,var(--text) 8%,transparent);transition:all .2s}
-.corr-pill.on{background:var(--success);color:#fff}
-.admin-list-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--bg);margin-bottom:7px;font-size:13px}
-.admin-list-item .ali-del{padding:4px 10px;border-radius:10px;font-size:12px;font-weight:800;background:color-mix(in srgb,var(--danger) 14%,transparent);color:var(--danger)}
-.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + var(--safe-bottom));width:min(100% - 20px,500px);z-index:60;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%);border:1px solid color-mix(in srgb,var(--text) 10%,transparent);border-radius:22px;padding:6px;display:flex;gap:2px;box-shadow:0 10px 34px rgba(0,0,0,.18)}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:16px;color:var(--text);opacity:.5;transition:all .25s var(--ease);position:relative;min-width:0}
-.nav-item .ni-em{font-size:19px;line-height:1;transition:transform .25s var(--spring)}
-.nav-item .ni-lb{font-size:9.5px;font-weight:700;letter-spacing:-.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.nav-item.active{opacity:1;color:var(--button);background:color-mix(in srgb,var(--button) 12%,transparent)}
-.nav-item.active .ni-em{transform:scale(1.12) translateY(-1px)}
-.nav-item.hidden{display:none}
-.nav-item:active{transform:scale(.93)}
-.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + var(--safe-bottom) + 22px);transform:translateX(-50%) translateY(30px);z-index:200;background:var(--text);color:var(--bg);padding:11px 20px;border-radius:20px;font-size:13.5px;font-weight:700;opacity:0;pointer-events:none;transition:all .4s var(--spring);box-shadow:0 8px 26px rgba(0,0,0,.28);max-width:90vw;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.pfx{position:fixed;inset:0;pointer-events:none;z-index:150;overflow:hidden}
-.pfx-bit{position:absolute;width:9px;height:9px;border-radius:2px;will-change:transform,opacity}
-.lvl-overlay{position:fixed;inset:0;z-index:180;display:none;place-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(6px)}
-.lvl-overlay.show{display:grid;animation:viewIn .3s ease}
-.lvl-box{background:var(--bg);border-radius:26px;padding:28px 24px;text-align:center;width:min(88vw,340px);box-shadow:0 20px 60px rgba(0,0,0,.4);animation:versePop .5s var(--spring)}
-.lvl-em{font-size:52px;margin-bottom:8px}
-.lvl-t1{font-size:13px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--hint)}
-.lvl-t2{font-size:22px;font-weight:800;letter-spacing:-.4px;margin:4px 0 6px}
-.lvl-t3{font-size:14px;opacity:.7;line-height:1.45;margin-bottom:18px}
-@media (max-width:360px){.moods{grid-template-columns:repeat(2,1fr)}.arch-grid{grid-template-columns:1fr}.badge-grid{grid-template-columns:repeat(2,1fr)}.nav-item .ni-lb{font-size:8.5px}.view{padding:12px 11px 20px}}
-@media (min-width:560px){.nav{bottom:16px}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Затишок · DIY & Мінімалізм</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --cream: #f9f5f0;
+      --paper: #f2ebe3;
+      --terracotta: #c97e5a;
+      --terracotta-light: #dda382;
+      --terracotta-dark: #a85e3c;
+      --warm-gray: #8a7e72;
+      --soft-brown: #6b5a4e;
+      --shadow: rgba(100, 70, 50, 0.08);
+      --shadow-strong: rgba(100, 70, 50, 0.15);
+      --pin: #b5654a;
+      --sticker-bg: #fffbf7;
+      --font-serif: 'Georgia', 'Times New Roman', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      background-color: var(--cream);
+      color: var(--soft-brown);
+      user-select: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 20% 10%, rgba(201, 126, 90, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 90%, rgba(201, 126, 90, 0.03) 0%, transparent 50%);
+    }
+
+    /* ---------- APP CONTAINER ---------- */
+    #app {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tab-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 20px 20px;
+      display: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-content.active {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- HEADER ---------- */
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--soft-brown);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .page-subtitle {
+      font-size: 13px;
+      color: var(--warm-gray);
+      margin-bottom: 24px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    /* ---------- TAB 1: ДУМКА / SURVEY ---------- */
+    .survey-card {
+      background: var(--sticker-bg);
+      border-radius: 18px;
+      padding: 28px 22px;
+      box-shadow: 0 2px 16px var(--shadow);
+      border: 1px solid rgba(201, 126, 90, 0.06);
+    }
+
+    .survey-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--terracotta);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .survey-textarea {
+      width: 100%;
+      min-height: 110px;
+      border: 1.5px solid #e8ddd3;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--soft-brown);
+      background: #fffdfa;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .survey-textarea::placeholder {
+      color: #c4b5a8;
+      font-style: italic;
+    }
+
+    .survey-textarea:focus {
+      border-color: var(--terracotta-light);
+      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08);
+    }
+
+    /* Toggle switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      padding: 12px 16px;
+      background: #faf6f1;
+      border-radius: 12px;
+      border: 1px solid #f0e8df;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      color: var(--soft-brown);
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 28px;
+      background: #e0d5c9;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch.active {
+      background: var(--terracotta);
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .toggle-switch.active .toggle-knob {
+      transform: translateX(22px);
+    }
+
+    /* Name input (hidden when anonymous) */
+    .name-input-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+
+    .name-input-wrapper.visible {
+      max-height: 70px;
+      opacity: 1;
+      margin-top: 14px;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #e8ddd3;
+      border-radius: 12px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--soft-brown);
+      background: #fffdfa;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .name-input::placeholder {
+      color: #c4b5a8;
+      font-style: italic;
+    }
+
+    .name-input:focus {
+      border-color: var(--terracotta-light);
+      box-shadow: 0 0 0 3px rgba(201, 126, 90, 0.08);
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(201, 126, 90, 0.25);
+    }
+
+    .submit-btn:hover {
+      background: var(--terracotta-dark);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 6px rgba(201, 126, 90, 0.2);
+    }
+
+    .submit-btn:disabled {
+      background: #d4c5b8;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--soft-brown);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ---------- TAB 2: ДОШКА / BOARD ---------- */
+    .board-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-bottom: 10px;
+    }
+
+    .sticker-card {
+      position: relative;
+      background: var(--sticker-bg);
+      border-radius: 4px;
+      padding: 22px 18px 16px;
+      box-shadow: 2px 4px 12px var(--shadow-strong), 0 1px 3px var(--shadow);
+      transform: rotate(-1.2deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sticker-card:nth-child(even) {
+      transform: rotate(1.1deg);
+    }
+
+    .sticker-card:nth-child(3n) {
+      transform: rotate(-0.7deg);
+    }
+
+    .sticker-card:nth-child(5n) {
+      transform: rotate(1.6deg);
+    }
+
+    .sticker-card:hover {
+      transform: rotate(0deg) scale(1.01);
+      box-shadow: 4px 8px 24px var(--shadow-strong);
+    }
+
+    /* Decorative pin */
+    .pin {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 22px;
+      z-index: 2;
+    }
+
+    .pin-head {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle at 35% 35%, #e8a080, var(--pin));
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1);
+    }
+
+    .pin-needle {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 10px;
+      background: linear-gradient(to bottom, #999, #666);
+      border-radius: 1px;
+    }
+
+    /* Paper texture line */
+    .sticker-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      border-radius: 4px;
+      background-image: 
+        repeating-linear-gradient(
+          transparent,
+          transparent 28px,
+          rgba(201, 126, 90, 0.06) 28px,
+          rgba(201, 126, 90, 0.06) 29px
+        );
+      pointer-events: none;
+    }
+
+    .sticker-author {
+      font-size: 11px;
+      color: var(--terracotta);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .sticker-text {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--soft-brown);
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+
+    .sticker-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .like-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--warm-gray);
+      padding: 4px 8px;
+      border-radius: 20px;
+      transition: background 0.2s ease, color 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .like-btn:hover {
+      background: rgba(201, 126, 90, 0.08);
+    }
+
+    .like-btn.liked {
+      color: var(--terracotta);
+    }
+
+    .like-heart {
+      font-size: 17px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .like-btn.liked .like-heart {
+      transform: scale(1.2);
+    }
+
+    .like-count {
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #c4b5a8;
+      padding: 4px 8px;
+      border-radius: 20px;
+      transition: color 0.2s ease, background 0.2s ease;
+      display: none;
+    }
+
+    .delete-btn.visible {
+      display: block;
+    }
+
+    .delete-btn:hover {
+      color: #d9534f;
+      background: rgba(217, 83, 79, 0.08);
+    }
+
+    .empty-board {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--warm-gray);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    /* ---------- TAB 3: ПЕЧИВО / COOKIE ---------- */
+    .cookie-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 380px;
+      padding: 10px 0;
+    }
+
+    .cookie-hint {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--warm-gray);
+      text-align: center;
+      margin-bottom: 32px;
+      min-height: 24px;
+      transition: opacity 0.3s ease;
+    }
+
+    .cookie-wrapper {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .cookie-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      transition: transform 0.1s ease;
+    }
+
+    .cookie-wrapper.cracked .cookie-svg {
+      animation: vibrate 0.15s linear infinite;
+    }
+
+    @keyframes vibrate {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(-1.5px, 1px) rotate(-0.5deg); }
+      50% { transform: translate(1.5px, -1px) rotate(0.5deg); }
+      75% { transform: translate(-1px, -1.5px) rotate(-0.3deg); }
+    }
+
+    /* Cookie halves */
+    .cookie-halves {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s ease;
+    }
+
+    .cookie-halves.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cookie-half {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    }
+
+    .cookie-half-left {
+      left: 0;
+      transform-origin: right center;
+    }
+
+    .cookie-half-right {
+      right: 0;
+      transform-origin: left center;
+    }
+
+    .cookie-half svg {
+      width: 200%;
+      height: 100%;
+    }
+
+    .cookie-half-left svg {
+      position: absolute;
+      left: 0;
+    }
+
+    .cookie-half-right svg {
+      position: absolute;
+      right: 0;
+    }
+
+    .cookie-halves.split .cookie-half-left {
+      transform: translateX(-60px) rotate(-25deg) translateY(20px);
+    }
+
+    .cookie-halves.split .cookie-half-right {
+      transform: translateX(60px) rotate(25deg) translateY(20px);
+    }
+
+    /* Prediction ribbon */
+    .prediction-ribbon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scaleY(0);
+      transform-origin: center center;
+      background: linear-gradient(135deg, #fdf8f3, #f5ece3);
+      border: 1px solid #e8ddd3;
+      border-radius: 3px;
+      padding: 28px 30px;
+      width: 260px;
+      max-width: 85vw;
+      text-align: center;
+      box-shadow: 0 6px 30px rgba(100, 70, 50, 0.18);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .prediction-ribbon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background-image: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 24px,
+          rgba(201, 126, 90, 0.07) 24px,
+          rgba(201, 126, 90, 0.07) 25px
+        );
+      border-radius: 3px;
+      pointer-events: none;
+    }
+
+    .prediction-ribbon.visible {
+      transform: translate(-50%, -50%) scaleY(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .prediction-text {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--soft-brown);
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    .prediction-deco {
+      width: 40px;
+      height: 1px;
+      background: var(--terracotta-light);
+      margin: 12px auto;
+      opacity: 0.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reset-cookie-btn {
+      margin-top: 28px;
+      padding: 11px 28px;
+      background: transparent;
+      border: 1.5px solid var(--terracotta-light);
+      border-radius: 30px;
+      color: var(--terracotta);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .reset-cookie-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .reset-cookie-btn:hover {
+      background: var(--terracotta);
+      color: #fff;
+    }
+
+    .reset-cookie-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* ---------- BOTTOM NAVIGATION ---------- */
+    .bottom-nav {
+      display: flex;
+      background: rgba(249, 245, 240, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(201, 126, 90, 0.1);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+      gap: 4px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 4px;
+      background: none;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+      color: var(--warm-gray);
+      font-family: var(--font-sans);
+    }
+
+    .nav-btn.active {
+      color: var(--terracotta);
+      background: rgba(201, 126, 90, 0.07);
+    }
+
+    .nav-icon {
+      font-size: 21px;
+      line-height: 1;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-btn.active .nav-icon {
+      transform: scale(1.12);
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ---------- SCROLLBAR ---------- */
+    .tab-content::-webkit-scrollbar {
+      width: 0;
+      display: none;
+    }
+
+    .tab-content {
+      scrollbar-width: none;
+    }
+
+    /* ---------- ADMIN BADGE ---------- */
+    .admin-badge {
+      display: none;
+      font-size: 9px;
+      background: var(--terracotta);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .admin-badge.visible {
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
 
-<div class="pfx" id="pfx"></div>
+<div id="app">
+  <!-- ========== TAB 1: ДУМКА ========== -->
+  <div class="tab-content active" id="tab-opinion">
+    <h1 class="page-title">Поділись думкою</h1>
+    <p class="page-subtitle">Твоя ідея може стати наступним проєктом ✨</p>
 
-<div class="app">
+    <div class="survey-card">
+      <div class="survey-label">Твоя ідея або відгук</div>
+      <textarea 
+        class="survey-textarea" 
+        id="surveyText" 
+        placeholder="Напиши, що тобі хочеться створити чи побачити у каналі..."
+        maxlength="500"
+      ></textarea>
 
-<header class="topbar">
-  <div class="topbar-brand">
-    <span class="logo">✨</span>
-    <span id="brandName">Спільнота</span>
-  </div>
-  <div class="topbar-right">
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="langUA" data-lang="ua">🇺🇦 UA</button>
-      <button class="lang-btn" id="langEN" data-lang="en">🇬🇧 EN</button>
-    </div>
-    <a class="channel-btn" id="channelTop" href="https://t.me/" target="_blank" rel="noopener">📢</a>
-  </div>
-</header>
-
-<main class="views">
-
-<section class="view active" id="viewMain">
-  <div class="hero-strip" id="heroStripMain">
-    <div class="hero-avatar" id="heroAvMain">Г</div>
-    <div class="hero-meta">
-      <div class="hero-name" id="heroNameMain">Гість</div>
-      <div class="hero-level" id="heroLvlMain">Новачок спільноти</div>
-    </div>
-    <div class="hero-xp">
-      <span class="xp-badge" id="heroXpBadge">0 XP</span>
-      <div class="xp-mini-track"><div class="xp-mini-fill" id="heroXpFill" style="width:0%"></div></div>
-    </div>
-  </div>
-
-  <div id="formBlock">
-    <h1 class="view-title" id="mainTitle">Поділися своєю думкою ✨</h1>
-    <p class="view-sub" id="mainSub">Обери настрій, напиши думку — і отримай вірш на сьогодні 💌</p>
-    <div class="section-label" id="lblCategory">Категорія</div>
-    <div class="chips" id="chipsCategory"></div>
-    <div class="section-label" id="lblMood">Настрій</div>
-    <div class="moods" id="moodGrid"></div>
-    <div class="field" style="margin-top:16px">
-      <div class="field-head">
-        <span class="lbl" id="lblMainField">Твоя ідея, питання або думка...</span>
-        <span class="count" id="countMain">0 / 800</span>
+      <div class="toggle-row">
+        <span class="toggle-label" id="toggleLabel">Анонімно</span>
+        <div class="toggle-switch" id="anonToggle">
+          <div class="toggle-knob"></div>
+        </div>
       </div>
-      <textarea class="tx main" id="taMain" maxlength="800" placeholder="Твоя ідея, питання або думка..."></textarea>
-    </div>
-    <div class="field">
-      <div class="field-head">
-        <span class="lbl" id="lblImproveField">Що можна покращити? (за бажанням)</span>
-        <span class="count" id="countImprove">0 / 400</span>
+
+      <div class="name-input-wrapper" id="nameWrapper">
+        <input 
+          type="text" 
+          class="name-input" 
+          id="nameInput" 
+          placeholder="Твоє ім'я..." 
+          maxlength="50"
+        >
       </div>
-      <textarea class="tx opt" id="taImprove" maxlength="400" placeholder="Що можна покращити в каналі? (за бажанням)"></textarea>
+
+      <button class="submit-btn" id="submitSurveyBtn">Надіслати</button>
     </div>
-    <button class="btn-primary" id="btnSend">
-      <span id="btnSendText">Надіслати 🚀</span>
+  </div>
+
+  <!-- ========== TAB 2: ДОШКА ========== -->
+  <div class="tab-content" id="tab-board">
+    <h1 class="page-title">Спільна дошка</h1>
+    <p class="page-subtitle">Ідеї, що надихають спільноту 📌</p>
+    <div class="board-grid" id="boardGrid"></div>
+  </div>
+
+  <!-- ========== TAB 3: ПЕЧИВО ========== -->
+  <div class="tab-content" id="tab-cookie">
+    <h1 class="page-title">Печиво з передбаченням</h1>
+    <p class="page-subtitle">Натискай на печиво — дізнайся, що тебе чекає 🍪</p>
+
+    <div class="cookie-container">
+      <div class="cookie-hint" id="cookieHint">Натисни на печиво</div>
+
+      <div class="cookie-wrapper" id="cookieWrapper">
+        <!-- Main cookie SVG -->
+        <svg class="cookie-svg" id="cookieSvg" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cookie shadow -->
+          <ellipse cx="110" cy="200" rx="75" ry="12" fill="rgba(100,70,50,0.08)"/>
+          
+          <!-- Cookie body -->
+          <defs>
+            <radialGradient id="cookieGrad" cx="40%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#e8c49a"/>
+              <stop offset="60%" stop-color="#d4a76a"/>
+              <stop offset="100%" stop-color="#c49050"/>
+            </radialGradient>
+            <radialGradient id="cookieGradDark" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#d4a76a"/>
+              <stop offset="100%" stop-color="#b88445"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Cookie base -->
+          <path id="cookieBase" d="
+            M 110 30
+            C 145 30, 185 50, 190 90
+            C 195 125, 185 160, 160 178
+            C 140 192, 115 195, 95 190
+            C 70 183, 40 165, 32 135
+            C 24 105, 28 75, 45 55
+            C 62 35, 85 30, 110 30 Z
+          " fill="url(#cookieGrad)" stroke="#b88445" stroke-width="2"/>
+
+          <!-- Cookie texture dots / chips -->
+          <circle cx="85" cy="75" r="4" fill="#a86830" opacity="0.6"/>
+          <circle cx="130" cy="65" r="3" fill="#a86830" opacity="0.5"/>
+          <circle cx="150" cy="100" r="4.5" fill="#a86830" opacity="0.55"/>
+          <circle cx="70" cy="110" r="3.5" fill="#a86830" opacity="0.5"/>
+          <circle cx="115" cy="120" r="4" fill="#a86830" opacity="0.6"/>
+          <circle cx="90" cy="150" r="3" fill="#a86830" opacity="0.45"/>
+          <circle cx="140" cy="145" r="3.5" fill="#a86830" opacity="0.5"/>
+          <circle cx="55" cy="85" r="2.5" fill="#a86830" opacity="0.4"/>
+          <circle cx="160" cy="125" r="2.5" fill="#a86830" opacity="0.4"/>
+          <circle cx="105" cy="95" r="2" fill="#a86830" opacity="0.35"/>
+          <circle cx="75" cy="135" r="2" fill="#a86830" opacity="0.35"/>
+          
+          <!-- Highlight -->
+          <ellipse cx="80" cy="65" rx="25" ry="15" fill="white" opacity="0.08" transform="rotate(-20 80 65)"/>
+
+          <!-- Crack lines (initially hidden) -->
+          <g id="crackGroup" opacity="0">
+            <!-- Crack 1 -->
+            <path id="crack1" d="M 110 55 L 105 90 L 115 110" stroke="#8a6030" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <!-- Crack 2 -->
+            <path id="crack2" d="M 115 110 L 130 140 L 125 165" stroke="#8a6030" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <!-- Crack 3 -->
+            <path id="crack3" d="M 105 90 L 80 105 L 70 130" stroke="#8a6030" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="200" stroke-dashoffset="200"/>
+            <!-- Crack 4 -->
+            <path id="crack4" d="M 130 140 L 155 130" stroke="#8a6030" stroke-width="1.2" stroke-linecap="round" fill="none" stroke-dasharray="100" stroke-dashoffset="100"/>
+          </g>
+        </svg>
+
+        <!-- Cookie halves (for splitting) -->
+        <div class="cookie-halves" id="cookieHalves">
+          <div class="cookie-half cookie-half-left">
+            <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="cookieGradL" cx="40%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#e8c49a"/>
+                  <stop offset="60%" stop-color="#d4a76a"/>
+                  <stop offset="100%" stop-color="#c49050"/>
+                </radialGradient>
+              </defs>
+              <path d="
+                M 110 30
+                C 145 30, 185 50, 190 90
+                C 195 125, 185 160, 160 178
+                C 140 192, 115 195, 95 190
+                C 70 183, 40 165, 32 135
+                C 24 105, 28 75, 45 55
+                C 62 35, 85 30, 110 30 Z
+              " fill="url(#cookieGradL)" stroke="#b88445" stroke-width="2"/>
+              <circle cx="85" cy="75" r="4" fill="#a86830" opacity="0.6"/>
+              <circle cx="70" cy="110" r="3.5" fill="#a86830" opacity="0.5"/>
+              <circle cx="90" cy="150" r="3" fill="#a86830" opacity="0.45"/>
+              <circle cx="55" cy="85" r="2.5" fill="#a86830" opacity="0.4"/>
+              <circle cx="105" cy="95" r="2" fill="#a86830" opacity="0.35"/>
+              <circle cx="75" cy="135" r="2" fill="#a86830" opacity="0.35"/>
+              <!-- Broken edge -->
+              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="#c49050" stroke-width="3" fill="none" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="cookie-half cookie-half-right">
+            <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="cookieGradR" cx="60%" cy="40%" r="65%">
+                  <stop offset="0%" stop-color="#e8c49a"/>
+                  <stop offset="60%" stop-color="#d4a76a"/>
+                  <stop offset="100%" stop-color="#c49050"/>
+                </radialGradient>
+              </defs>
+              <path d="
+                M 110 30
+                C 145 30, 185 50, 190 90
+                C 195 125, 185 160, 160 178
+                C 140 192, 115 195, 95 190
+                C 70 183, 40 165, 32 135
+                C 24 105, 28 75, 45 55
+                C 62 35, 85 30, 110 30 Z
+              " fill="url(#cookieGradR)" stroke="#b88445" stroke-width="2"/>
+              <circle cx="130" cy="65" r="3" fill="#a86830" opacity="0.5"/>
+              <circle cx="150" cy="100" r="4.5" fill="#a86830" opacity="0.55"/>
+              <circle cx="115" cy="120" r="4" fill="#a86830" opacity="0.6"/>
+              <circle cx="140" cy="145" r="3.5" fill="#a86830" opacity="0.5"/>
+              <circle cx="160" cy="125" r="2.5" fill="#a86830" opacity="0.4"/>
+              <!-- Broken edge -->
+              <path d="M 110 55 L 105 90 L 115 110 L 110 130 L 115 160" stroke="#c49050" stroke-width="3" fill="none" opacity="0.8"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Prediction ribbon -->
+        <div class="prediction-ribbon" id="predictionRibbon">
+          <div class="prediction-deco"></div>
+          <p class="prediction-text" id="predictionText"></p>
+          <div class="prediction-deco"></div>
+        </div>
+      </div>
+
+      <button class="reset-cookie-btn" id="resetCookieBtn">Спробувати ще раз</button>
+    </div>
+  </div>
+
+  <!-- ========== BOTTOM NAVIGATION ========== -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="opinion" id="navOpinion">
+      <span class="nav-icon">💭</span>
+      <span class="nav-label">Думка</span>
     </button>
-  </div>
-
-  <div id="cookieBlock" style="display:none">
-    <div class="thank-title" id="thankTitle">Дякуємо! Твоє повідомлення вже у нас 💌</div>
-    <div class="thank-hint" id="thankHint">Натисни на печиво, щоб відкрити вірш на сьогодні:</div>
-    <div class="cookie-wrap" id="cookieWrap">
-      <svg class="cookie-svg" id="cookieSvg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="cg1" cx="45%" cy="40%" r="60%">
-            <stop offset="0%" stop-color="#f5d98f"/><stop offset="60%" stop-color="#e8c468"/><stop offset="100%" stop-color="#d4a843"/>
-          </radialGradient>
-          <radialGradient id="cg2" cx="40%" cy="35%" r="55%">
-            <stop offset="0%" stop-color="#f7e0a0"/><stop offset="100%" stop-color="#e0b855"/>
-          </radialGradient>
-        </defs>
-        <circle cx="70" cy="70" r="60" fill="url(#cg1)" stroke="#c49a2e" stroke-width="2"/>
-        <circle cx="70" cy="70" r="52" fill="url(#cg2)" opacity="0.5"/>
-        <circle cx="48" cy="48" r="7" fill="#5c3a1e" opacity="0.85"/>
-        <circle cx="90" cy="52" r="6" fill="#5c3a1e" opacity="0.8"/>
-        <circle cx="60" cy="85" r="6.5" fill="#5c3a1e" opacity="0.85"/>
-        <circle cx="95" cy="82" r="5.5" fill="#5c3a1e" opacity="0.75"/>
-        <circle cx="72" cy="65" r="5" fill="#5c3a1e" opacity="0.7"/>
-        <circle cx="40" cy="78" r="4.5" fill="#5c3a1e" opacity="0.65"/>
-        <circle cx="80" cy="105" r="4.5" fill="#5c3a1e" opacity="0.6"/>
-        <circle cx="55" cy="60" r="3.5" fill="#5c3a1e" opacity="0.5"/>
-        <circle cx="55" cy="65" r="4" fill="#3d2510"/>
-        <circle cx="85" cy="65" r="4" fill="#3d2510"/>
-        <circle cx="56.5" cy="63.5" r="1.5" fill="#fff"/>
-        <circle cx="86.5" cy="63.5" r="1.5" fill="#fff"/>
-        <path d="M60 78 Q70 88 80 78" fill="none" stroke="#3d2510" stroke-width="2.5" stroke-linecap="round"/>
-        <ellipse cx="45" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
-        <ellipse cx="95" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
-        <text x="25" y="40" font-size="12" opacity="0.6">✨</text>
-        <text x="110" y="35" font-size="10" opacity="0.5">✨</text>
-      </svg>
-    </div>
-    <div class="verse-card" id="verseCard">
-      <div class="verse-em" id="verseEm">📖</div>
-      <div class="verse-text" id="verseText"></div>
-      <div class="verse-ref" id="verseRef"></div>
-    </div>
-    <button class="btn-ghost" id="btnAgain" style="display:none">Надіслати ще одне повідомлення</button>
-  </div>
-</section>
-
-<section class="view" id="viewWall">
-  <h1 class="view-title" id="wallTitle">📌 Стіна</h1>
-  <p class="view-sub" id="wallSub">Новини, анонси та важливі оголошення каналу</p>
-  <div class="filter-row" id="wallFilters"></div>
-  <div id="wallList"></div>
-  <a class="btn-ghost" id="wallChannel" href="https://t.me/" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-top:6px">Обговорити в каналі 💬</a>
-</section>
-
-<section class="view" id="viewQuiz">
-  <h1 class="view-title" id="quizTitle">🎯 Квіз дня</h1>
-  <p class="view-sub" id="quizSub">Перевір інтуїцію та отримай +30 XP</p>
-  <div class="quiz-wrap" id="quizWrap"></div>
-</section>
-
-<section class="view" id="viewArchive">
-  <h1 class="view-title" id="archTitle">📚 Архів натхнення</h1>
-  <p class="view-sub" id="archSub">Плейлисти, шпалери, корисні посилання та нотатки</p>
-  <div class="filter-row" id="archFilters"></div>
-  <div class="arch-grid" id="archGrid"></div>
-</section>
-
-<section class="view" id="viewProfile">
-  <div class="profile-hero">
-    <div class="profile-av" id="profileAv">Г</div>
-    <div class="profile-name" id="profileName">Гість</div>
-    <div class="profile-status" id="profileStatus">Новачок спільноти</div>
-    <div class="xp-track"><div class="xp-fill" id="profileXpFill" style="width:0%"></div></div>
-    <div class="xp-label" id="profileXpLabel">0 / 100 XP</div>
-  </div>
-  <div class="stat-grid">
-    <div class="stat-box"><div class="stat-val" id="statIdeas">0</div><div class="stat-lbl" id="lblStatIdeas">Ідей</div></div>
-    <div class="stat-box"><div class="stat-val" id="statCookies">0</div><div class="stat-lbl" id="lblStatCookies">Печив</div></div>
-    <div class="stat-box"><div class="stat-val" id="statQuiz">0</div><div class="stat-lbl" id="lblStatQuiz">Квізів</div></div>
-    <div class="stat-box"><div class="stat-val" id="statReacts">0</div><div class="stat-lbl" id="lblStatReacts">Реакцій</div></div>
-  </div>
-  <div class="section-label" id="lblBadges">🏆 Досягнення</div>
-  <div class="badge-grid" id="badgeGrid"></div>
-  <div class="section-label" id="lblSavedVerses">📖 Мої збережені вірші</div>
-  <div id="savedVersesList"></div>
-</section>
-
-<section class="view" id="viewAdmin">
-  <div class="admin-head">
-    <div>
-      <div class="ah-title" id="adminTitle">👑 Адмінка</div>
-      <div class="ah-sub" id="adminSub">Керуй квізами, стіною та архівом</div>
-    </div>
-    <button class="admin-view-btn" id="adminViewAs">👁️ Як користувач</button>
-  </div>
-
-  <div class="admin-sec">
-    <div class="admin-sec-title">🎯 Новий квіз</div>
-    <label class="admin-lbl">Питання UA</label>
-    <input class="admin-in" id="aqQ_ua" placeholder="Питання українською">
-    <label class="admin-lbl">Питання EN</label>
-    <input class="admin-in" id="aqQ_en" placeholder="Question in English">
-    <div class="admin-row">
-      <div><label class="admin-lbl">Варіант 1 UA</label><input class="admin-in" id="aqA1_ua" placeholder="A1 UA"></div>
-      <div><label class="admin-lbl">Варіант 1 EN</label><input class="admin-in" id="aqA1_en" placeholder="A1 EN"></div>
-    </div>
-    <div class="admin-row">
-      <div><label class="admin-lbl">Варіант 2 UA</label><input class="admin-in" id="aqA2_ua" placeholder="A2 UA"></div>
-      <div><label class="admin-lbl">Варіант 2 EN</label><input class="admin-in" id="aqA2_en" placeholder="A2 EN"></div>
-    </div>
-    <div class="admin-row">
-      <div><label class="admin-lbl">Варіант 3 UA</label><input class="admin-in" id="aqA3_ua" placeholder="A3 UA"></div>
-      <div><label class="admin-lbl">Варіант 3 EN</label><input class="admin-in" id="aqA3_en" placeholder="A3 EN"></div>
-    </div>
-    <div class="admin-row">
-      <div><label class="admin-lbl">Варіант 4 UA</label><input class="admin-in" id="aqA4_ua" placeholder="A4 UA"></div>
-      <div><label class="admin-lbl">Варіант 4 EN</label><input class="admin-in" id="aqA4_en" placeholder="A4 EN"></div>
-    </div>
-    <label class="admin-lbl">Правильна відповідь</label>
-    <div class="admin-correct-pick" id="aqCorrectPick">
-      <button class="corr-pill on" data-i="0">1</button>
-      <button class="corr-pill" data-i="1">2</button>
-      <button class="corr-pill" data-i="2">3</button>
-      <button class="corr-pill" data-i="3">4</button>
-    </div>
-    <label class="admin-lbl">Пояснення UA</label>
-    <textarea class="admin-in" id="aqExp_ua" placeholder="Чому ця відповідь цікава"></textarea>
-    <label class="admin-lbl">Пояснення EN</label>
-    <textarea class="admin-in" id="aqExp_en" placeholder="Why this answer is interesting"></textarea>
-    <button class="admin-pub" id="aqPublish">Опублікувати квіз</button>
-  </div>
-
-  <div class="admin-sec">
-    <div class="admin-sec-title">📌 Новий пост на Стіну</div>
-    <label class="admin-lbl">Заголовок UA</label>
-    <input class="admin-in" id="awT_ua" placeholder="Заголовок UA">
-    <label class="admin-lbl">Заголовок EN</label>
-    <input class="admin-in" id="awT_en" placeholder="Title EN">
-    <label class="admin-lbl">Текст UA</label>
-    <textarea class="admin-in" id="awB_ua" placeholder="Текст UA"></textarea>
-    <label class="admin-lbl">Текст EN</label>
-    <textarea class="admin-in" id="awB_en" placeholder="Text EN"></textarea>
-    <label class="admin-lbl">Тег</label>
-    <div class="admin-correct-pick" id="awTagPick">
-      <button class="corr-pill on" data-tag="announce">Анонс</button>
-      <button class="corr-pill" data-tag="important">Важливе</button>
-      <button class="corr-pill" data-tag="interactive">Інтерактив</button>
-    </div>
-    <label class="admin-lbl">Посилання на пост (необов'язково)</label>
-    <input class="admin-in" id="awLink" placeholder="https://t.me/...">
-    <button class="admin-pub" id="awPublish">Опублікувати на Стіну</button>
-  </div>
-
-  <div class="admin-sec">
-    <div class="admin-sec-title">📚 Нова картка в Архів</div>
-    <label class="admin-lbl">Назва UA</label>
-    <input class="admin-in" id="aaT_ua" placeholder="Назва UA">
-    <label class="admin-lbl">Назва EN</label>
-    <input class="admin-in" id="aaT_en" placeholder="Title EN">
-    <label class="admin-lbl">Опис UA</label>
-    <textarea class="admin-in" id="aaD_ua" placeholder="Опис UA"></textarea>
-    <label class="admin-lbl">Опис EN</label>
-    <textarea class="admin-in" id="aaD_en" placeholder="Description EN"></textarea>
-    <label class="admin-lbl">Категорія</label>
-    <div class="admin-correct-pick" id="aaCatPick">
-      <button class="corr-pill on" data-cat="playlist">Плейлист</button>
-      <button class="corr-pill" data-cat="wallpaper">Шпалери</button>
-      <button class="corr-pill" data-cat="link">Корисне</button>
-      <button class="corr-pill" data-cat="note">Ідеї</button>
-    </div>
-    <label class="admin-lbl">Посилання</label>
-    <input class="admin-in" id="aaLink" placeholder="https://...">
-    <button class="admin-pub" id="aaPublish">Додати в Архів</button>
-  </div>
-
-  <div class="admin-sec">
-    <div class="admin-sec-title">🧹 Очищення</div>
-    <div id="adminDraftsList"></div>
-    <button class="btn-danger" id="adminClearAll">Очистити всі локальні тестові дані</button>
-  </div>
-</section>
-
-</main>
-
-<nav class="nav" id="bottomNav">
-  <button class="nav-item active" data-view="viewMain"><span class="ni-em">💌</span><span class="ni-lb" data-nav="main">Думки</span></button>
-  <button class="nav-item" data-view="viewWall"><span class="ni-em">📌</span><span class="ni-lb" data-nav="wall">Стіна</span></button>
-  <button class="nav-item" data-view="viewQuiz"><span class="ni-em">🎯</span><span class="ni-lb" data-nav="quiz">Квіз</span></button>
-  <button class="nav-item" data-view="viewArchive"><span class="ni-em">📚</span><span class="ni-lb" data-nav="archive">Архів</span></button>
-  <button class="nav-item" data-view="viewProfile"><span class="ni-em">🏆</span><span class="ni-lb" data-nav="profile">Профіль</span></button>
-  <button class="nav-item hidden" id="navAdminBtn" data-view="viewAdmin"><span class="ni-em">👑</span><span class="ni-lb" data-nav="admin">Адмінка</span></button>
-</nav>
-
+    <button class="nav-btn" data-tab="board" id="navBoard">
+      <span class="nav-icon">📌</span>
+      <span class="nav-label">Дошка</span>
+    </button>
+    <button class="nav-btn" data-tab="cookie" id="navCookie">
+      <span class="nav-icon">🍪</span>
+      <span class="nav-label">Печиво</span>
+    </button>
+  </nav>
 </div>
 
+<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<div class="lvl-overlay" id="lvlOverlay">
-  <div class="lvl-box">
-    <div class="lvl-em" id="lvlEm">🎉</div>
-    <div class="lvl-t1" id="lvlT1">Новий рівень!</div>
-    <div class="lvl-t2" id="lvlT2">Рівень 2</div>
-    <div class="lvl-t3" id="lvlT3">Так тримати! Ти стаєш ближче до легенди каналу.</div>
-    <button class="btn-primary" id="lvlClose">Продовжити</button>
-  </div>
-</div>
-
 <script>
-/* ============================================================
-   PART 2 — CORE JS
-   ============================================================ */
+(function() {
+  'use strict';
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxY3zdCJn9G5NXBVWcjLioPDz5A8jZTF0Ze3ymzKWvN7YJm3fYAnDKAcnNjeqdciY_q/exec';
-const CHANNEL_URL = 'https://t.me/DIY_and_HomeDesign';
-const ADMIN_ID = '7431962320';
+  // ==================== CONFIG ====================
+  const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwFkBBzEZXkPZ5BXqJdOe8OOGQy_taVDSPxnRfXmsJDTpdrK0N5PBCBYs7Fyp3Xkg3qA/exec';
+  const ADMIN_ID = 7431962320;
 
-const TelegramBridge = (function(){
-  let tg = null;
-  let user = { id: 'browser_test', username: 'guest', first_name: 'Гість' };
-  try {
-    if (window.Telegram && window.Telegram.WebApp) {
-      tg = window.Telegram.WebApp;
-      if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        const u = tg.initDataUnsafe.user;
-        user = {
-          id: u.id ? String(u.id) : 'browser_test',
-          username: u.username || 'guest',
-          first_name: u.first_name || 'Гість'
-        };
-      }
+  // ==================== TELEGRAM WEB APP ====================
+  const tg = window.Telegram?.WebApp;
+  if (tg) {
+    tg.ready();
+    tg.expand();
+    tg.enableClosingConfirmation();
+    if (tg.setHeaderColor) {
+      tg.setHeaderColor('#f9f5f0');
     }
-  } catch(e){}
-  function haptic(type){
-    try { if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred(type || 'light'); } catch(e){}
-  }
-  function ready(){ try{ if(tg){ tg.ready(); tg.expand(); } }catch(e){} }
-  return { user, haptic, ready, isAdmin: function(){ return String(user.id) === ADMIN_ID; } };
-})();
-
-const StorageService = (function(){
-  const NS = 'mini_app_v2_';
-  function get(k, def){
-    try {
-      const raw = localStorage.getItem(NS + k);
-      if (raw === null) return def;
-      return JSON.parse(raw);
-    } catch(e){ return def; }
-  }
-  function set(k, v){
-    try { localStorage.setItem(NS + k, JSON.stringify(v)); } catch(e){}
-  }
-  function del(k){
-    try { localStorage.removeItem(NS + k); } catch(e){}
-  }
-  function clearAll(){
-    try {
-      const keys = [];
-      for (let i=0;i<localStorage.length;i++){
-        const key = localStorage.key(i);
-        if (key && key.indexOf(NS) === 0) keys.push(key);
-      }
-      keys.forEach(k => localStorage.removeItem(k));
-    } catch(e){}
-  }
-  return { get, set, del, clearAll };
-})();
-
-const I18nManager = (function(){
-  const dict = {
-    ua: {
-      brand: 'Спільнота',
-      navMain: 'Думки', navWall: 'Стіна', navQuiz: 'Квіз', navArchive: 'Архів', navProfile: 'Профіль', navAdmin: 'Адмінка',
-      mainTitle: 'Поділися своєю думкою ✨',
-      mainSub: 'Обери настрій, напиши думку — і отримай вірш на сьогодні 💌',
-      lblCategory: 'Категорія', lblMood: 'Настрій',
-      lblMainField: 'Твоя ідея, питання або думка...',
-      lblImproveField: 'Що можна покращити? (за бажанням)',
-      phMain: 'Твоя ідея, питання або думка...',
-      phImprove: 'Що можна покращити в каналі? (за бажанням)',
-      btnSend: 'Надіслати 🚀', btnSending: 'Надсилаємо...',
-      thankTitle: 'Дякуємо! Твоє повідомлення вже у нас 💌',
-      thankHint: 'Натисни на печиво, щоб відкрити вірш на сьогодні:',
-      btnAgain: 'Надіслати ще одне повідомлення',
-      emptyMain: 'Будь ласка, напиши щось у головному полі 💭',
-      noCategory: 'Обери категорію, будь ласка 💡',
-      noMood: 'Обери настрій, будь ласка 🎨',
-      sendError: 'Щось пішло не так. Спробуй ще раз 🙏',
-      sendSuccess: 'Надіслано! Дякуємо 💌',
-      categories: [
-        { value:'idea', emoji:'💡', label:'Ідея для посту' },
-        { value:'question', emoji:'💬', label:'Питання' },
-        { value:'newtopic', emoji:'🔥', label:'Нова тема' },
-        { value:'hello', emoji:'✨', label:'Просто привіт' }
-      ],
-      moods: [
-        { value:'super', emoji:'🔋', label:'Супер' },
-        { value:'sleepy', emoji:'☁️', label:'Сонно' },
-        { value:'creative', emoji:'🎨', label:'Творчо' },
-        { value:'coffee', emoji:'☕', label:'Хочу кави' }
-      ],
-      wallTitle: '📌 Стіна', wallSub: 'Новини, анонси та важливі оголошення каналу',
-      wallFilters: { all:'Усі', announce:'Анонси', important:'Важливе', interactive:'Інтерактив' },
-      wallRead: 'Читати в каналі ➔',
-      quizTitle: '🎯 Квіз дня', quizSub: 'Перевір інтуїцію та отримай +30 XP',
-      quizCorrect: 'Правильно! 🎉', quizWrong: 'Цікаво! Ось пояснення:', quizAlready: 'Ти вже проходив цей квіз сьогодні ✅',
-      quizXp: '+30 XP за проходження',
-      archTitle: '📚 Архів натхнення', archSub: 'Плейлисти, шпалери, корисні посилання та нотатки',
-      archFilters: { all:'Усе', playlist:'🎵 Плейлисти', wallpaper:'🖼️ Шпалери', link:'💡 Корисні посилання', note:'✨ Нотатки' },
-      profileStatuses: ['Новачок спільноти','Дослідник','Друг каналу','Активіст','Натхненник','Зірка','Мудрець','Хранитель','Легенда','Легенда каналу'],
-      lblStatIdeas: 'Ідей', lblStatCookies: 'Печив', lblStatQuiz: 'Квізів', lblStatReacts: 'Реакцій',
-      lblBadges: '🏆 Досягнення', lblSavedVerses: '📖 Мої збережені вірші',
-      noSavedVerses: 'Тут з\'являться вірші, які ти відкриєш з печива 🍪',
-      adminTitle: '👑 Адмінка', adminSub: 'Керуй квізами, стіною та архівом',
-      adminViewAs: '👁️ Як користувач',
-      lvlUpTitle: 'Новий рівень!', lvlUpSub: 'Так тримати! Ти стаєш ближче до легенди каналу.',
-      lvlUpBtn: 'Продовжити',
-      confirmClear: 'Точно очистити всі локальні дані?',
-      cleared: 'Локальні дані очищено 🧹',
-      publishedQuiz: 'Квіз опубліковано ✅',
-      publishedWall: 'Пост опубліковано на Стіні ✅',
-      publishedArch: 'Картку додано в Архів ✅',
-      fillFields: 'Заповни всі обов\'язкові поля ⚠️',
-      savedVerse: 'Вірш збережено в профіль 📖',
-      channelBtn: 'Наш Telegram-канал 📢',
-      wallDiscuss: 'Обговорити в каналі 💬'
-    },
-    en: {
-      brand: 'Community',
-      navMain: 'Thoughts', navWall: 'Wall', navQuiz: 'Quiz', navArchive: 'Archive', navProfile: 'Profile', navAdmin: 'Admin',
-      mainTitle: 'Share your thoughts ✨',
-      mainSub: 'Pick a mood, write a thought — and get a verse for today 💌',
-      lblCategory: 'Category', lblMood: 'Mood',
-      lblMainField: 'Your idea, question or thought...',
-      lblImproveField: 'What can we improve? (optional)',
-      phMain: 'Your idea, question or thought...',
-      phImprove: 'What can we improve? (optional)',
-      btnSend: 'Send 🚀', btnSending: 'Sending...',
-      thankTitle: 'Thank you! We got your message 💌',
-      thankHint: 'Tap the cookie to open your verse for today:',
-      btnAgain: 'Send another message',
-      emptyMain: 'Please write something in the main field 💭',
-      noCategory: 'Please pick a category 💡',
-      noMood: 'Please pick a mood 🎨',
-      sendError: 'Something went wrong. Please try again 🙏',
-      sendSuccess: 'Sent! Thank you 💌',
-      categories: [
-        { value:'idea', emoji:'💡', label:'Post idea' },
-        { value:'question', emoji:'💬', label:'Question' },
-        { value:'newtopic', emoji:'🔥', label:'New topic' },
-        { value:'hello', emoji:'✨', label:'Just saying hi' }
-      ],
-      moods: [
-        { value:'super', emoji:'🔋', label:'Great' },
-        { value:'sleepy', emoji:'☁️', label:'Sleepy' },
-        { value:'creative', emoji:'🎨', label:'Creative' },
-        { value:'coffee', emoji:'☕', label:'Need coffee' }
-      ],
-      wallTitle: '📌 Wall', wallSub: 'News, announcements and important channel updates',
-      wallFilters: { all:'All', announce:'Announcements', important:'Important', interactive:'Interactive' },
-      wallRead: 'Read in channel ➔',
-      quizTitle: '🎯 Quiz of the day', quizSub: 'Test your intuition and get +30 XP',
-      quizCorrect: 'Correct! 🎉', quizWrong: 'Interesting! Here is the explanation:', quizAlready: 'You already did this quiz today ✅',
-      quizXp: '+30 XP for completion',
-      archTitle: '📚 Inspiration archive', archSub: 'Playlists, wallpapers, useful links and notes',
-      archFilters: { all:'All', playlist:'🎵 Playlists', wallpaper:'🖼️ Wallpapers', link:'💡 Useful links', note:'✨ Notes' },
-      profileStatuses: ['Community newbie','Explorer','Channel friend','Activist','Inspirer','Star','Sage','Keeper','Legend','Channel legend'],
-      lblStatIdeas: 'Ideas', lblStatCookies: 'Cookies', lblStatQuiz: 'Quizzes', lblStatReacts: 'Reactions',
-      lblBadges: '🏆 Achievements', lblSavedVerses: '📖 My saved verses',
-      noSavedVerses: 'Verses you open from cookies will appear here 🍪',
-      adminTitle: '👑 Admin', adminSub: 'Manage quizzes, wall and archive',
-      adminViewAs: '👁️ As user',
-      lvlUpTitle: 'New level!', lvlUpSub: 'Keep it up! You are getting closer to the channel legend.',
-      lvlUpBtn: 'Continue',
-      confirmClear: 'Clear all local data?',
-      cleared: 'Local data cleared 🧹',
-      publishedQuiz: 'Quiz published ✅',
-      publishedWall: 'Post published on the Wall ✅',
-      publishedArch: 'Card added to Archive ✅',
-      fillFields: 'Please fill in all required fields ⚠️',
-      savedVerse: 'Verse saved to profile 📖',
-      channelBtn: 'Our Telegram channel 📢',
-      wallDiscuss: 'Discuss in channel 💬'
+    if (tg.setBackgroundColor) {
+      tg.setBackgroundColor('#f9f5f0');
     }
+  }
+
+  const userId = tg?.initDataUnsafe?.user?.id;
+  const isAdmin = userId === ADMIN_ID;
+
+  // ==================== STATE ====================
+  const state = {
+    isAnonymous: true,
+    ideas: JSON.parse(localStorage.getItem('cozy_ideas') || '[]'),
+    likedIds: JSON.parse(localStorage.getItem('cozy_liked') || '[]'),
+    cookieClicks: 0,
+    cookieBroken: false,
+    currentPrediction: ''
   };
-  let current = 'ua';
-  function t(key){ return (dict[current] && dict[current][key]) || key; }
-  function setLang(lang){ if (dict[lang]) current = lang; }
-  function getLang(){ return current; }
-  function data(){ return dict[current]; }
-  return { t, setLang, getLang, data };
-})();
 
-const LEVELS = [
-  { lvl:1, xp:0,    nameUa:'Новачок спільноти', nameEn:'Community newbie' },
-  { lvl:2, xp:100,  nameUa:'Дослідник',         nameEn:'Explorer' },
-  { lvl:3, xp:250,  nameUa:'Друг каналу',       nameEn:'Channel friend' },
-  { lvl:4, xp:500,  nameUa:'Активіст',          nameEn:'Activist' },
-  { lvl:5, xp:850,  nameUa:'Натхненник',        nameEn:'Inspirer' },
-  { lvl:6, xp:1300, nameUa:'Зірка',             nameEn:'Star' },
-  { lvl:7, xp:1900, nameUa:'Мудрець',           nameEn:'Sage' },
-  { lvl:8, xp:2600, nameUa:'Хранитель',         nameEn:'Keeper' },
-  { lvl:9, xp:3500, nameUa:'Легенда',           nameEn:'Legend' },
-  { lvl:10,xp:5000, nameUa:'Легенда каналу',    nameEn:'Channel legend' }
-];
+  // ==================== DOM REFS ====================
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
 
-const StateManager = (function(){
-  const DEFAULTS = {
-    xp: 0,
-    level: 1,
-    stats: { ideas:0, cookies:0, quiz:0, reacts:0 },
-    savedVerses: [],
-    quizDone: {},
-    likedPosts: {},
-    savedArchive: {},
-    userPosts: [],
-    userQuizzes: [],
-    userArchive: [],
-    viewAsUser: false
-  };
-  let state = null;
-  function load(){
-    const stored = StorageService.get('state', null);
-    state = Object.assign({}, DEFAULTS, stored || {});
-    state.stats = Object.assign({}, DEFAULTS.stats, state.stats || {});
-    if (!Array.isArray(state.savedVerses)) state.savedVerses = [];
-    if (!Array.isArray(state.userPosts)) state.userPosts = [];
-    if (!Array.isArray(state.userQuizzes)) state.userQuizzes = [];
-    if (!Array.isArray(state.userArchive)) state.userArchive = [];
-    if (typeof state.quizDone !== 'object' || state.quizDone === null) state.quizDone = {};
-    if (typeof state.likedPosts !== 'object' || state.likedPosts === null) state.likedPosts = {};
-    if (typeof state.savedArchive !== 'object' || state.savedArchive === null) state.savedArchive = {};
-  }
-  function save(){ StorageService.set('state', state); }
-  function get(){ return state; }
-  function set(patch){ Object.assign(state, patch); save(); }
-  function addXp(amount){
-    const before = state.level;
-    state.xp += amount;
-    let lvl = 1;
-    for (let i = LEVELS.length - 1; i >= 0; i--) {
-      if (state.xp >= LEVELS[i].xp) { lvl = LEVELS[i].lvl; break; }
+  const anonToggle = $('#anonToggle');
+  const toggleLabel = $('#toggleLabel');
+  const nameWrapper = $('#nameWrapper');
+  const nameInput = $('#nameInput');
+  const surveyText = $('#surveyText');
+  const submitSurveyBtn = $('#submitSurveyBtn');
+  const boardGrid = $('#boardGrid');
+  const toastEl = $('#toast');
+  const cookieWrapper = $('#cookieWrapper');
+  const cookieSvg = $('#cookieSvg');
+  const cookieHalves = $('#cookieHalves');
+  const cookieHint = $('#cookieHint');
+  const predictionRibbon = $('#predictionRibbon');
+  const predictionText = $('#predictionText');
+  const resetCookieBtn = $('#resetCookieBtn');
+  const crackGroup = $('#crackGroup');
+  const crack1 = $('#crack1');
+  const crack2 = $('#crack2');
+  const crack3 = $('#crack3');
+  const crack4 = $('#crack4');
+
+  // ==================== NAVIGATION ====================
+  const tabs = ['opinion', 'board', 'cookie'];
+
+  function switchTab(tabName) {
+    tabs.forEach(t => {
+      const content = document.getElementById('tab-' + t);
+      const btn = document.querySelector(`.nav-btn[data-tab="${t}"]`);
+      if (t === tabName) {
+        content.classList.add('active');
+        btn.classList.add('active');
+      } else {
+        content.classList.remove('active');
+        btn.classList.remove('active');
+      }
+    });
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.selectionChanged();
     }
-    state.level = lvl;
-    save();
-    return { leveledUp: lvl > before, from: before, to: lvl };
   }
-  function incStat(key, by){
-    if (typeof state.stats[key] === 'number') state.stats[key] += (by || 1);
-    save();
+
+  $$('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchTab(btn.dataset.tab);
+    });
+  });
+
+  // ==================== TOAST ====================
+  let toastTimer;
+
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastEl.classList.remove('show');
+    }, 2200);
   }
-  function levelInfo(){
-    const idx = Math.max(0, state.level - 1);
-    const current = LEVELS[idx];
-    const next = LEVELS[idx + 1] || null;
-    const currentXp = state.xp - current.xp;
-    const needed = next ? (next.xp - current.xp) : 1;
-    return {
-      level: state.level,
-      current: current,
-      next: next,
-      progress: next ? Math.min(100, Math.round((currentXp / needed) * 100)) : 100,
-      currentXp: currentXp,
-      needed: next ? needed : 0
+
+  // ==================== TAB 1: SURVEY ====================
+  anonToggle.addEventListener('click', () => {
+    state.isAnonymous = !state.isAnonymous;
+    anonToggle.classList.toggle('active', !state.isAnonymous);
+    toggleLabel.textContent = state.isAnonymous ? 'Анонімно' : 'Вказати ім\'я';
+    nameWrapper.classList.toggle('visible', !state.isAnonymous);
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred('light');
+    }
+
+    if (state.isAnonymous) {
+      nameInput.value = '';
+    } else {
+      nameInput.focus();
+    }
+  });
+
+  // Load saved name if exists
+  const savedName = localStorage.getItem('cozy_user_name');
+  if (savedName) {
+    nameInput.value = savedName;
+  }
+
+  // Save name on input
+  nameInput.addEventListener('input', () => {
+    localStorage.setItem('cozy_user_name', nameInput.value);
+  });
+
+  submitSurveyBtn.addEventListener('click', function() {
+    const text = surveyText.value.trim();
+    const name = state.isAnonymous ? 'Анонім' : (nameInput.value.trim() || 'Анонім');
+
+    if (!text) {
+      showToast('Будь ласка, напиши щось ✏️');
+      return;
+    }
+
+    if (!state.isAnonymous && !nameInput.value.trim()) {
+      showToast('Введи своє ім\'я або обери "Анонімно"');
+      return;
+    }
+
+    submitSurveyBtn.disabled = true;
+    submitSurveyBtn.textContent = 'Надсилаю...';
+
+    // Simulate sending
+    const idea = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      text: text,
+      name: name,
+      timestamp: Date.now(),
+      likes: 0
     };
-  }
-  function reset(){
-    state = JSON.parse(JSON.stringify(DEFAULTS));
-    save();
-  }
-  return { load, save, get, set, addXp, incStat, levelInfo, reset };
-})();
 
-const ParticleFX = (function(){
-  const container = document.getElementById('pfx');
-  const COLORS = ['#ffd700','#ffaa00','#ff7b7b','#7b5cff','#4fd1c5','#ff9eb5'];
-  function burst(x, y, count){
-    count = count || 24;
-    for (let i = 0; i < count; i++){
-      const bit = document.createElement('div');
-      bit.className = 'pfx-bit';
-      bit.style.left = x + 'px';
-      bit.style.top = y + 'px';
-      bit.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
-      bit.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-      container.appendChild(bit);
-      const angle = Math.random() * Math.PI * 2;
-      const dist = 60 + Math.random() * 140;
-      const dx = Math.cos(angle) * dist;
-      const dy = Math.sin(angle) * dist - 40;
-      const rot = (Math.random() - 0.5) * 720;
-      const dur = 700 + Math.random() * 500;
-      requestAnimationFrame(function(){
-        bit.style.transition = 'transform ' + dur + 'ms cubic-bezier(.2,.8,.3,1), opacity ' + dur + 'ms ease';
-        bit.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg) scale(' + (0.4 + Math.random()) + ')';
-        bit.style.opacity = '0';
+    // Try to send to Google Apps Script if URL is configured
+    if (GOOGLE_APPS_SCRIPT_URL && GOOGLE_APPS_SCRIPT_URL.includes('YOUR_SCRIPT')) {
+      // Demo mode: save locally
+      setTimeout(() => {
+        saveIdeaLocally(idea);
+        finishSurveySubmission();
+      }, 600);
+    } else {
+      // Real mode: send to Google Apps Script
+      fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text,
+          name: name,
+          timestamp: new Date().toISOString(),
+          telegram_user_id: userId || null
+        })
+      }).then(() => {
+        saveIdeaLocally(idea);
+        finishSurveySubmission();
+      }).catch(() => {
+        // Fallback to local
+        saveIdeaLocally(idea);
+        finishSurveySubmission();
       });
-      setTimeout(function(){ try { bit.remove(); } catch(e){} }, dur + 60);
     }
-  }
-  function fromElement(el, count){
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    burst(r.left + r.width / 2, r.top + r.height / 2, count);
-  }
-  return { burst, fromElement };
-})();
-
-const Toast = (function(){
-  const el = document.getElementById('toast');
-  let timer = null;
-  function show(msg, ms){
-    el.textContent = msg;
-    el.classList.add('show');
-    clearTimeout(timer);
-    timer = setTimeout(function(){ el.classList.remove('show'); }, ms || 2200);
-  }
-  return { show };
-})();
-
-const VERSES = {
-  ua: [
-    { text:'Дякуйте за все, бо така Божа воля про вас у Христі Ісусі.', ref:'1 Солунян 5:18', emoji:'🙏' },
-    { text:'Світло в темряві світить, і темрява його не подолала.', ref:'Івана 1:5', emoji:'✨' },
-    { text:'Доручи Господу свої дороги, і Він здійснить твої задуми.', ref:'Псалми 37:5', emoji:'🛤️' },
-    { text:'Надійся на Господа всім серцем своїм, і не покладайся на власний розум.', ref:'Приповісті 3:5', emoji:'💛' },
-    { text:'Усе можу в Тому, Хто дає мені силу.', ref:'Филип\'ян 4:13', emoji:'💪' },
-    { text:'Будь сильним і сміливим! Не бійся і не лякайся, бо Господь, твій Бог, іде з тобою.', ref:'Ісуса Навина 1:9', emoji:'🌟' },
-    { text:'Господь — мій Пастир, тому я не матиму нестачі.', ref:'Псалми 23:1', emoji:'🐑' },
-    { text:'Нехай Бог надії сповнить вас усією радістю та миром у вірі.', ref:'Римлян 15:13', emoji:'🌿' },
-    { text:'Ви — світло світу. Місто, що стоїть на горі, не сховати.', ref:'Матвія 5:14', emoji:'🌅' },
-    { text:'Ми любимо, тому що Він перший полюбив нас.', ref:'1 Івана 4:19', emoji:'❤️' },
-    { text:'Бог — наша пристань і сила, помічник у скруті, який завжди поруч.', ref:'Псалми 46:2', emoji:'⛰️' },
-    { text:'Не бійся, бо Я з тобою; не тривожся, бо Я — твій Бог. Я зміцню тебе і допоможу тобі.', ref:'Ісаї 41:10', emoji:'🤝' },
-    { text:'Радійте завжди, моліться постійно, дякуйте за все.', ref:'1 Солунян 5:16-18', emoji:'😊' },
-    { text:'Господь — моє світло і моє спасіння: кого мені боятися?', ref:'Псалми 27:1', emoji:'🕊️' },
-    { text:'Приходьте до Мене всі втомлені та обтяжені, і Я заспокою вас.', ref:'Матвія 11:28', emoji:'🌙' },
-    { text:'Любов ніколи не перестає.', ref:'1 Коринтян 13:8', emoji:'💖' },
-    { text:'Той, хто в вас, більший за того, хто в світі.', ref:'1 Івана 4:4', emoji:'🛡️' },
-    { text:'Не турбуйтеся ні про що, але в усьому молитвою і проханням з подякою відкривайте свої потреби Богові.', ref:'Филип\'ян 4:6', emoji:'🙌' },
-    { text:'Господь добрий, пристановище в день скрути, і Він знає тих, хто надіється на Нього.', ref:'Наум 1:7', emoji:'🏡' },
-    { text:'Ті, хто надіється на Господа, оновляться в силі.', ref:'Ісаї 40:31', emoji:'🦅' },
-    { text:'Смакуйте і побачте, що Господь добрий!', ref:'Псалми 34:9', emoji:'🍯' },
-    { text:'Будьте добрими один до одного, співчутливими, прощайте одне одному.', ref:'Ефесян 4:32', emoji:'🤗' },
-    { text:'Мир залишаю вам, Свій мир Я даю вам.', ref:'Івана 14:27', emoji:'☮️' },
-    { text:'Усе робіть з любов\'ю.', ref:'1 Коринтян 16:14', emoji:'💝' },
-    { text:'Господь буде тобі світлом назавжди.', ref:'Ісаї 60:20', emoji:'🌞' }
-  ],
-  en: [
-    { text:'Give thanks in all things, for this is God\'s will for you in Christ Jesus.', ref:'1 Thessalonians 5:18', emoji:'🙏' },
-    { text:'The light shines in the darkness, and the darkness has not overcome it.', ref:'John 1:5', emoji:'✨' },
-    { text:'Commit your way to the Lord; trust in Him and He will act.', ref:'Psalm 37:5', emoji:'🛤️' },
-    { text:'Trust in the Lord with all your heart and lean not on your own understanding.', ref:'Proverbs 3:5', emoji:'💛' },
-    { text:'I can do all things through Him who gives me strength.', ref:'Philippians 4:13', emoji:'💪' },
-    { text:'Be strong and courageous! Do not be afraid, for the Lord your God is with you.', ref:'Joshua 1:9', emoji:'🌟' },
-    { text:'The Lord is my shepherd; I shall not want.', ref:'Psalm 23:1', emoji:'🐑' },
-    { text:'May the God of hope fill you with all joy and peace as you trust in Him.', ref:'Romans 15:13', emoji:'🌿' },
-    { text:'You are the light of the world. A city on a hill cannot be hidden.', ref:'Matthew 5:14', emoji:'🌅' },
-    { text:'We love because He first loved us.', ref:'1 John 4:19', emoji:'❤️' },
-    { text:'God is our refuge and strength, a very present help in trouble.', ref:'Psalm 46:2', emoji:'⛰️' },
-    { text:'Do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you.', ref:'Isaiah 41:10', emoji:'🤝' },
-    { text:'Rejoice always, pray continually, give thanks in all circumstances.', ref:'1 Thessalonians 5:16-18', emoji:'😊' },
-    { text:'The Lord is my light and my salvation — whom shall I fear?', ref:'Psalm 27:1', emoji:'🕊️' },
-    { text:'Come to me, all you who are weary and burdened, and I will give you rest.', ref:'Matthew 11:28', emoji:'🌙' },
-    { text:'Love never fails.', ref:'1 Corinthians 13:8', emoji:'💖' },
-    { text:'The one who is in you is greater than the one who is in the world.', ref:'1 John 4:4', emoji:'🛡️' },
-    { text:'Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.', ref:'Philippians 4:6', emoji:'🙌' },
-    { text:'The Lord is good, a refuge in times of trouble. He cares for those who trust in Him.', ref:'Nahum 1:7', emoji:'🏡' },
-    { text:'Those who hope in the Lord will renew their strength.', ref:'Isaiah 40:31', emoji:'🦅' },
-    { text:'Taste and see that the Lord is good!', ref:'Psalm 34:9', emoji:'🍯' },
-    { text:'Be kind and compassionate to one another, forgiving each other.', ref:'Ephesians 4:32', emoji:'🤗' },
-    { text:'Peace I leave with you; my peace I give you.', ref:'John 14:27', emoji:'☮️' },
-    { text:'Do everything in love.', ref:'1 Corinthians 16:14', emoji:'💝' },
-    { text:'The Lord will be your everlasting light.', ref:'Isaiah 60:20', emoji:'🌞' }
-  ]
-};
-
-const BADGES = [
-  { id:'first_idea', emoji:'💌', ua:'Перша думка',  en:'First thought',  descUa:'Надішли перше повідомлення', descEn:'Send your first message', need:1, stat:'ideas' },
-  { id:'ideas_5',    emoji:'✍️', ua:'Активний',     en:'Active',         descUa:'5 ідей',                   descEn:'5 ideas',                 need:5, stat:'ideas' },
-  { id:'ideas_20',   emoji:'📚', ua:'Натхненник',  en:'Inspirer',       descUa:'20 ідей',                  descEn:'20 ideas',                need:20,stat:'ideas' },
-  { id:'first_cookie',emoji:'🍪',ua:'Перше печиво',en:'First cookie',   descUa:'Відкрий перше печиво',     descEn:'Open your first cookie',  need:1, stat:'cookies' },
-  { id:'cookies_10', emoji:'🥠', ua:'Печивний гурман',en:'Cookie gourmet',descUa:'10 печив',               descEn:'10 cookies',              need:10,stat:'cookies' },
-  { id:'cookies_50', emoji:'🎁', ua:'Колекціонер', en:'Collector',      descUa:'50 печив',                 descEn:'50 cookies',              need:50,stat:'cookies' },
-  { id:'first_quiz', emoji:'🎯', ua:'Перший квіз', en:'First quiz',     descUa:'Пройди перший квіз',       descEn:'Complete first quiz',     need:1, stat:'quiz' },
-  { id:'quiz_5',     emoji:'🧠', ua:'Розумник',    en:'Smart one',      descUa:'5 квізів',                 descEn:'5 quizzes',               need:5, stat:'quiz' },
-  { id:'quiz_10',    emoji:'🎓', ua:'Ерудит',      en:'Erudite',        descUa:'10 квізів',                descEn:'10 quizzes',              need:10,stat:'quiz' },
-  { id:'react_first',emoji:'❤️', ua:'Перша реакція',en:'First reaction', descUa:'Постав першу реакцію',    descEn:'Give first reaction',     need:1, stat:'reacts' },
-  { id:'react_20',   emoji:'🔥', ua:'Реактивний',  en:'Reactive',       descUa:'20 реакцій',               descEn:'20 reactions',            need:20,stat:'reacts' },
-  { id:'react_100',  emoji:'💫', ua:'Душа компанії',en:'Soul of the party',descUa:'100 реакцій',         descEn:'100 reactions',           need:100,stat:'reacts' }
-];
-
-const GamificationEngine = (function(){
-  function updateHeroUI(){
-    const st = StateManager.get();
-    const info = StateManager.levelInfo();
-    const lang = I18nManager.getLang();
-    const user = TelegramBridge.user;
-    const displayName = user.first_name || user.username || 'Гість';
-    const initial = (displayName[0] || '?').toUpperCase();
-    const levelName = lang === 'ua' ? info.current.nameUa : info.current.nameEn;
-
-    const avMain = document.getElementById('heroAvMain');
-    const nameMain = document.getElementById('heroNameMain');
-    const lvlMain = document.getElementById('heroLvlMain');
-    const avProf = document.getElementById('profileAv');
-    const nameProf = document.getElementById('profileName');
-    const lvlProf = document.getElementById('profileStatus');
-    if (avMain) avMain.textContent = initial;
-    if (nameMain) nameMain.textContent = displayName;
-    if (lvlMain) lvlMain.textContent = levelName;
-    if (avProf) avProf.textContent = initial;
-    if (nameProf) nameProf.textContent = displayName;
-    if (lvlProf) lvlProf.textContent = levelName;
-
-    const heroBadge = document.getElementById('heroXpBadge');
-    const heroFill = document.getElementById('heroXpFill');
-    if (heroBadge) heroBadge.textContent = st.xp + ' XP';
-    if (heroFill) heroFill.style.width = info.progress + '%';
-
-    const pFill = document.getElementById('profileXpFill');
-    const pLabel = document.getElementById('profileXpLabel');
-    if (pFill) pFill.style.width = info.progress + '%';
-    if (pLabel) {
-      pLabel.textContent = info.next
-        ? (info.currentXp + ' / ' + info.needed + ' XP')
-        : (st.xp + ' XP');
-    }
-
-    const elIdeas = document.getElementById('statIdeas');
-    const elCookies = document.getElementById('statCookies');
-    const elQuiz = document.getElementById('statQuiz');
-    const elReacts = document.getElementById('statReacts');
-    if (elIdeas) elIdeas.textContent = st.stats.ideas;
-    if (elCookies) elCookies.textContent = st.stats.cookies;
-    if (elQuiz) elQuiz.textContent = st.stats.quiz;
-    if (elReacts) elReacts.textContent = st.stats.reacts;
-  }
-  function awardXp(amount, sourceEl){
-    const res = StateManager.addXp(amount);
-    updateHeroUI();
-    if (sourceEl) ParticleFX.fromElement(sourceEl, 20);
-    if (res.leveledUp) {
-      showLevelUp(res.to);
-    }
-    return res;
-  }
-  function showLevelUp(level){
-    const lang = I18nManager.getLang();
-    const info = LEVELS[level - 1];
-    const overlay = document.getElementById('lvlOverlay');
-    document.getElementById('lvlT2').textContent = (lang === 'ua' ? 'Рівень ' : 'Level ') + level + ' — ' + (lang === 'ua' ? info.nameUa : info.nameEn);
-    document.getElementById('lvlT1').textContent = I18nManager.t('lvlUpTitle');
-    document.getElementById('lvlT3').textContent = I18nManager.t('lvlUpSub');
-    document.getElementById('lvlClose').textContent = I18nManager.t('lvlUpBtn');
-    overlay.classList.add('show');
-    ParticleFX.burst(window.innerWidth / 2, window.innerHeight / 2, 60);
-    TelegramBridge.haptic('medium');
-  }
-  function renderBadges(){
-    const grid = document.getElementById('badgeGrid');
-    if (!grid) return;
-    const st = StateManager.get();
-    const lang = I18nManager.getLang();
-    grid.innerHTML = '';
-    BADGES.forEach(function(b){
-      const cur = st.stats[b.stat] || 0;
-      const unlocked = cur >= b.need;
-      const pct = Math.min(100, Math.round((cur / b.need) * 100));
-      const div = document.createElement('div');
-      div.className = 'badge' + (unlocked ? ' unlocked' : '');
-      div.title = lang === 'ua' ? b.descUa : b.descEn;
-      div.innerHTML =
-        '<div class="badge-svg" style="font-size:40px;display:grid;place-items:center">' + b.emoji + '</div>' +
-        '<div class="badge-name">' + (lang === 'ua' ? b.ua : b.en) + '</div>' +
-        '<div class="badge-bar"><div class="badge-bar-fill" style="width:' + pct + '%"></div></div>';
-      grid.appendChild(div);
-    });
-  }
-  function renderSavedVerses(){
-    const list = document.getElementById('savedVersesList');
-    if (!list) return;
-    const st = StateManager.get();
-    list.innerHTML = '';
-    if (!st.savedVerses.length) {
-      const p = document.createElement('p');
-      p.style.cssText = 'font-size:13px;opacity:.55;padding:12px 4px';
-      p.textContent = I18nManager.t('noSavedVerses');
-      list.appendChild(p);
-      return;
-    }
-    st.savedVerses.slice().reverse().forEach(function(v){
-      const card = document.createElement('div');
-      card.className = 'saved-verse';
-      card.innerHTML =
-        '<div class="sv-text">' + v.emoji + ' ' + v.text + '</div>' +
-        '<div class="sv-ref">' + v.ref + '</div>';
-      list.appendChild(card);
-    });
-  }
-  function refreshAll(){
-    updateHeroUI();
-    renderBadges();
-    renderSavedVerses();
-  }
-  return { updateHeroUI, awardXp, renderBadges, renderSavedVerses, refreshAll, showLevelUp };
-})();
-
-const NavController = (function(){
-  const items = document.querySelectorAll('.nav-item');
-  const views = document.querySelectorAll('.view');
-  let current = 'viewMain';
-
-  function go(viewId){
-    if (!viewId || viewId === current) return;
-    const target = document.getElementById(viewId);
-    if (!target) return;
-    TelegramBridge.haptic('light');
-    views.forEach(function(v){ v.classList.remove('active'); });
-    items.forEach(function(i){ i.classList.toggle('active', i.dataset.view === viewId); });
-    target.classList.add('active');
-    current = viewId;
-    window.scrollTo({ top:0, behavior:'smooth' });
-
-    if (viewId === 'viewWall') WallRenderer.render();
-    if (viewId === 'viewQuiz') QuizEngine.render();
-    if (viewId === 'viewArchive') ArchiveRenderer.render();
-    if (viewId === 'viewProfile') GamificationEngine.refreshAll();
-    if (viewId === 'viewAdmin') AdminController.render();
-  }
-  function init(){
-    items.forEach(function(item){
-      item.addEventListener('click', function(){
-        go(item.dataset.view);
-      });
-    });
-  }
-  function currentView(){ return current; }
-  return { init, go, currentView };
-})();
-
-const MainForm = (function(){
-  let selectedCategory = null;
-  let selectedMood = null;
-  let isSending = false;
-  let verseRevealed = false;
-
-  const taMain = document.getElementById('taMain');
-  const taImprove = document.getElementById('taImprove');
-  const countMain = document.getElementById('countMain');
-  const countImprove = document.getElementById('countImprove');
-  const chipsContainer = document.getElementById('chipsCategory');
-  const moodGrid = document.getElementById('moodGrid');
-  const btnSend = document.getElementById('btnSend');
-  const btnSendText = document.getElementById('btnSendText');
-  const formBlock = document.getElementById('formBlock');
-  const cookieBlock = document.getElementById('cookieBlock');
-  const cookieWrap = document.getElementById('cookieWrap');
-  const cookieSvg = document.getElementById('cookieSvg');
-  const verseCard = document.getElementById('verseCard');
-  const verseEm = document.getElementById('verseEm');
-  const verseText = document.getElementById('verseText');
-  const verseRef = document.getElementById('verseRef');
-  const btnAgain = document.getElementById('btnAgain');
-
-  function saveDraft(){
-    StorageService.set('draft', {
-      category: selectedCategory,
-      mood: selectedMood,
-      main: taMain.value,
-      improve: taImprove.value
-    });
-  }
-  function loadDraft(){
-    const d = StorageService.get('draft', null);
-    if (!d) return;
-    if (d.category) selectedCategory = d.category;
-    if (d.mood) selectedMood = d.mood;
-    if (d.main) taMain.value = d.main;
-    if (d.improve) taImprove.value = d.improve;
-    updateCounts();
-  }
-  function clearDraft(){
-    StorageService.del('draft');
-  }
-  function updateCounts(){
-    if (countMain) countMain.textContent = taMain.value.length + ' / 800';
-    if (countImprove) countImprove.textContent = taImprove.value.length + ' / 400';
-  }
-  function renderCategories(){
-    const d = I18nManager.data();
-    chipsContainer.innerHTML = '';
-    d.categories.forEach(function(cat){
-      const btn = document.createElement('button');
-      btn.className = 'chip' + (selectedCategory === cat.value ? ' selected' : '');
-      btn.dataset.value = cat.value;
-      btn.innerHTML = cat.emoji + ' <span>' + cat.label + '</span>';
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        selectedCategory = cat.value;
-        saveDraft();
-        chipsContainer.querySelectorAll('.chip').forEach(function(c){
-          c.classList.toggle('selected', c.dataset.value === selectedCategory);
-        });
-      });
-      chipsContainer.appendChild(btn);
-    });
-  }
-  function renderMoods(){
-    const d = I18nManager.data();
-    moodGrid.innerHTML = '';
-    d.moods.forEach(function(m){
-      const btn = document.createElement('button');
-      btn.className = 'mood-card' + (selectedMood === m.value ? ' selected' : '');
-      btn.dataset.value = m.value;
-      btn.innerHTML = '<span class="em">' + m.emoji + '</span><span class="lb">' + m.label + '</span>';
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        selectedMood = m.value;
-        saveDraft();
-        moodGrid.querySelectorAll('.mood-card').forEach(function(c){
-          c.classList.toggle('selected', c.dataset.value === selectedMood);
-        });
-      });
-      moodGrid.appendChild(btn);
-    });
-  }
-  function renderTexts(){
-    document.getElementById('mainTitle').textContent = I18nManager.t('mainTitle');
-    document.getElementById('mainSub').textContent = I18nManager.t('mainSub');
-    document.getElementById('lblCategory').textContent = I18nManager.t('lblCategory');
-    document.getElementById('lblMood').textContent = I18nManager.t('lblMood');
-    document.getElementById('lblMainField').textContent = I18nManager.t('lblMainField');
-    document.getElementById('lblImproveField').textContent = I18nManager.t('lblImproveField');
-    taMain.placeholder = I18nManager.t('phMain');
-    taImprove.placeholder = I18nManager.t('phImprove');
-    if (!isSending) btnSendText.textContent = I18nManager.t('btnSend');
-    document.getElementById('thankTitle').textContent = I18nManager.t('thankTitle');
-    document.getElementById('thankHint').textContent = I18nManager.t('thankHint');
-    btnAgain.textContent = I18nManager.t('btnAgain');
-  }
-  function renderAll(){
-    renderTexts();
-    renderCategories();
-    renderMoods();
-  }
-  function showCookie(){
-    formBlock.style.display = 'none';
-    cookieBlock.style.display = 'block';
-    verseRevealed = false;
-    verseCard.classList.remove('show');
-    cookieSvg.classList.remove('cracked');
-    cookieSvg.style.display = 'block';
-    btnAgain.style.display = 'none';
-  }
-  function resetForm(){
-    formBlock.style.display = 'block';
-    cookieBlock.style.display = 'none';
-    selectedCategory = null;
-    selectedMood = null;
-    taMain.value = '';
-    taImprove.value = '';
-    clearDraft();
-    updateCounts();
-    renderAll();
-    isSending = false;
-    btnSend.disabled = false;
-    verseRevealed = false;
-    verseCard.classList.remove('show');
-    cookieSvg.classList.remove('cracked');
-    cookieSvg.style.display = 'block';
-    btnAgain.style.display = 'none';
-  }
-  function getCategoryLabel(value){
-    const d = I18nManager.data();
-    const found = d.categories.find(function(c){ return c.value === value; });
-    return found ? found.label : value;
-  }
-  function getMoodLabel(value){
-    const d = I18nManager.data();
-    const found = d.moods.find(function(m){ return m.value === value; });
-    return found ? found.label : value;
-  }
-  function send(){
-    if (isSending) return;
-    const lang = I18nManager.getLang();
-    const mainText = taMain.value.trim();
-    if (!mainText){ Toast.show(I18nManager.t('emptyMain')); taMain.focus(); return; }
-    if (!selectedCategory){ Toast.show(I18nManager.t('noCategory')); return; }
-    if (!selectedMood){ Toast.show(I18nManager.t('noMood')); return; }
-
-    TelegramBridge.haptic('medium');
-    const langTag = lang === 'ua' ? 'UA' : 'EN';
-    const goalsStr = '[' + langTag + '] [' + getCategoryLabel(selectedCategory) + '] [' + getMoodLabel(selectedMood) + '] ' + mainText;
-    const formData = new FormData();
-    formData.append('goals', goalsStr);
-    formData.append('improvements', taImprove.value.trim());
-    formData.append('telegram_id', TelegramBridge.user.id);
-    formData.append('username', TelegramBridge.user.username);
-
-    isSending = true;
-    btnSend.disabled = true;
-    btnSendText.innerHTML = '<span class="spin"></span>' + I18nManager.t('btnSending');
-
-    try {
-      fetch(scriptURL, { method:'POST', mode:'no-cors', body: formData })
-        .finally(function(){
-          isSending = false;
-          btnSend.disabled = false;
-          btnSendText.textContent = I18nManager.t('btnSend');
-          clearDraft();
-          StateManager.incStat('ideas');
-          GamificationEngine.awardXp(15, btnSend);
-          GamificationEngine.refreshAll();
-          Toast.show(I18nManager.t('sendSuccess'));
-          showCookie();
-        });
-    } catch (err) {
-      console.error('Fetch sync error:', err);
-      isSending = false;
-      btnSend.disabled = false;
-      btnSendText.textContent = I18nManager.t('btnSend');
-      Toast.show(I18nManager.t('sendError'));
-    }
-  }
-  function revealVerse(){
-    if (verseRevealed) return;
-    TelegramBridge.haptic('light');
-    verseRevealed = true;
-    cookieSvg.classList.add('cracked');
-    ParticleFX.fromElement(cookieSvg, 36);
-    setTimeout(function(){
-      cookieSvg.style.display = 'none';
-      const lang = I18nManager.getLang();
-      const pool = VERSES[lang];
-      const v = pool[Math.floor(Math.random() * pool.length)];
-      verseEm.textContent = v.emoji;
-      verseText.textContent = v.text;
-      verseRef.textContent = v.ref;
-      verseCard.classList.remove('show');
-      void verseCard.offsetWidth;
-      verseCard.classList.add('show');
-      btnAgain.style.display = 'block';
-      const st = StateManager.get();
-      st.savedVerses.push({ text:v.text, ref:v.ref, emoji:v.emoji, ts: Date.now() });
-      if (st.savedVerses.length > 100) st.savedVerses = st.savedVerses.slice(-100);
-      StateManager.set({});
-      StateManager.incStat('cookies');
-      GamificationEngine.awardXp(25, verseCard);
-      GamificationEngine.refreshAll();
-    }, 500);
-  }
-  function init(){
-    loadDraft();
-    renderAll();
-    updateCounts();
-    taMain.addEventListener('input', function(){ updateCounts(); saveDraft(); });
-    taImprove.addEventListener('input', function(){ updateCounts(); saveDraft(); });
-    btnSend.addEventListener('click', send);
-    cookieWrap.addEventListener('click', revealVerse);
-    btnAgain.addEventListener('click', resetForm);
-  }
-  function onLangChange(){ renderTexts(); renderCategories(); renderMoods(); }
-  return { init, renderAll, onLangChange };
-})();
-
-function setLanguage(lang){
-  I18nManager.setLang(lang);
-  StorageService.set('lang', lang);
-  document.getElementById('langUA').classList.toggle('active', lang === 'ua');
-  document.getElementById('langEN').classList.toggle('active', lang === 'en');
-  TelegramBridge.haptic('light');
-  applyI18n();
-}
-function applyI18n(){
-  document.getElementById('brandName').textContent = I18nManager.t('brand');
-  document.getElementById('mainTitle').textContent = I18nManager.t('mainTitle');
-  document.getElementById('mainSub').textContent = I18nManager.t('mainSub');
-  document.getElementById('lblCategory').textContent = I18nManager.t('lblCategory');
-  document.getElementById('lblMood').textContent = I18nManager.t('lblMood');
-  document.getElementById('lblMainField').textContent = I18nManager.t('lblMainField');
-  document.getElementById('lblImproveField').textContent = I18nManager.t('lblImproveField');
-  document.getElementById('taMain').placeholder = I18nManager.t('phMain');
-  document.getElementById('taImprove').placeholder = I18nManager.t('phImprove');
-  document.getElementById('btnSendText').textContent = I18nManager.t('btnSend');
-  document.getElementById('thankTitle').textContent = I18nManager.t('thankTitle');
-  document.getElementById('thankHint').textContent = I18nManager.t('thankHint');
-  document.getElementById('btnAgain').textContent = I18nManager.t('btnAgain');
-
-  document.getElementById('wallTitle').textContent = I18nManager.t('wallTitle');
-  document.getElementById('wallSub').textContent = I18nManager.t('wallSub');
-  document.getElementById('wallChannel').textContent = I18nManager.t('wallDiscuss');
-  document.getElementById('quizTitle').textContent = I18nManager.t('quizTitle');
-  document.getElementById('quizSub').textContent = I18nManager.t('quizSub');
-  document.getElementById('archTitle').textContent = I18nManager.t('archTitle');
-  document.getElementById('archSub').textContent = I18nManager.t('archSub');
-
-  document.getElementById('lblBadges').textContent = I18nManager.t('lblBadges');
-  document.getElementById('lblSavedVerses').textContent = I18nManager.t('lblSavedVerses');
-  document.getElementById('lblStatIdeas').textContent = I18nManager.t('lblStatIdeas');
-  document.getElementById('lblStatCookies').textContent = I18nManager.t('lblStatCookies');
-  document.getElementById('lblStatQuiz').textContent = I18nManager.t('lblStatQuiz');
-  document.getElementById('lblStatReacts').textContent = I18nManager.t('lblStatReacts');
-
-  document.getElementById('adminTitle').textContent = I18nManager.t('adminTitle');
-  document.getElementById('adminSub').textContent = I18nManager.t('adminSub');
-  document.getElementById('adminViewAs').textContent = I18nManager.t('adminViewAs');
-
-  const navLabels = {
-    main: I18nManager.t('navMain'),
-    wall: I18nManager.t('navWall'),
-    quiz: I18nManager.t('navQuiz'),
-    archive: I18nManager.t('navArchive'),
-    profile: I18nManager.t('navProfile'),
-    admin: I18nManager.t('navAdmin')
-  };
-  document.querySelectorAll('[data-nav]').forEach(function(el){
-    el.textContent = navLabels[el.dataset.nav] || el.textContent;
   });
 
-  document.getElementById('channelTop').href = CHANNEL_URL;
-  document.getElementById('wallChannel').href = CHANNEL_URL;
-
-  MainForm.onLangChange();
-  GamificationEngine.refreshAll();
-  if (typeof WallRenderer !== 'undefined') WallRenderer.render();
-  if (typeof QuizEngine !== 'undefined') QuizEngine.render();
-  if (typeof ArchiveRenderer !== 'undefined') ArchiveRenderer.render();
-}
-
-const WallRenderer = (function(){
-  let activeFilter = 'all';
-  const DEFAULT_POSTS = [
-    { id:'w1', tag:'announce', tUa:'Привіт, спільното! 👋', tEn:'Hey community! 👋',
-      bUa:'Раді бачити тебе тут. Ділись ідеями, став питання та отримуй натхнення щодня!',
-      bEn:'Glad to see you here. Share ideas, ask questions, and get inspired every day!',
-      link: CHANNEL_URL },
-    { id:'w2', tag:'important', tUa:'Правила спільноти 📌', tEn:'Community rules 📌',
-      bUa:'Будь добрим, поважай інших і не спам. Дякуємо, що ти з нами!',
-      bEn:'Be kind, respect others and no spam. Thanks for being with us!',
-      link: CHANNEL_URL },
-    { id:'w3', tag:'interactive', tUa:'Питання тижня 💬', tEn:'Question of the week 💬',
-      bUa:'Що надихає тебе сьогодні? Напиши в чаті каналу!',
-      bEn:'What inspires you today? Write in the channel chat!',
-      link: CHANNEL_URL }
-  ];
-  function getAllPosts(){
-    const st = StateManager.get();
-    return st.userPosts.concat(DEFAULT_POSTS);
+  function saveIdeaLocally(idea) {
+    state.ideas.unshift(idea);
+    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
+    renderBoard();
   }
-  function renderFilters(){
-    const row = document.getElementById('wallFilters');
-    const d = I18nManager.data();
-    row.innerHTML = '';
-    ['all','announce','important','interactive'].forEach(function(key){
-      const btn = document.createElement('button');
-      btn.className = 'filter-pill' + (activeFilter === key ? ' active' : '');
-      btn.textContent = d.wallFilters[key];
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        activeFilter = key;
-        render();
-      });
-      row.appendChild(btn);
-    });
+
+  function finishSurveySubmission() {
+    surveyText.value = '';
+    submitSurveyBtn.disabled = false;
+    submitSurveyBtn.textContent = 'Надіслати';
+    showToast('Дякуємо! Твоя ідея на дошці 💫');
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.notificationOccurred('success');
+    }
   }
-  function render(){
-    renderFilters();
-    const list = document.getElementById('wallList');
-    const lang = I18nManager.getLang();
-    const st = StateManager.get();
-    list.innerHTML = '';
-    const posts = getAllPosts().filter(function(p){
-      return activeFilter === 'all' || p.tag === activeFilter;
-    });
-    if (!posts.length) {
-      list.innerHTML = '<p style="opacity:.55;font-size:13px;text-align:center;padding:24px">—</p>';
+
+  // ==================== TAB 2: BOARD ====================
+  function renderBoard() {
+    boardGrid.innerHTML = '';
+
+    if (state.ideas.length === 0) {
+      boardGrid.innerHTML = '<div class="empty-board">Поки що порожньо...<br>Поділись першою ідеєю на вкладці "Думка" ✨</div>';
       return;
     }
-    posts.forEach(function(p){
+
+    state.ideas.forEach((idea, index) => {
       const card = document.createElement('div');
-      card.className = 'wall-card';
-      const title = lang === 'ua' ? p.tUa : p.tEn;
-      const body = lang === 'ua' ? p.bUa : p.bEn;
-      const tagClass = 'tag-' + p.tag;
-      const tagLabel = I18nManager.data().wallFilters[p.tag] || p.tag;
-      const liked = st.likedPosts[p.id] || {};
-      const reactions = ['❤️','🔥','✨','💡'];
-      card.innerHTML =
-        '<div class="wall-top"><span class="wall-tag ' + tagClass + '">' + tagLabel + '</span></div>' +
-        '<div class="wall-title">' + title + '</div>' +
-        '<div class="wall-body">' + body + '</div>' +
-        '<div class="wall-actions"></div>';
-      const actions = card.querySelector('.wall-actions');
-      reactions.forEach(function(em){
-        const btn = document.createElement('button');
-        btn.className = 'react-btn' + (liked[em] ? ' on' : '');
-        btn.innerHTML = em + ' <span>1</span>';
-        btn.addEventListener('click', function(){
-          TelegramBridge.haptic('light');
-          const stt = StateManager.get();
-          if (!stt.likedPosts[p.id]) stt.likedPosts[p.id] = {};
-          if (stt.likedPosts[p.id][em]) {
-            delete stt.likedPosts[p.id][em];
-          } else {
-            stt.likedPosts[p.id][em] = true;
-            StateManager.incStat('reacts');
-            GamificationEngine.awardXp(2);
-            ParticleFX.fromElement(btn, 12);
-          }
-          StateManager.set({});
-          GamificationEngine.refreshAll();
-          render();
-        });
-        actions.appendChild(btn);
-      });
-      if (p.link) {
-        const a = document.createElement('a');
-        a.className = 'wall-link';
-        a.href = p.link;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.textContent = I18nManager.t('wallRead');
-        actions.appendChild(a);
+      card.className = 'sticker-card';
+      card.style.animationDelay = (index * 0.05) + 's';
+
+      const isLiked = state.likedIds.includes(idea.id);
+
+      card.innerHTML = `
+        <div class="pin">
+          <div class="pin-head"></div>
+          <div class="pin-needle"></div>
+        </div>
+        <div class="sticker-author">${escapeHtml(idea.name)}</div>
+        <div class="sticker-text">${escapeHtml(idea.text)}</div>
+        <div class="sticker-footer">
+          <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${idea.id}">
+            <span class="like-heart">${isLiked ? '❤️' : '🤍'}</span>
+            <span class="like-count">${idea.likes || 0}</span>
+          </button>
+          <button class="delete-btn ${isAdmin ? 'visible' : ''}" data-id="${idea.id}" title="Видалити">✕</button>
+        </div>
+      `;
+
+      boardGrid.appendChild(card);
+    });
+
+    // Attach event listeners
+    boardGrid.querySelectorAll('.like-btn').forEach(btn => {
+      btn.addEventListener('click', handleLike);
+    });
+
+    boardGrid.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', handleDelete);
+    });
+  }
+
+  function handleLike(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const id = btn.dataset.id;
+    const idea = state.ideas.find(i => i.id === id);
+
+    if (!idea) return;
+
+    const likedIdx = state.likedIds.indexOf(id);
+
+    if (likedIdx === -1) {
+      // Like
+      idea.likes = (idea.likes || 0) + 1;
+      state.likedIds.push(id);
+      btn.classList.add('liked');
+      btn.querySelector('.like-heart').textContent = '❤️';
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
       }
-      list.appendChild(card);
-    });
-  }
-  return { render };
-})();
-
-const QuizEngine = (function(){
-  const DEFAULT_QUIZZES = [
-    { id:'q1', qUa:'Яка книга Біблії найкоротша?', qEn:'Which book of the Bible is the shortest?',
-      aUa:['Псалми','Об\'явлення','2 Івана','Юда'], aEn:['Psalms','Revelation','2 John','Jude'], correct:2,
-      expUa:'2 Івана — лише 13 віршів!', expEn:'2 John — only 13 verses!' },
-    { id:'q2', qUa:'Скільки апостолів обрав Ісус?', qEn:'How many apostles did Jesus choose?',
-      aUa:['7','10','12','14'], aEn:['7','10','12','14'], correct:2,
-      expUa:'Ісус обрав 12 апостолів.', expEn:'Jesus chose 12 apostles.' },
-    { id:'q3', qUa:'Хто збудував ковчег?', qEn:'Who built the ark?',
-      aUa:['Мойсей','Ной','Авраам','Давид'], aEn:['Moses','Noah','Abraham','David'], correct:1,
-      expUa:'Ной збудував ковчег за Божим повелінням.', expEn:'Noah built the ark by God\'s command.' },
-    { id:'q4', qUa:'Скільки днів Ісус був у пустелі?', qEn:'How many days was Jesus in the desert?',
-      aUa:['20','30','40','50'], aEn:['20','30','40','50'], correct:2,
-      expUa:'Ісус постив 40 днів і 40 ночей.', expEn:'Jesus fasted 40 days and 40 nights.' },
-    { id:'q5', qUa:'Яке перше диво Ісуса?', qEn:'What was Jesus\' first miracle?',
-      aUa:['Ходіння по воді','Перетворення води у вино','Зцілення сліпого','Воскресіння Лазаря'],
-      aEn:['Walking on water','Turning water into wine','Healing the blind','Raising Lazarus'], correct:1,
-      expUa:'У Кані Галілейській Ісус перетворив воду у вино.', expEn:'At Cana in Galilee, Jesus turned water into wine.' },
-    { id:'q6', qUa:'Хто написав більшість псалмів?', qEn:'Who wrote most of the Psalms?',
-      aUa:['Соломон','Давид','Мойсей','Павло'], aEn:['Solomon','David','Moses','Paul'], correct:1,
-      expUa:'Цар Давид написав більшість псалмів.', expEn:'King David wrote most of the Psalms.' },
-    { id:'q7', qUa:'Скільки книг у Новому Заповіті?', qEn:'How many books are in the New Testament?',
-      aUa:['21','27','39','66'], aEn:['21','27','39','66'], correct:1,
-      expUa:'Новий Заповіт містить 27 книг.', expEn:'The New Testament has 27 books.' },
-    { id:'q8', qUa:'Хто був першим мучеником за віру?', qEn:'Who was the first martyr for the faith?',
-      aUa:['Степан','Петро','Павло','Яків'], aEn:['Stephen','Peter','Paul','James'], correct:0,
-      expUa:'Степан — перший християнський мученик.', expEn:'Stephen was the first Christian martyr.' },
-    { id:'q9', qUa:'Яка найбільша заповідь?', qEn:'What is the greatest commandment?',
-      aUa:['Не вбий','Люби Бога і ближнього','Шануй батька й матір','Не кради'],
-      aEn:['Do not kill','Love God and your neighbor','Honor your parents','Do not steal'], correct:1,
-      expUa:'Люби Господа Бога свого всім серцем і ближнього, як себе.',
-      expEn:'Love the Lord your God with all your heart and love your neighbor as yourself.' },
-    { id:'q10', qUa:'Хто хрестив Ісуса?', qEn:'Who baptized Jesus?',
-      aUa:['Петро','Іван Хреститель','Павло','Андрій'], aEn:['Peter','John the Baptist','Paul','Andrew'], correct:1,
-      expUa:'Іван Хреститель хрестив Ісуса в Йордані.', expEn:'John the Baptist baptized Jesus in the Jordan.' }
-  ];
-  let picked = null;
-
-  function getAllQuizzes(){
-    const st = StateManager.get();
-    return st.userQuizzes.concat(DEFAULT_QUIZZES);
-  }
-  function todayQuizId(){
-    const day = Math.floor(Date.now() / 86400000);
-    const list = getAllQuizzes();
-    return list[day % list.length].id;
-  }
-  function render(){
-    const wrap = document.getElementById('quizWrap');
-    if (!wrap) return;
-    const lang = I18nManager.getLang();
-    const st = StateManager.get();
-    const qid = todayQuizId();
-    const quiz = getAllQuizzes().find(function(q){ return q.id === qid; });
-    if (!quiz) { wrap.innerHTML = ''; return; }
-    const alreadyDone = !!st.quizDone[qid];
-    const qText = lang === 'ua' ? quiz.qUa : quiz.qEn;
-    const opts = lang === 'ua' ? quiz.aUa : quiz.aEn;
-    const expText = lang === 'ua' ? quiz.expUa : quiz.expEn;
-
-    wrap.innerHTML =
-      '<div class="quiz-q">' + qText + '</div>' +
-      '<div class="quiz-opts" id="quizOpts"></div>' +
-      '<div class="quiz-explain" id="quizExp" style="display:none"></div>' +
-      '<div style="margin-top:14px;font-size:12px;opacity:.55;font-weight:700">' + I18nManager.t('quizXp') + '</div>';
-
-    const optsWrap = document.getElementById('quizOpts');
-    opts.forEach(function(opt, idx){
-      const btn = document.createElement('button');
-      btn.className = 'quiz-opt';
-      btn.innerHTML = '<span class="dot">' + (idx + 1) + '</span><span>' + opt + '</span>';
-      if (alreadyDone) {
-        btn.setAttribute('disabled','');
-        if (idx === quiz.correct) btn.classList.add('correct');
+    } else {
+      // Unlike
+      idea.likes = Math.max(0, (idea.likes || 0) - 1);
+      state.likedIds.splice(likedIdx, 1);
+      btn.classList.remove('liked');
+      btn.querySelector('.like-heart').textContent = '🤍';
+      if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('soft');
       }
-      btn.addEventListener('click', function(){
-        if (alreadyDone) return;
-        TelegramBridge.haptic('light');
-        const stt = StateManager.get();
-        if (stt.quizDone[qid]) return;
-        picked = idx;
-        optsWrap.querySelectorAll('.quiz-opt').forEach(function(el){ el.setAttribute('disabled',''); });
-        const isCorrect = idx === quiz.correct;
-        optsWrap.querySelectorAll('.quiz-opt').forEach(function(el, i){
-          if (i === quiz.correct) el.classList.add('correct');
-          else if (i === idx && !isCorrect) el.classList.add('wrong');
-        });
-        const exp = document.getElementById('quizExp');
-        exp.style.display = 'block';
-        exp.innerHTML = '<strong>' + (isCorrect ? I18nManager.t('quizCorrect') : I18nManager.t('quizWrong')) + '</strong><br>' + expText;
-
-        stt.quizDone[qid] = true;
-        StateManager.set({});
-        StateManager.incStat('quiz');
-        GamificationEngine.awardXp(30, btn);
-        GamificationEngine.refreshAll();
-        if (isCorrect) ParticleFX.fromElement(btn, 30);
-
-        const formData = new FormData();
-        formData.append('goals', '[QUIZ] ' + qText + ' -> ' + opts[idx]);
-        let lvlNum = 1;
-        try { lvlNum = StateManager.levelInfo().level; } catch(e){}
-        formData.append('improvements', 'Level ' + lvlNum);
-        formData.append('telegram_id', TelegramBridge.user.id);
-        formData.append('username', TelegramBridge.user.username);
-        try { fetch(scriptURL, { method:'POST', mode:'no-cors', body: formData }).finally(function(){}); } catch(e){}
-      });
-      optsWrap.appendChild(btn);
-    });
-
-    if (alreadyDone) {
-      const exp = document.getElementById('quizExp');
-      exp.style.display = 'block';
-      exp.innerHTML = '<strong>' + I18nManager.t('quizAlready') + '</strong><br>' + expText;
     }
-  }
-  return { render };
-})();
 
-const ArchiveRenderer = (function(){
-  const DEFAULT_CARDS = [
-    { id:'a1', cat:'playlist', emoji:'🎵', tUa:'Ранкові мелодії', tEn:'Morning melodies', dUa:'Добірка спокійних треків для початку дня', dEn:'A calm playlist to start your day', link:'https://t.me/' },
-    { id:'a2', cat:'playlist', emoji:'🎧', tUa:'Фокус та робота', tEn:'Focus & work', dUa:'Музика без слів для концентрації', dEn:'Instrumental music for concentration', link:'https://t.me/' },
-    { id:'a3', cat:'wallpaper', emoji:'🖼️', tUa:'Мінімалізм', tEn:'Minimalism', dUa:'Шпалери у світлих тонах', dEn:'Light-tone wallpapers', link:'https://t.me/' },
-    { id:'a4', cat:'wallpaper', emoji:'🌌', tUa:'Нічне небо', tEn:'Night sky', dUa:'Космічні шпалери у темних тонах', dEn:'Space wallpapers in dark tones', link:'https://t.me/' },
-    { id:'a5', cat:'link', emoji:'💡', tUa:'Корисні ресурси', tEn:'Useful resources', dUa:'Добірка посилань для натхнення', dEn:'A collection of links for inspiration', link:'https://t.me/' },
-    { id:'a6', cat:'note', emoji:'✨', tUa:'Цитата дня', tEn:'Quote of the day', dUa:'Маленькі нагадування про важливе', dEn:'Small reminders about what matters', link:'https://t.me/' }
+    btn.querySelector('.like-count').textContent = idea.likes;
+
+    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
+    localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
+  }
+
+  function handleDelete(e) {
+    e.stopPropagation();
+    if (!isAdmin) return;
+
+    const id = e.currentTarget.dataset.id;
+
+    if (!confirm('Видалити цю ідею?')) return;
+
+    state.ideas = state.ideas.filter(i => i.id !== id);
+    state.likedIds = state.likedIds.filter(lid => lid !== id);
+
+    localStorage.setItem('cozy_ideas', JSON.stringify(state.ideas));
+    localStorage.setItem('cozy_liked', JSON.stringify(state.likedIds));
+
+    renderBoard();
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.notificationOccurred('warning');
+    }
+
+    showToast('Ідею видалено 🗑️');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ==================== TAB 3: COOKIE ====================
+  const predictions = [
+    'Найкрасивіші речі народжуються з простих матеріалів 🌿',
+    'Твій наступний DIY-проєкт принесе тобі спокій і радість ✨',
+    'Сьогодні варто додати трохи теракоти у свій простір 🧡',
+    'Папір, клей і трохи магії — і диво готове 📄✂️',
+    'Дозволь собі створити щось недосконале — воно буде особливим 🌸',
+    'Затишок починається з маленьких деталей навколо тебе 🕯️',
+    'Твоя ідея варта того, щоб її втілити. Почни сьогодні! 💫',
+    'Кремові відтінки та натуральні текстури принесуть гармонію 🎨',
+    'Не бійся експериментувати — найкращі знахідки народжуються випадково 🍂',
+    'Зроби паузу, вдихни глибше і поміть красу навколо тебе 🌾',
+    'Твоє творче серце знає шлях. Просто довірся йому ❤️',
+    'Маленькі рухи створюють великі зміни. Крок за кроком 🐾',
+    'Сьогодні — ідеальний день для нової ідеї на дошці 📌',
+    'Мінімалізм — це не про порожнечу, а про простір для головного ✨',
+    'Ти здатен створити щось прекрасне з нічого. Я вірю в тебе! 🌟'
   ];
-  let activeFilter = 'all';
 
-  function getAllCards(){
-    const st = StateManager.get();
-    return st.userArchive.concat(DEFAULT_CARDS);
+  // Load cookie state from localStorage
+  const savedCookieBroken = localStorage.getItem('cozy_cookie_broken');
+  const savedPrediction = localStorage.getItem('cozy_prediction');
+
+  if (savedCookieBroken === 'true' && savedPrediction) {
+    state.cookieBroken = true;
+    state.cookieClicks = 4;
+    state.currentPrediction = savedPrediction;
+    // Restore broken state after render
+    setTimeout(() => {
+      restoreBrokenCookie();
+    }, 100);
   }
-  function renderFilters(){
-    const row = document.getElementById('archFilters');
-    const d = I18nManager.data();
-    row.innerHTML = '';
-    ['all','playlist','wallpaper','link','note'].forEach(function(key){
-      const btn = document.createElement('button');
-      btn.className = 'filter-pill' + (activeFilter === key ? ' active' : '');
-      btn.textContent = d.archFilters[key];
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        activeFilter = key;
-        render();
-      });
-      row.appendChild(btn);
-    });
+
+  function restoreBrokenCookie() {
+    cookieWrapper.style.opacity = '0';
+    cookieHalves.classList.add('active', 'split');
+    setTimeout(() => {
+      predictionText.textContent = state.currentPrediction;
+      predictionRibbon.classList.add('visible');
+      cookieHint.style.opacity = '0';
+      resetCookieBtn.classList.add('visible');
+    }, 300);
   }
-  function render(){
-    renderFilters();
-    const grid = document.getElementById('archGrid');
-    if (!grid) return;
-    const lang = I18nManager.getLang();
-    const st = StateManager.get();
-    grid.innerHTML = '';
-    const cards = getAllCards().filter(function(c){
-      return activeFilter === 'all' || c.cat === activeFilter;
-    });
-    if (!cards.length) {
-      grid.innerHTML = '<p style="opacity:.55;font-size:13px;grid-column:1/-1;text-align:center;padding:24px">—</p>';
-      return;
+
+  cookieWrapper.addEventListener('click', function(e) {
+    if (state.cookieBroken) return;
+
+    state.cookieClicks++;
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred('light');
     }
-    cards.forEach(function(c){
-      const title = lang === 'ua' ? c.tUa : c.tEn;
-      const desc = lang === 'ua' ? c.dUa : c.dEn;
-      const card = document.createElement('div');
-      card.className = 'arch-card';
-      const isSaved = !!st.savedArchive[c.id];
-      card.innerHTML =
-        '<div class="arch-em">' + c.emoji + '</div>' +
-        '<div class="arch-title">' + title + '</div>' +
-        '<div class="arch-desc">' + desc + '</div>' +
-        '<div class="arch-foot">' +
-          '<a class="arch-link" href="' + (c.link || CHANNEL_URL) + '" target="_blank" rel="noopener">' + (lang === 'ua' ? 'Перейти ➔' : 'Open ➔') + '</a>' +
-          '<button class="arch-fav' + (isSaved ? ' on' : '') + '" title="' + (lang === 'ua' ? 'В обране' : 'Save') + '">' + (isSaved ? '❤️' : '🤍') + '</button>' +
-        '</div>';
-      const favBtn = card.querySelector('.arch-fav');
-      favBtn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        const stt = StateManager.get();
-        if (stt.savedArchive[c.id]) {
-          delete stt.savedArchive[c.id];
-        } else {
-          stt.savedArchive[c.id] = true;
-          ParticleFX.fromElement(favBtn, 12);
+
+    if (state.cookieClicks <= 3) {
+      // Show cracks progressively
+      crackGroup.setAttribute('opacity', '1');
+
+      if (state.cookieClicks === 1) {
+        crack1.style.transition = 'stroke-dashoffset 0.4s ease';
+        crack1.style.strokeDashoffset = '0';
+        cookieHint.textContent = 'Ще трохи...';
+      } else if (state.cookieClicks === 2) {
+        crack1.style.strokeDashoffset = '0';
+        crack2.style.transition = 'stroke-dashoffset 0.4s ease';
+        crack2.style.strokeDashoffset = '0';
+        crackHint('Вже близько...');
+      } else if (state.cookieClicks === 3) {
+        crack3.style.transition = 'stroke-dashoffset 0.35s ease';
+        crack3.style.strokeDashoffset = '0';
+        crack4.style.transition = 'stroke-dashoffset 0.35s ease';
+        crack4.style.strokeDashoffset = '0';
+        cookieWrapper.classList.add('cracked');
+        cookieHint.textContent = 'Ще один...';
+      }
+
+      // Add vibration for each click
+      cookieSvg.style.transition = 'transform 0.1s ease';
+      cookieSvg.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        cookieSvg.style.transform = 'scale(1)';
+      }, 100);
+
+    } else if (state.cookieClicks === 4) {
+      breakCookie();
+    }
+
+    function crackHint(msg) {
+      cookieHint.textContent = msg;
+    }
+  });
+
+  function breakCookie() {
+    state.cookieBroken = true;
+    cookieWrapper.classList.remove('cracked');
+
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.notificationOccurred('success');
+    }
+
+    // Fade out main cookie
+    cookieSvg.style.transition = 'opacity 0.2s ease, transform 0.3s ease';
+    cookieSvg.style.opacity = '0';
+    cookieSvg.style.transform = 'scale(0.8) rotate(10deg)';
+
+    // Show halves
+    cookieHalves.classList.add('active');
+
+    setTimeout(() => {
+      cookieHalves.classList.add('split');
+      cookieHint.style.opacity = '0';
+
+      // Pick prediction
+      const randomIdx = Math.floor(Math.random() * predictions.length);
+      state.currentPrediction = predictions[randomIdx];
+
+      setTimeout(() => {
+        predictionText.textContent = state.currentPrediction;
+        predictionRibbon.classList.add('visible');
+
+        // Save to localStorage
+        localStorage.setItem('cozy_cookie_broken', 'true');
+        localStorage.setItem('cozy_prediction', state.currentPrediction);
+
+        resetCookieBtn.classList.add('visible');
+
+        if (tg?.HapticFeedback) {
+          tg.HapticFeedback.impactOccurred('medium');
         }
-        StateManager.set({});
-        render();
-      });
-      grid.appendChild(card);
+      }, 400);
+    }, 150);
+  }
+
+  resetCookieBtn.addEventListener('click', function() {
+    state.cookieClicks = 0;
+    state.cookieBroken = false;
+    state.currentPrediction = '';
+
+    localStorage.removeItem('cozy_cookie_broken');
+    localStorage.removeItem('cozy_prediction');
+
+    // Reset visuals
+    cookieWrapper.classList.remove('cracked');
+    cookieSvg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    cookieSvg.style.opacity = '1';
+    cookieSvg.style.transform = 'scale(1)';
+
+    // Reset cracks
+    crackGroup.setAttribute('opacity', '0');
+    [crack1, crack2, crack3, crack4].forEach(c => {
+      c.style.transition = 'none';
+      c.style.strokeDashoffset = c.getAttribute('stroke-dasharray') || '200';
     });
-  }
-  return { render };
-})();
 
-/* ============================================================
-   PART 3 — ADMIN CONTROLLER + BOOT
-   ============================================================ */
+    // Reset halves and ribbon
+    cookieHalves.classList.remove('active', 'split');
+    predictionRibbon.classList.remove('visible');
+    resetCookieBtn.classList.remove('visible');
+    cookieHint.style.opacity = '1';
+    cookieHint.textContent = 'Натисни на печиво';
 
-const AdminController = (function(){
-  let selectedCorrect = 0;
-  let selectedTag = 'announce';
-  let selectedCat = 'playlist';
-
-  function isActive(){
-    const st = StateManager.get();
-    return TelegramBridge.isAdmin() && !st.viewAsUser;
-  }
-
-  function render(){
-    if (!isActive()) return;
-    renderDrafts();
-  }
-
-  function renderDrafts(){
-    const wrap = document.getElementById('adminDraftsList');
-    const st = StateManager.get();
-    wrap.innerHTML = '';
-    const items = [];
-    st.userPosts.forEach(function(p, i){ items.push({ type:'wall', idx:i, label:'📌 ' + (p.tUa || p.tEn || 'Wall post') }); });
-    st.userQuizzes.forEach(function(q, i){ items.push({ type:'quiz', idx:i, label:'🎯 ' + (q.qUa || q.qEn || 'Quiz') }); });
-    st.userArchive.forEach(function(a, i){ items.push({ type:'arch', idx:i, label:'📚 ' + (a.tUa || a.tEn || 'Card') }); });
-    if (!items.length) {
-      wrap.innerHTML = '<p style="font-size:12.5px;opacity:.55;padding:6px 2px">—</p>';
-      return;
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred('light');
     }
-    items.forEach(function(it){
-      const row = document.createElement('div');
-      row.className = 'admin-list-item';
-      row.innerHTML = '<span>' + it.label + '</span>';
-      const del = document.createElement('button');
-      del.className = 'ali-del';
-      del.textContent = '✕';
-      del.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        const stt = StateManager.get();
-        if (it.type === 'wall') stt.userPosts.splice(it.idx, 1);
-        if (it.type === 'quiz') stt.userQuizzes.splice(it.idx, 1);
-        if (it.type === 'arch') stt.userArchive.splice(it.idx, 1);
-        StateManager.set({});
-        render();
-        Toast.show('Видалено');
-        if (typeof WallRenderer !== 'undefined') WallRenderer.render();
-        if (typeof QuizEngine !== 'undefined') QuizEngine.render();
-        if (typeof ArchiveRenderer !== 'undefined') ArchiveRenderer.render();
-      });
-      row.appendChild(del);
-      wrap.appendChild(row);
-    });
-  }
-
-  function val(id){ const el = document.getElementById(id); return el ? el.value.trim() : ''; }
-
-  function publishQuiz(){
-    const qUa = val('aqQ_ua'), qEn = val('aqQ_en');
-    const aUa = [val('aqA1_ua'), val('aqA2_ua'), val('aqA3_ua'), val('aqA4_ua')];
-    const aEn = [val('aqA1_en'), val('aqA2_en'), val('aqA3_en'), val('aqA4_en')];
-    const expUa = val('aqExp_ua'), expEn = val('aqExp_en');
-    if (!qUa || !qEn || aUa.some(function(x){ return !x; }) || aEn.some(function(x){ return !x; })) {
-      Toast.show(I18nManager.t('fillFields'));
-      return;
-    }
-    const st = StateManager.get();
-    st.userQuizzes.push({
-      id: 'uq' + Date.now(),
-      qUa: qUa, qEn: qEn,
-      aUa: aUa, aEn: aEn,
-      correct: selectedCorrect,
-      expUa: expUa || '', expEn: expEn || ''
-    });
-    StateManager.set({});
-    Toast.show(I18nManager.t('publishedQuiz'));
-    ParticleFX.burst(window.innerWidth / 2, window.innerHeight / 2, 40);
-    TelegramBridge.haptic('medium');
-    ['aqQ_ua','aqQ_en','aqA1_ua','aqA1_en','aqA2_ua','aqA2_en','aqA3_ua','aqA3_en','aqA4_ua','aqA4_en','aqExp_ua','aqExp_en'].forEach(function(fieldId){ const el = document.getElementById(fieldId); if (el) el.value = ''; });
-    render();
-    if (typeof QuizEngine !== 'undefined') QuizEngine.render();
-  }
-
-  function publishWall(){
-    const tUa = val('awT_ua'), tEn = val('awT_en');
-    const bUa = val('awB_ua'), bEn = val('awB_en');
-    const link = val('awLink');
-    if (!tUa || !tEn || !bUa || !bEn) {
-      Toast.show(I18nManager.t('fillFields'));
-      return;
-    }
-    const st = StateManager.get();
-    st.userPosts.push({
-      id: 'up' + Date.now(),
-      tag: selectedTag,
-      tUa: tUa, tEn: tEn,
-      bUa: bUa, bEn: bEn,
-      link: link || CHANNEL_URL
-    });
-    StateManager.set({});
-    Toast.show(I18nManager.t('publishedWall'));
-    ParticleFX.burst(window.innerWidth / 2, window.innerHeight / 2, 40);
-    TelegramBridge.haptic('medium');
-    ['awT_ua','awT_en','awB_ua','awB_en','awLink'].forEach(function(id){ const el = document.getElementById(id); if (el) el.value = ''; });
-    render();
-    if (typeof WallRenderer !== 'undefined') WallRenderer.render();
-  }
-
-  function publishArchive(){
-    const tUa = val('aaT_ua'), tEn = val('aaT_en');
-    const dUa = val('aaD_ua'), dEn = val('aaD_en');
-    const link = val('aaLink');
-    if (!tUa || !tEn || !dUa || !dEn) {
-      Toast.show(I18nManager.t('fillFields'));
-      return;
-    }
-    const st = StateManager.get();
-    const emojis = { playlist:'🎵', wallpaper:'🖼️', link:'💡', note:'✨' };
-    st.userArchive.push({
-      id: 'ua' + Date.now(),
-      cat: selectedCat,
-      emoji: emojis[selectedCat] || '✨',
-      tUa: tUa, tEn: tEn,
-      dUa: dUa, dEn: dEn,
-      link: link || CHANNEL_URL
-    });
-    StateManager.set({});
-    Toast.show(I18nManager.t('publishedArch'));
-    ParticleFX.burst(window.innerWidth / 2, window.innerHeight / 2, 40);
-    TelegramBridge.haptic('medium');
-    ['aaT_ua','aaT_en','aaD_ua','aaD_en','aaLink'].forEach(function(id){ const el = document.getElementById(id); if (el) el.value = ''; });
-    render();
-    if (typeof ArchiveRenderer !== 'undefined') ArchiveRenderer.render();
-  }
-
-  function clearAll(){
-    const ok = window.confirm(I18nManager.t('confirmClear'));
-    if (!ok) return;
-    TelegramBridge.haptic('medium');
-    StorageService.clearAll();
-    StateManager.reset();
-    Toast.show(I18nManager.t('cleared'));
-    render();
-    GamificationEngine.refreshAll();
-    if (typeof WallRenderer !== 'undefined') WallRenderer.render();
-    if (typeof QuizEngine !== 'undefined') QuizEngine.render();
-    if (typeof ArchiveRenderer !== 'undefined') ArchiveRenderer.render();
-  }
-
-  function setViewAsUser(){
-    TelegramBridge.haptic('light');
-    StateManager.set({ viewAsUser: true });
-    applyAdminVisibility();
-    NavController.go('viewMain');
-    Toast.show('👁️ Режим користувача');
-  }
-
-  function init(){
-    document.querySelectorAll('#aqCorrectPick .corr-pill').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        selectedCorrect = parseInt(btn.dataset.i, 10);
-        document.querySelectorAll('#aqCorrectPick .corr-pill').forEach(function(b){
-          b.classList.toggle('on', parseInt(b.dataset.i, 10) === selectedCorrect);
-        });
-      });
-    });
-    document.querySelectorAll('#awTagPick .corr-pill').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        selectedTag = btn.dataset.tag;
-        document.querySelectorAll('#awTagPick .corr-pill').forEach(function(b){
-          b.classList.toggle('on', b.dataset.tag === selectedTag);
-        });
-      });
-    });
-    document.querySelectorAll('#aaCatPick .corr-pill').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        TelegramBridge.haptic('light');
-        selectedCat = btn.dataset.cat;
-        document.querySelectorAll('#aaCatPick .corr-pill').forEach(function(b){
-          b.classList.toggle('on', b.dataset.cat === selectedCat);
-        });
-      });
-    });
-    document.getElementById('aqPublish').addEventListener('click', publishQuiz);
-    document.getElementById('awPublish').addEventListener('click', publishWall);
-    document.getElementById('aaPublish').addEventListener('click', publishArchive);
-    document.getElementById('adminClearAll').addEventListener('click', clearAll);
-    document.getElementById('adminViewAs').addEventListener('click', setViewAsUser);
-  }
-
-  return { render, init, isActive, setViewAsUser };
-})();
-
-function applyAdminVisibility(){
-  const navAdminBtn = document.getElementById('navAdminBtn');
-  const active = AdminController.isActive();
-  if (active) {
-    navAdminBtn.classList.remove('hidden');
-  } else {
-    navAdminBtn.classList.add('hidden');
-    if (NavController.currentView() === 'viewAdmin') {
-      NavController.go('viewMain');
-    }
-  }
-}
-
-function boot(){
-  TelegramBridge.ready();
-  StateManager.load();
-
-  const savedLang = StorageService.get('lang', 'ua');
-  I18nManager.setLang(savedLang === 'en' ? 'en' : 'ua');
-  document.getElementById('langUA').classList.toggle('active', savedLang !== 'en');
-  document.getElementById('langEN').classList.toggle('active', savedLang === 'en');
-
-  MainForm.init();
-  NavController.init();
-  AdminController.init();
-
-  document.getElementById('langUA').addEventListener('click', function(){ setLanguage('ua'); });
-  document.getElementById('langEN').addEventListener('click', function(){ setLanguage('en'); });
-
-  document.getElementById('lvlClose').addEventListener('click', function(){
-    TelegramBridge.haptic('light');
-    document.getElementById('lvlOverlay').classList.remove('show');
   });
 
-  applyI18n();
-  applyAdminVisibility();
-  GamificationEngine.refreshAll();
-  WallRenderer.render();
-  QuizEngine.render();
-  ArchiveRenderer.render();
-  AdminController.render();
-}
+  // ==================== INIT ====================
+  renderBoard();
 
-let __booted = false;
-function safeBoot(){
-  if (__booted) return;
-  __booted = true;
-  try { boot(); }
-  catch(e){
-    console.error('BOOT ERROR:', e);
-    const t = document.getElementById('toast');
-    if (t) { t.textContent = 'Помилка запуску: ' + e.message; t.classList.add('show'); }
+  // Check if cookie was broken on page load
+  if (state.cookieBroken && state.currentPrediction) {
+    setTimeout(() => {
+      restoreBrokenCookie();
+    }, 200);
   }
-}
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', safeBoot);
-} else {
-  safeBoot();
-}
+
+  // Update admin badge
+  const adminBadge = document.querySelector('.admin-badge');
+  if (adminBadge) {
+    adminBadge.classList.toggle('visible', isAdmin);
+  }
+
+  console.log('🍪 Cozy DIY Mini App loaded. Admin:', isAdmin);
+
+})();
 </script>
 </body>
 </html>
