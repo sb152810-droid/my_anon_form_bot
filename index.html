@@ -1,162 +1,1073 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Зворотний зв'язок ✨</title>
-    <!-- Підключаємо офіційний Telegram Web App скрипт -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --primary: #8e44ad;
-            --bg: #fdfbf7;
-            --card-bg: #ffffff;
-            --text: #2c3e50;
-            --gray: #7f8c8d;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        p.subtitle {
-            text-align: center;
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #eaeaea;
-            border-radius: 10px;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        textarea:focus {
-            border-color: var(--primary);
-        }
-        button {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            opacity: 0.9;
-        }
-        .success-msg {
-            display: none;
-            text-align: center;
-            color: #27ae60;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Поділися своєю думкою ✨</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg: var(--tg-theme-bg-color, #ffffff);
+      --text: var(--tg-theme-text-color, #222222);
+      --button: var(--tg-theme-button-color, #3390ec);
+      --button-text: var(--tg-theme-button-text-color, #ffffff);
+      --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+      --card-radius: 16px;
+      --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px 16px 40px;
+      position: relative;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding-top: 4px;
+    }
+
+    .lang-btn {
+      background: var(--secondary-bg);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.55;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lang-btn.active {
+      opacity: 1;
+      background: var(--button);
+      color: var(--button-text);
+      box-shadow: 0 2px 8px rgba(51, 144, 236, 0.3);
+    }
+
+    .lang-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-top: 4px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+
+    /* Form screen */
+    #formScreen {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #formScreen.hidden {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      padding: 0 16px;
+    }
+
+    /* Chips section */
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0.6;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .chip {
+      background: var(--secondary-bg);
+      border: 2px solid transparent;
+      border-radius: 20px;
+      padding: 9px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .chip:active {
+      transform: scale(0.93);
+    }
+
+    .chip.selected {
+      border-color: var(--button);
+      background: var(--button);
+      color: var(--button-text);
+      box-shadow: 0 2px 12px rgba(51, 144, 236, 0.35);
+    }
+
+    /* Mood emojis */
+    .moods {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .mood-btn {
+      flex: 1;
+      min-width: 70px;
+      background: var(--secondary-bg);
+      border: 2px solid transparent;
+      border-radius: var(--card-radius);
+      padding: 14px 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      user-select: none;
+      line-height: 1.3;
+    }
+
+    .mood-btn .emoji {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .mood-btn:active {
+      transform: scale(0.93);
+    }
+
+    .mood-btn.selected {
+      border-color: var(--button);
+      background: var(--button);
+      color: var(--button-text);
+      box-shadow: 0 2px 12px rgba(51, 144, 236, 0.35);
+    }
+
+    /* Textareas */
+    .textarea-group {
+      margin-bottom: 18px;
+    }
+
+    .textarea-group textarea {
+      width: 100%;
+      background: var(--secondary-bg);
+      border: 2px solid transparent;
+      border-radius: var(--card-radius);
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      resize: none;
+      transition: var(--transition);
+      line-height: 1.5;
+      min-height: 90px;
+    }
+
+    .textarea-group textarea:focus {
+      outline: none;
+      border-color: var(--button);
+      box-shadow: 0 0 0 4px rgba(51, 144, 236, 0.12);
+    }
+
+    .textarea-group textarea::placeholder {
+      color: var(--text);
+      opacity: 0.4;
+    }
+
+    .textarea-group textarea.main {
+      min-height: 110px;
+    }
+
+    .textarea-group textarea.optional {
+      min-height: 70px;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      background: var(--button);
+      color: var(--button-text);
+      border: none;
+      border-radius: var(--card-radius);
+      padding: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 8px;
+      box-shadow: 0 4px 16px rgba(51, 144, 236, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.97);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Thank you screen */
+    #thankYouScreen {
+      display: none;
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    #thankYouScreen.visible {
+      display: block;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .thank-title {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .thank-hint {
+      font-size: 15px;
+      opacity: 0.65;
+      margin-bottom: 28px;
+      line-height: 1.45;
+    }
+
+    /* Cookie */
+    .cookie-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .cookie {
+      width: 140px;
+      height: 140px;
+      animation: wobble 3s ease-in-out infinite;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 8px 24px rgba(200, 150, 60, 0.35));
+    }
+
+    .cookie:active {
+      transform: scale(0.92);
+    }
+
+    .cookie.cracked {
+      animation: crackAnim 0.6s ease forwards;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      15% { transform: rotate(-6deg) scale(1.02); }
+      30% { transform: rotate(5deg) scale(1.01); }
+      45% { transform: rotate(-3deg) scale(1); }
+      60% { transform: rotate(2deg) scale(1.01); }
+      75% { transform: rotate(-1deg) scale(1); }
+    }
+
+    @keyframes crackAnim {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.15) rotate(-8deg); }
+      50% { transform: scale(1.05) rotate(6deg); }
+      75% { transform: scale(0.9) rotate(-3deg); opacity: 0.7; }
+      100% { transform: scale(0) rotate(20deg); opacity: 0; }
+    }
+
+    /* Verse card */
+    .verse-card {
+      display: none;
+      background: var(--secondary-bg);
+      border-radius: var(--card-radius);
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      animation: verseReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .verse-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+      border-radius: var(--card-radius) var(--card-radius) 0 0;
+    }
+
+    .verse-card.visible {
+      display: block;
+    }
+
+    @keyframes verseReveal {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .verse-text {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      font-style: italic;
+      letter-spacing: -0.2px;
+    }
+
+    .verse-ref {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--button);
+      letter-spacing: 0.3px;
+    }
+
+    .verse-emoji {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    /* Send another button */
+    .again-btn {
+      display: none;
+      width: 100%;
+      background: var(--secondary-bg);
+      color: var(--text);
+      border: 2px solid var(--button);
+      border-radius: var(--card-radius);
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .again-btn.visible {
+      display: block;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .again-btn:active {
+      transform: scale(0.97);
+      background: var(--button);
+      color: var(--button-text);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text);
+      color: var(--bg);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1000;
+      pointer-events: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Decorative background elements */
+    .bg-decoration {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bg-decoration.d1 {
+      width: 300px;
+      height: 300px;
+      background: var(--button);
+      top: -100px;
+      right: -80px;
+    }
+
+    .bg-decoration.d2 {
+      width: 200px;
+      height: 200px;
+      background: #ffd700;
+      bottom: 100px;
+      left: -60px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 380px) {
+      .app { padding: 12px 12px 32px; }
+      .header h1 { font-size: 19px; }
+      .mood-btn { font-size: 12px; padding: 12px 4px; }
+      .mood-btn .emoji { font-size: 19px; }
+      .chip { font-size: 13px; padding: 8px 13px; }
+      .cookie { width: 120px; height: 120px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>💬 Залишити коментар</h1>
-    <p class="subtitle">Поділися своїми думками, ідеями чи відгуком про наш канал!</p>
+<div class="bg-decoration d1"></div>
+<div class="bg-decoration d2"></div>
 
-    <form id="feedbackForm">
-        <div class="form-group">
-            <label>✨ Яку тему чи рубрику ви хотіли б бачити частіше?</label>
-            <textarea name="goals" rows="3" placeholder="Напиши свої ідеї..." required></textarea>
-        </div>
+<div class="app">
 
-        <div class="form-group">
-            <label>💡 Що найбільше подобається, а чого, можливо, не вистачає?</label>
-            <textarea name="improvements" rows="3" placeholder="Твої думки та коментарі..."></textarea>
-        </div>
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="langUA" data-lang="ua">🇺🇦 UA</button>
+    <button class="lang-btn" id="langEN" data-lang="en">🇬🇧 EN</button>
+  </div>
 
-        <button type="submit" id="submitBtn">Надіслати відповідь 🚀</button>
-    </form>
+  <!-- FORM SCREEN -->
+  <div id="formScreen">
+    <div class="header">
+      <h1 id="headerTitle">Поділися своєю думкою ✨</h1>
+    </div>
 
-    <div id="successMessage" class="success-msg">Дякую! Твоє повідомлення успішно надіслане ❤️</div>
+    <div class="section-label" id="labelCategory">Категорія</div>
+    <div class="chips" id="chipsContainer">
+      <button class="chip" data-value="idea">💡 <span>Ідея для посту</span></button>
+      <button class="chip" data-value="question">💬 <span>Питання</span></button>
+      <button class="chip" data-value="newtopic">🔥 <span>Нова тема</span></button>
+      <button class="chip" data-value="hello">✨ <span>Просто привіт</span></button>
+    </div>
+
+    <div class="section-label" id="labelMood">Настрій</div>
+    <div class="moods" id="moodsContainer">
+      <button class="mood-btn" data-value="super"><span class="emoji">🔋</span><span>Супер</span></button>
+      <button class="mood-btn" data-value="sleepy"><span class="emoji">☁️</span><span>Сонно</span></button>
+      <button class="mood-btn" data-value="creative"><span class="emoji">🎨</span><span>Творчо</span></button>
+      <button class="mood-btn" data-value="coffee"><span class="emoji">☕</span><span>Хочу кави</span></button>
+    </div>
+
+    <div class="textarea-group">
+      <textarea id="mainText" class="main" placeholder="Твоя ідея, питання або думка..."></textarea>
+    </div>
+
+    <div class="textarea-group">
+      <textarea id="improveText" class="optional" placeholder="Що можна покращити в каналі? (за бажанням)"></textarea>
+    </div>
+
+    <button class="submit-btn" id="submitBtn">
+      <span id="submitText">Надіслати 🚀</span>
+    </button>
+  </div>
+
+  <!-- THANK YOU SCREEN -->
+  <div id="thankYouScreen">
+    <div class="thank-title" id="thankTitle">Дякуємо! Твоє повідомлення вже у нас 💌</div>
+    <div class="thank-hint" id="thankHint">Натисни на печиво, щоб відкрити вірш на сьогодні:</div>
+
+    <div class="cookie-wrap" id="cookieWrap">
+      <svg class="cookie" id="cookieSvg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="cookieGrad" cx="45%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="#f5d98f"/>
+            <stop offset="60%" stop-color="#e8c468"/>
+            <stop offset="100%" stop-color="#d4a843"/>
+          </radialGradient>
+          <radialGradient id="cookieGrad2" cx="40%" cy="35%" r="55%">
+            <stop offset="0%" stop-color="#f7e0a0"/>
+            <stop offset="100%" stop-color="#e0b855"/>
+          </radialGradient>
+        </defs>
+        <!-- Main cookie body -->
+        <circle cx="70" cy="70" r="60" fill="url(#cookieGrad)" stroke="#c49a2e" stroke-width="2"/>
+        <!-- Inner highlight -->
+        <circle cx="70" cy="70" r="52" fill="url(#cookieGrad2)" opacity="0.5"/>
+        <!-- Chocolate chips -->
+        <circle cx="48" cy="48" r="7" fill="#5c3a1e" opacity="0.85"/>
+        <circle cx="90" cy="52" r="6" fill="#5c3a1e" opacity="0.8"/>
+        <circle cx="60" cy="85" r="6.5" fill="#5c3a1e" opacity="0.85"/>
+        <circle cx="95" cy="82" r="5.5" fill="#5c3a1e" opacity="0.75"/>
+        <circle cx="72" cy="65" r="5" fill="#5c3a1e" opacity="0.7"/>
+        <circle cx="40" cy="78" r="4.5" fill="#5c3a1e" opacity="0.65"/>
+        <circle cx="80" cy="105" r="4.5" fill="#5c3a1e" opacity="0.6"/>
+        <circle cx="55" cy="60" r="3.5" fill="#5c3a1e" opacity="0.5"/>
+        <!-- Cute face -->
+        <circle cx="55" cy="65" r="4" fill="#3d2510"/>
+        <circle cx="85" cy="65" r="4" fill="#3d2510"/>
+        <circle cx="56.5" cy="63.5" r="1.5" fill="#fff"/>
+        <circle cx="86.5" cy="63.5" r="1.5" fill="#fff"/>
+        <path d="M60 78 Q70 88 80 78" fill="none" stroke="#3d2510" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Blush -->
+        <ellipse cx="45" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
+        <ellipse cx="95" cy="75" rx="6" ry="3.5" fill="#e89b7a" opacity="0.45"/>
+        <!-- Sparkles -->
+        <text x="25" y="40" font-size="12" opacity="0.6">✨</text>
+        <text x="110" y="35" font-size="10" opacity="0.5">✨</text>
+      </svg>
+    </div>
+
+    <div class="verse-card" id="verseCard">
+      <div class="verse-emoji" id="verseEmoji">📖</div>
+      <div class="verse-text" id="verseText"></div>
+      <div class="verse-ref" id="verseRef"></div>
+    </div>
+
+    <button class="again-btn" id="againBtn">Надіслати ще одне повідомлення</button>
+  </div>
+
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-    // Ініціалізація Telegram WebApp
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+(function() {
+  'use strict';
 
-    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const btn = document.getElementById('submitBtn');
-        btn.textContent = "Надсилаємо...";
-        btn.disabled = true;
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzjdbvyKiB6aSEnbuYnVhI1ojwblBHkjwGWOZfDQTJh_P_7T6sm7zMp15aHq0N3o4Qe/exec';
 
-        // Дістаємо дані юзера з Telegram
-        const user = tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
-        
-        const telegramId = user ? user.id : "Браузер / Без Telegram";
-        const username = user && user.username ? "@" + user.username : (user ? user.first_name : "Гість");
+  // ---- Telegram user ----
+  let telegramId = 'browser_test';
+  let username = 'guest';
+  try {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+      const u = window.Telegram.WebApp.initDataUnsafe.user;
+      telegramId = u.id ? String(u.id) : 'browser_test';
+      username = u.username || 'guest';
+    }
+  } catch (e) {
+    telegramId = 'browser_test';
+    username = 'guest';
+  }
 
-        const formData = {
-            goals: this.goals.value,
-            improvements: this.improvements.value,
-            telegram_id: telegramId,
-            username: username
-        };
+  // ---- Haptic helper ----
+  function haptic(type) {
+    try {
+      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
+        window.Telegram.WebApp.HapticFeedback.impactOccurred(type || 'light');
+      }
+    } catch (e) {}
+  }
 
-        // Твоє посилання на Google Apps Script залишається тут незмінним
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzjdbvyKiB6aSEnbuYnVhI1ojwblBHkjwGWOZfDQTJh_P_7T6sm7zMp15aHq0N3o4Qe/exec';
+  // ---- State ----
+  let currentLang = 'ua';
+  let selectedCategory = null;
+  let selectedMood = null;
+  let isSending = false;
+  let verseRevealed = false;
 
-        fetch(scriptURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-        .then(() => {
-            document.getElementById('feedbackForm').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'block';
-        })
-        .catch(error => {
-            alert('Помилка відправки. Спробуй ще раз!');
-            btn.textContent = "Надіслати відповідь 🚀";
-            btn.disabled = false;
+  // ---- i18n ----
+  const i18n = {
+    ua: {
+      headerTitle: 'Поділися своєю думкою ✨',
+      labelCategory: 'Категорія',
+      labelMood: 'Настрій',
+      categories: [
+        { value: 'idea', emoji: '💡', label: 'Ідея для посту' },
+        { value: 'question', emoji: '💬', label: 'Питання' },
+        { value: 'newtopic', emoji: '🔥', label: 'Нова тема' },
+        { value: 'hello', emoji: '✨', label: 'Просто привіт' }
+      ],
+      moods: [
+        { value: 'super', emoji: '🔋', label: 'Супер' },
+        { value: 'sleepy', emoji: '☁️', label: 'Сонно' },
+        { value: 'creative', emoji: '🎨', label: 'Творчо' },
+        { value: 'coffee', emoji: '☕', label: 'Хочу кави' }
+      ],
+      mainPlaceholder: 'Твоя ідея, питання або думка...',
+      improvePlaceholder: 'Що можна покращити в каналі? (за бажанням)',
+      submitText: 'Надіслати 🚀',
+      sendingText: 'Надсилаємо...',
+      thankTitle: 'Дякуємо! Твоє повідомлення вже у нас 💌',
+      thankHint: 'Натисни на печиво, щоб відкрити вірш на сьогодні:',
+      againBtn: 'Надіслати ще одне повідомлення',
+      emptyMain: 'Будь ласка, напиши щось у головному полі 💭',
+      noCategory: 'Обери категорію, будь ласка 💡',
+      noMood: 'Обери настрій, будь ласка 🎨',
+      sendSuccess: 'Надіслано! Дякуємо 💌',
+      sendError: 'Щось пішло не так. Спробуй ще раз 🙏'
+    },
+    en: {
+      headerTitle: 'Share your thoughts ✨',
+      labelCategory: 'Category',
+      labelMood: 'Mood',
+      categories: [
+        { value: 'idea', emoji: '💡', label: 'Post idea' },
+        { value: 'question', emoji: '💬', label: 'Question' },
+        { value: 'newtopic', emoji: '🔥', label: 'New topic' },
+        { value: 'hello', emoji: '✨', label: 'Just saying hi' }
+      ],
+      moods: [
+        { value: 'super', emoji: '🔋', label: 'Great' },
+        { value: 'sleepy', emoji: '☁️', label: 'Sleepy' },
+        { value: 'creative', emoji: '🎨', label: 'Creative' },
+        { value: 'coffee', emoji: '☕', label: 'Need coffee' }
+      ],
+      mainPlaceholder: 'Your idea, question or thought...',
+      improvePlaceholder: 'What can we improve? (optional)',
+      submitText: 'Send 🚀',
+      sendingText: 'Sending...',
+      thankTitle: 'Thank you! We got your message 💌',
+      thankHint: 'Tap the cookie to open your verse for today:',
+      againBtn: 'Send another message',
+      emptyMain: 'Please write something in the main field 💭',
+      noCategory: 'Please pick a category 💡',
+      noMood: 'Please pick a mood 🎨',
+      sendSuccess: 'Sent! Thank you 💌',
+      sendError: 'Something went wrong. Please try again 🙏'
+    }
+  };
+
+  // ---- Bible verses ----
+  const verses = {
+    ua: [
+      { text: 'Дякуйте за все, бо така Божа воля про вас у Христі Ісусі.', ref: '1 Солунян 5:18', emoji: '🙏' },
+      { text: 'Світло в темряві світить, і темрява його не подолала.', ref: 'Івана 1:5', emoji: '✨' },
+      { text: 'Доручи Господу свої дороги, і Він здійснить твої задуми.', ref: 'Псалми 37:5', emoji: '🛤️' },
+      { text: 'Надійся на Господа всім серцем своїм, і не покладайся на власний розум.', ref: 'Приповісті 3:5', emoji: '💛' },
+      { text: 'Усе можу в Тому, Хто дає мені силу.', ref: 'Филип\'ян 4:13', emoji: '💪' },
+      { text: 'Будь сильним і сміливим! Не бійся і не лякайся, бо Господь, твій Бог, іде з тобою.', ref: 'Ісуса Навина 1:9', emoji: '🌟' },
+      { text: 'Господь — мій Пастир, тому я не матиму нестачі.', ref: 'Псалми 23:1', emoji: '🐑' },
+      { text: 'Нехай Бог надії сповнить вас усією радістю та миром у вірі.', ref: 'Римлян 15:13', emoji: '🌿' },
+      { text: 'Ви — світло світу. Місто, що стоїть на горі, не сховати.', ref: 'Матвія 5:14', emoji: '🌅' },
+      { text: 'Ми любимо, тому що Він перший полюбив нас.', ref: '1 Івана 4:19', emoji: '❤️' },
+      { text: 'Бог — наша пристань і сила, помічник у скруті, який завжди поруч.', ref: 'Псалми 46:2', emoji: '⛰️' },
+      { text: 'Не бійся, бо Я з тобою; не тривожся, бо Я — твій Бог. Я зміцню тебе і допоможу тобі.', ref: 'Ісаї 41:10', emoji: '🤝' }
+    ],
+    en: [
+      { text: 'Give thanks in all things, for this is God\'s will for you in Christ Jesus.', ref: '1 Thessalonians 5:18', emoji: '🙏' },
+      { text: 'The light shines in the darkness, and the darkness has not overcome it.', ref: 'John 1:5', emoji: '✨' },
+      { text: 'Commit your way to the Lord; trust in Him and He will act.', ref: 'Psalm 37:5', emoji: '🛤️' },
+      { text: 'Trust in the Lord with all your heart and lean not on your own understanding.', ref: 'Proverbs 3:5', emoji: '💛' },
+      { text: 'I can do all things through Him who gives me strength.', ref: 'Philippians 4:13', emoji: '💪' },
+      { text: 'Be strong and courageous! Do not be afraid, for the Lord your God is with you.', ref: 'Joshua 1:9', emoji: '🌟' },
+      { text: 'The Lord is my shepherd; I shall not want.', ref: 'Psalm 23:1', emoji: '🐑' },
+      { text: 'May the God of hope fill you with all joy and peace as you trust in Him.', ref: 'Romans 15:13', emoji: '🌿' },
+      { text: 'You are the light of the world. A city on a hill cannot be hidden.', ref: 'Matthew 5:14', emoji: '🌅' },
+      { text: 'We love because He first loved us.', ref: '1 John 4:19', emoji: '❤️' },
+      { text: 'God is our refuge and strength, a very present help in trouble.', ref: 'Psalm 46:2', emoji: '⛰️' },
+      { text: 'Do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you.', ref: 'Isaiah 41:10', emoji: '🤝' }
+    ]
+  };
+
+  // ---- DOM elements ----
+  const formScreen = document.getElementById('formScreen');
+  const thankYouScreen = document.getElementById('thankYouScreen');
+  const headerTitle = document.getElementById('headerTitle');
+  const labelCategory = document.getElementById('labelCategory');
+  const labelMood = document.getElementById('labelMood');
+  const chipsContainer = document.getElementById('chipsContainer');
+  const moodsContainer = document.getElementById('moodsContainer');
+  const mainText = document.getElementById('mainText');
+  const improveText = document.getElementById('improveText');
+  const submitBtn = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+  const thankTitle = document.getElementById('thankTitle');
+  const thankHint = document.getElementById('thankHint');
+  const cookieWrap = document.getElementById('cookieWrap');
+  const cookieSvg = document.getElementById('cookieSvg');
+  const verseCard = document.getElementById('verseCard');
+  const verseText = document.getElementById('verseText');
+  const verseRef = document.getElementById('verseRef');
+  const verseEmoji = document.getElementById('verseEmoji');
+  const againBtn = document.getElementById('againBtn');
+  const toastEl = document.getElementById('toast');
+  const langUA = document.getElementById('langUA');
+  const langEN = document.getElementById('langEN');
+
+  // ---- LocalStorage keys ----
+  const LS_DRAFT = 'mini_app_draft_v1';
+  const LS_LANG = 'mini_app_lang_v1';
+
+  // ---- Toast ----
+  let toastTimer = null;
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      toastEl.classList.remove('show');
+    }, 2200);
+  }
+
+  // ---- Draft save/load/clear ----
+  function saveDraft() {
+    try {
+      const draft = {
+        category: selectedCategory,
+        mood: selectedMood,
+        main: mainText.value,
+        improve: improveText.value
+      };
+      localStorage.setItem(LS_DRAFT, JSON.stringify(draft));
+    } catch (e) {}
+  }
+
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(LS_DRAFT);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      if (draft.category) selectedCategory = draft.category;
+      if (draft.mood) selectedMood = draft.mood;
+      if (draft.main) mainText.value = draft.main;
+      if (draft.improve) improveText.value = draft.improve;
+    } catch (e) {}
+  }
+
+  function clearDraft() {
+    try {
+      localStorage.removeItem(LS_DRAFT);
+    } catch (e) {}
+  }
+
+  // ---- Render dynamic content based on language ----
+  function renderLanguage(lang) {
+    currentLang = lang;
+    const t = i18n[lang];
+
+    // Header
+    headerTitle.textContent = t.headerTitle;
+
+    // Labels
+    labelCategory.textContent = t.labelCategory;
+    labelMood.textContent = t.labelMood;
+
+    // Placeholders
+    mainText.placeholder = t.mainPlaceholder;
+    improveText.placeholder = t.improvePlaceholder;
+
+    // Submit button text (only if not sending)
+    if (!isSending) {
+      submitText.textContent = t.submitText;
+    }
+
+    // Thank you texts
+    thankTitle.textContent = t.thankTitle;
+    thankHint.textContent = t.thankHint;
+
+    // Again button
+    againBtn.textContent = t.againBtn;
+
+    // Chips
+    chipsContainer.innerHTML = '';
+    t.categories.forEach(function(cat) {
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.dataset.value = cat.value;
+      if (selectedCategory === cat.value) {
+        btn.classList.add('selected');
+      }
+      btn.innerHTML = cat.emoji + ' <span>' + cat.label + '</span>';
+      btn.addEventListener('click', function() {
+        haptic('light');
+        selectedCategory = cat.value;
+        saveDraft();
+        chipsContainer.querySelectorAll('.chip').forEach(function(c) {
+          c.classList.toggle('selected', c.dataset.value === selectedCategory);
         });
+      });
+      chipsContainer.appendChild(btn);
     });
+
+    // Moods
+    moodsContainer.innerHTML = '';
+    t.moods.forEach(function(mood) {
+      const btn = document.createElement('button');
+      btn.className = 'mood-btn';
+      btn.dataset.value = mood.value;
+      if (selectedMood === mood.value) {
+        btn.classList.add('selected');
+      }
+      btn.innerHTML = '<span class="emoji">' + mood.emoji + '</span><span>' + mood.label + '</span>';
+      btn.addEventListener('click', function() {
+        haptic('light');
+        selectedMood = mood.value;
+        saveDraft();
+        moodsContainer.querySelectorAll('.mood-btn').forEach(function(m) {
+          m.classList.toggle('selected', m.dataset.value === selectedMood);
+        });
+      });
+      moodsContainer.appendChild(btn);
+    });
+
+    // Language buttons
+    langUA.classList.toggle('active', lang === 'ua');
+    langEN.classList.toggle('active', lang === 'en');
+  }
+
+  // ---- Language switch ----
+  function setLanguage(lang) {
+    if (lang === currentLang) return;
+    haptic('light');
+    renderLanguage(lang);
+    try {
+      localStorage.setItem(LS_LANG, lang);
+    } catch (e) {}
+    // If verse is already visible, re-pick verse in new language
+    if (verseRevealed) {
+      showVerse();
+    }
+  }
+
+  langUA.addEventListener('click', function() { setLanguage('ua'); });
+  langEN.addEventListener('click', function() { setLanguage('en'); });
+
+  // ---- Textarea listeners for draft ----
+  mainText.addEventListener('input', saveDraft);
+  improveText.addEventListener('input', saveDraft);
+
+  // ---- Submit ----
+  function getCategoryLabel(value) {
+    const t = i18n[currentLang];
+    const found = t.categories.find(function(c) { return c.value === value; });
+    return found ? found.label : value;
+  }
+
+  function getMoodLabel(value) {
+    const t = i18n[currentLang];
+    const found = t.moods.find(function(m) { return m.value === value; });
+    return found ? found.label : value;
+  }
+
+  function getLangLabel() {
+    return currentLang === 'ua' ? 'UA' : 'EN';
+  }
+
+  submitBtn.addEventListener('click', function() {
+    if (isSending) return;
+    haptic('medium');
+
+    const t = i18n[currentLang];
+
+    // Validate
+    if (!mainText.value.trim()) {
+      showToast(t.emptyMain);
+      mainText.focus();
+      return;
+    }
+    if (!selectedCategory) {
+      showToast(t.noCategory);
+      return;
+    }
+    if (!selectedMood) {
+      showToast(t.noMood);
+      return;
+    }
+
+    // Build goals string
+    const goalsStr = '[' + getLangLabel() + '] [' + getCategoryLabel(selectedCategory) + '] [' + getMoodLabel(selectedMood) + '] ' + mainText.value.trim();
+
+    // Prepare FormData
+    const formData = new FormData();
+    formData.append('goals', goalsStr);
+    formData.append('improvements', improveText.value.trim());
+    formData.append('telegram_id', telegramId);
+    formData.append('username', username);
+
+    // UI: sending state
+    isSending = true;
+    submitBtn.disabled = true;
+    submitText.innerHTML = '<span class="spinner"></span>' + t.sendingText;
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    })
+    .then(function() {
+      // Success
+      isSending = false;
+      submitBtn.disabled = false;
+      submitText.textContent = i18n[currentLang].submitText;
+      clearDraft();
+      showThankYouScreen();
+      haptic('medium');
+    })
+    .catch(function(err) {
+      isSending = false;
+      submitBtn.disabled = false;
+      submitText.textContent = i18n[currentLang].submitText;
+      showToast(i18n[currentLang].sendError);
+      console.error('Send error:', err);
+    });
+  });
+
+  // ---- Thank you screen ----
+  function showThankYouScreen() {
+    formScreen.classList.add('hidden');
+    // Reset verse state
+    verseRevealed = false;
+    verseCard.classList.remove('visible');
+    cookieSvg.classList.remove('cracked');
+    againBtn.classList.remove('visible');
+    // Show thank you
+    thankYouScreen.classList.add('visible');
+    // Reset form after animation
+    setTimeout(function() {
+      // Don't clear form yet — will clear on "again"
+    }, 500);
+  }
+
+  function goBackToForm() {
+    haptic('light');
+    thankYouScreen.classList.remove('visible');
+    formScreen.classList.remove('hidden');
+    // Clear form
+    selectedCategory = null;
+    selectedMood = null;
+    mainText.value = '';
+    improveText.value = '';
+    clearDraft();
+    verseRevealed = false;
+    verseCard.classList.remove('visible');
+    cookieSvg.classList.remove('cracked');
+    againBtn.classList.remove('visible');
+    // Re-render to clear selections
+    renderLanguage(currentLang);
+  }
+
+  againBtn.addEventListener('click', goBackToForm);
+
+  // ---- Cookie click ----
+  cookieWrap.addEventListener('click', function() {
+    if (verseRevealed) return;
+    haptic('light');
+    verseRevealed = true;
+    cookieSvg.classList.add('cracked');
+    // After crack animation, show verse
+    setTimeout(function() {
+      showVerse();
+      againBtn.classList.add('visible');
+    }, 400);
+  });
+
+  function showVerse() {
+    const pool = verses[currentLang];
+    const v = pool[Math.floor(Math.random() * pool.length)];
+    verseText.textContent = v.text;
+    verseRef.textContent = v.ref;
+    verseEmoji.textContent = v.emoji;
+    verseCard.classList.remove('visible');
+    // Force reflow
+    void verseCard.offsetWidth;
+    verseCard.classList.add('visible');
+  }
+
+  // ---- Initial load ----
+  function init() {
+    // Load language
+    try {
+      const savedLang = localStorage.getItem(LS_LANG);
+      if (savedLang === 'en' || savedLang === 'ua') {
+        currentLang = savedLang;
+      }
+    } catch (e) {}
+
+    // Load draft
+    loadDraft();
+
+    // Render
+    renderLanguage(currentLang);
+
+    // Expand Telegram WebApp
+    try {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+      }
+    } catch (e) {}
+  }
+
+  init();
+
+})();
 </script>
 
 </body>
